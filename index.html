@@ -1,0 +1,1598 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ワーホリ英会話トレーナー</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #f6f3ec;
+    --card: #fdfcf8;
+    --ink: #2b2620;
+    --muted: #94897a;
+    --accent: #1f4e5f;
+    --accent-soft: #e9efef;
+    --line: #e2dccf;
+    --done: #4a7c59;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  button { touch-action: manipulation; font-family: inherit; }
+  body {
+    font-family: "Zen Kaku Gothic New", "Hiragino Sans", "Yu Gothic UI", "Segoe UI", sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    line-height: 1.75;
+  }
+  header {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 34px 20px 4px;
+  }
+  header h1 {
+    font-size: 1.4rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+  }
+  header p { color: var(--muted); font-size: 0.83rem; margin-top: 6px; }
+
+  .controls {
+    max-width: 760px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 0;
+    padding: 12px 20px 2px;
+    position: sticky;
+    top: 0;
+    background: var(--paper);
+    z-index: 10;
+  }
+  .controls button {
+    background: none;
+    border: 1px solid var(--line);
+    border-right-width: 0;
+    color: var(--muted);
+    padding: 5px 16px;
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: color 0.15s, background 0.15s;
+  }
+  .controls button:first-child { border-radius: 4px 0 0 4px; }
+  .controls button:nth-child(2) { border-radius: 0 4px 4px 0; border-right-width: 1px; }
+  .controls button:last-child {
+    border: none;
+    margin-left: auto;
+    font-size: 0.78rem;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    text-decoration-color: var(--line);
+  }
+  .controls button:hover { color: var(--ink); }
+  .controls button.active { background: var(--accent); border-color: var(--accent); color: #fff; }
+  .controls button:last-child.active { background: none; color: var(--ink); }
+  .controls select {
+    margin-left: auto;
+    max-width: 42%;
+    border: 1px solid var(--line);
+    background: var(--card);
+    color: var(--muted);
+    font-size: 0.75rem;
+    padding: 4px 6px;
+    border-radius: 4px;
+    font-family: inherit;
+  }
+
+  #job-nav {
+    max-width: 760px;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 22px;
+    overflow-x: auto;
+    padding: 14px 20px 0;
+    border-bottom: 1px solid var(--line);
+    scrollbar-width: none;
+  }
+  #job-nav::-webkit-scrollbar { display: none; }
+  #job-nav button {
+    background: none;
+    border: none;
+    border-bottom: 2px solid transparent;
+    padding: 4px 1px 10px;
+    font-size: 0.9rem;
+    color: var(--muted);
+    cursor: pointer;
+    white-space: nowrap;
+    transition: color 0.15s;
+  }
+  #job-nav button:hover { color: var(--ink); }
+  #job-nav button.active {
+    color: var(--ink);
+    font-weight: 600;
+    border-bottom-color: var(--accent);
+  }
+
+  nav {
+    max-width: 760px;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2px 18px;
+    padding: 14px 20px 4px;
+  }
+  nav button {
+    background: none;
+    border: none;
+    font-size: 0.82rem;
+    color: var(--muted);
+    cursor: pointer;
+    padding: 2px 0;
+    transition: color 0.15s;
+  }
+  nav button:hover { color: var(--ink); }
+  nav button.active { color: var(--accent); font-weight: 600; }
+  nav button.done::after { content: " ✓"; color: var(--done); }
+
+  main { max-width: 760px; margin: 0 auto; padding: 8px 20px 80px; }
+
+  .scene-header { margin: 22px 0 6px; }
+  .scene-header h2 {
+    font-size: 1.15rem;
+    font-weight: 700;
+  }
+  .scene-header p { color: var(--muted); font-size: 0.85rem; margin-top: 4px; }
+
+  .scene-actions { display: flex; gap: 8px; margin: 12px 0 22px; }
+  .scene-actions button {
+    background: none;
+    border: 1px solid var(--line);
+    color: var(--muted);
+    border-radius: 4px;
+    padding: 5px 14px;
+    cursor: pointer;
+    font-size: 0.8rem;
+  }
+  .scene-actions button:hover { color: var(--ink); border-color: var(--muted); }
+
+  .line {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 12px;
+  }
+  .line.staff { align-items: flex-end; }
+  .who {
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.09em;
+    color: var(--muted);
+    margin: 0 8px 2px;
+  }
+  .line.staff .who { color: var(--accent); }
+  .bubble {
+    max-width: 78%;
+    padding: 9px 14px;
+    border-radius: 12px;
+    background: var(--card);
+    border: 1px solid var(--line);
+  }
+  .line.customer .bubble { border-top-left-radius: 4px; }
+  .line.staff .bubble {
+    background: var(--accent-soft);
+    border-color: #d1dee1;
+    border-top-right-radius: 4px;
+  }
+  .en {
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 1.02rem;
+  }
+  .ja { font-size: 0.8rem; color: var(--muted); margin-top: 2px; }
+  body.hide-ja .ja { display: none; }
+
+  .play-btn {
+    background: none;
+    border: none;
+    color: #c3b9a8;
+    cursor: pointer;
+    font-size: 0.75rem;
+    margin-left: 8px;
+    padding: 0 2px;
+    vertical-align: middle;
+  }
+  .play-btn:hover { color: var(--accent); }
+
+  /* ロールプレイモード: 自分のセリフを隠す */
+  body.roleplay .line.staff .bubble.hidden-answer .en,
+  body.roleplay .line.staff .bubble.hidden-answer .ja,
+  body.roleplay .line.staff .bubble.hidden-answer .play-btn { display: none; }
+  body.roleplay .line.staff .bubble.hidden-answer::after {
+    content: "あなたの番 — 声に出して言ってから、ここを押して答え合わせ";
+    display: block;
+    color: var(--accent);
+    font-size: 0.82rem;
+    padding: 4px 0;
+    cursor: pointer;
+  }
+  body.roleplay .line.staff .bubble.hidden-answer {
+    cursor: pointer;
+    background: var(--card);
+    border: 1px dashed var(--accent);
+  }
+
+  .tips {
+    background: var(--card);
+    border-left: 3px solid var(--accent);
+    padding: 14px 18px;
+    margin: 26px 0;
+    font-size: 0.87rem;
+  }
+  .tips h3 {
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    color: var(--accent);
+    margin-bottom: 8px;
+  }
+  .tips li { margin-left: 18px; margin-bottom: 5px; color: #4d453a; }
+
+  .complete-row { text-align: center; margin-top: 26px; }
+  .complete-row button {
+    background: none;
+    border: 1px solid var(--accent);
+    color: var(--accent);
+    border-radius: 4px;
+    padding: 8px 24px;
+    font-size: 0.88rem;
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s;
+  }
+  .complete-row button:hover { background: var(--accent-soft); }
+  .complete-row button.completed { background: var(--accent); color: #fff; }
+
+  /* キーフレーズページ */
+  table { width: 100%; border-collapse: collapse; margin: 10px 0 26px; font-size: 0.9rem; }
+  th {
+    text-align: left;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.09em;
+    color: var(--muted);
+    border-bottom: 1px solid var(--ink);
+    padding: 4px 8px 6px;
+  }
+  td { padding: 8px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  td.en-cell { font-family: Georgia, "Times New Roman", serif; }
+  td .play-btn { margin-left: 4px; }
+  h3.section-title {
+    font-size: 1rem;
+    font-weight: 700;
+    margin: 30px 0 2px;
+  }
+  .section-note { color: var(--muted); font-size: 0.83rem; }
+
+  footer { text-align: center; color: var(--muted); font-size: 0.76rem; padding: 24px 20px 40px; }
+  @media (max-width: 600px) {
+    .bubble { max-width: 90%; }
+    header h1 { font-size: 1.25rem; }
+    .play-btn { font-size: 1rem; padding: 2px 8px; }
+    .scene-actions button { padding: 9px 16px; font-size: 0.85rem; }
+    .controls button { padding: 8px 14px; }
+    nav button { padding: 6px 0; }
+    #job-nav button { padding: 6px 1px 10px; }
+    main { padding: 8px 16px calc(60px + env(safe-area-inset-bottom)); }
+  }
+</style>
+</head>
+<body class="hide-ja-no">
+
+<header>
+  <h1>ワーホリ英会話トレーナー</h1>
+  <p>職場を選んで、場面ごとに英語を練習する。色付きのラベルがあなたのセリフ。</p>
+</header>
+
+<div class="controls">
+  <button id="mode-study" class="active" onclick="setMode('study')">学習</button>
+  <button id="mode-roleplay" onclick="setMode('roleplay')">ロールプレイ</button>
+  <select id="voice-select" onchange="changeVoice(this.value)" title="英語の音声を選ぶ"></select>
+  <button id="toggle-ja" class="active" onclick="toggleJa()">和訳を隠す</button>
+</div>
+
+<nav id="job-nav"></nav>
+<nav id="nav"></nav>
+<main id="main"></main>
+
+<footer>音声は端末の読み上げ機能(Web Speech API)を使用。上のメニューで声を変更できます。<br>iPhoneの場合:設定 → アクセシビリティ → 読み上げコンテンツ → 声 → 英語 で「Karen(拡張)」等をダウンロードすると、より自然な声が選べるようになります。<br>進捗はこのブラウザに自動保存されます。</footer>
+
+<script>
+const STEAK_SCENES = [
+{
+  id: "greeting",
+  title: "1. 出迎え・席案内",
+  emoji: "🚪",
+  desc: "お客さんが入店した最初の瞬間。第一印象が決まる大事な場面。",
+  tips: [
+    "オーストラリアでは \"How are you going?\" が定番のあいさつ(going = doing)。",
+    "\"No worries\" は「かしこまりました/大丈夫ですよ」として何にでも使える万能フレーズ。",
+    "満席のときは正直に待ち時間を伝えて、名前を聞いてリストに載せる。"
+  ],
+  lines: [
+    { sp: "S", en: "Hi there! Welcome to Aussie Grill. How are you going today?", ja: "いらっしゃいませ、オージーグリルへようこそ!今日の調子はどうですか?" },
+    { sp: "C", en: "Good, thanks. Table for two, please.", ja: "元気です、ありがとう。2名でお願いします。" },
+    { sp: "S", en: "Sure! Do you have a reservation with us?", ja: "かしこまりました!ご予約はされていますか?" },
+    { sp: "C", en: "No, we don't. Is that okay?", ja: "いえ、していません。大丈夫ですか?" },
+    { sp: "S", en: "No worries at all. Would you like to sit inside or outside?", ja: "全く問題ありません。店内とテラス席、どちらがよろしいですか?" },
+    { sp: "C", en: "Inside would be great.", ja: "中がいいです。" },
+    { sp: "S", en: "Perfect. Right this way, please.", ja: "かしこまりました。こちらへどうぞ。" },
+    { sp: "S", en: "Here are your menus. Can I get you started with some water?", ja: "こちらがメニューです。まずお水をお持ちしましょうか?" },
+    { sp: "C", en: "Yes, please. Tap water is fine.", ja: "はい、お願いします。水道水で大丈夫です。" },
+    { sp: "S", en: "No problem. I'll be right back. Your server will be with you shortly.", ja: "かしこまりました。すぐ戻ります。担当の者がすぐに参ります。" }
+  ]
+},
+{
+  id: "fullybooked",
+  title: "2. 満席・ウェイティング対応",
+  emoji: "⏳",
+  desc: "混雑時の対応。待ち時間の伝え方と、待ってもらう間の気遣い。",
+  tips: [
+    "\"put your name down\" = ウェイティングリストに名前を書く。",
+    "待ち時間は少し多めに言うのがコツ(早く案内できれば好印象)。",
+    "\"I'm afraid...\" は「あいにく〜」と丁寧に悪い知らせを伝える前置き。"
+  ],
+  lines: [
+    { sp: "C", en: "Hi, do you have a table for four?", ja: "こんにちは、4人席はありますか?" },
+    { sp: "S", en: "I'm afraid we're fully booked at the moment. The wait is about 20 to 30 minutes.", ja: "あいにくただいま満席でして、20〜30分ほどお待ちいただくことになります。" },
+    { sp: "C", en: "Hmm, okay. Can we wait?", ja: "うーん、わかりました。待てますか?" },
+    { sp: "S", en: "Of course! Can I put your name down? What name should I put it under?", ja: "もちろんです!ウェイティングリストにお名前を書いてもよろしいですか?どちら様のお名前で承りましょう?" },
+    { sp: "C", en: "It's under Sarah. S-A-R-A-H.", ja: "サラでお願いします。S-A-R-A-Hです。" },
+    { sp: "S", en: "Got it, Sarah. Feel free to grab a drink at the bar while you wait, and we'll call you when your table's ready.", ja: "承りました、サラ様。お待ちの間、バーでお飲み物をどうぞ。お席の準備ができましたらお呼びします。" },
+    { sp: "S", en: "Sarah, party of four? Your table is ready. Sorry to keep you waiting!", ja: "サラ様、4名様?お席のご用意ができました。お待たせして申し訳ありません!" },
+    { sp: "C", en: "Great, thank you!", ja: "よかった、ありがとう!" }
+  ]
+},
+{
+  id: "drinks",
+  title: "3. ドリンク注文",
+  emoji: "🍺",
+  desc: "最初のドリンクオーダー。ビールの種類やワインの聞かれ方に慣れよう。",
+  tips: [
+    "\"on tap\" = 生ビール(樽から注ぐ)。\"a pint / a schooner\" はグラスサイズ(豪ではschooner=中グラスが一般的)。",
+    "\"house red / house white\" = お店の定番ハウスワイン。",
+    "注文を受けたら \"Great choice!\" \"Coming right up!\" と一言添えると好印象。"
+  ],
+  lines: [
+    { sp: "S", en: "Can I get you something to drink to start?", ja: "まずお飲み物はいかがですか?" },
+    { sp: "C", en: "What do you have on tap?", ja: "生ビールは何がありますか?" },
+    { sp: "S", en: "We've got Carlton Draught, Great Northern, and a local pale ale.", ja: "カールトン・ドラフト、グレート・ノーザン、それから地元のペールエールがございます。" },
+    { sp: "C", en: "I'll take a schooner of the pale ale, please.", ja: "ペールエールをスクーナー(中グラス)でお願いします。" },
+    { sp: "S", en: "Sure thing. And for you?", ja: "かしこまりました。そちらのお客様は?" },
+    { sp: "C", en: "Just a glass of house red, please.", ja: "ハウスワインの赤をグラスでお願いします。" },
+    { sp: "S", en: "Great choice. I'll be right back with your drinks.", ja: "素敵なチョイスです。すぐにお持ちします。" },
+    { sp: "S", en: "Here's your pale ale, and the house red for you. Are you ready to order, or do you need a few more minutes?", ja: "ペールエールと、赤ワインをどうぞ。ご注文はお決まりですか?それとももう少しお時間が必要ですか?" },
+    { sp: "C", en: "We need a few more minutes, sorry.", ja: "もう少し時間をください、すみません。" },
+    { sp: "S", en: "No worries, take your time. I'll come back in a bit.", ja: "大丈夫ですよ、ごゆっくりどうぞ。また少ししたら伺います。" }
+  ]
+},
+{
+  id: "menu",
+  title: "4. メニュー説明・おすすめ",
+  emoji: "📋",
+  desc: "「おすすめは?」「違いは?」に答える場面。アレルギー対応も超重要。",
+  tips: [
+    "sirloin(サーロイン)は赤身寄り、ribeye(リブアイ)はサシが多くジューシー。この説明は鉄板。",
+    "アレルギーの質問は絶対に適当に答えない。\"Let me check with the kitchen.\" が正解。",
+    "\"It comes with ~\" = 「〜が付いてきます」。付け合わせの説明で毎日使う。"
+  ],
+  lines: [
+    { sp: "C", en: "Excuse me, what do you recommend?", ja: "すみません、おすすめは何ですか?" },
+    { sp: "S", en: "Our most popular dish is the 300-gram ribeye. It's really juicy and full of flavour.", ja: "一番人気は300グラムのリブアイです。とてもジューシーで味わい深いですよ。" },
+    { sp: "C", en: "What's the difference between the sirloin and the ribeye?", ja: "サーロインとリブアイの違いは何ですか?" },
+    { sp: "S", en: "The sirloin is leaner, while the ribeye has more marbling, so it's richer and more tender.", ja: "サーロインは赤身が多めで、リブアイはサシが多いので、より濃厚で柔らかいです。" },
+    { sp: "C", en: "Does it come with any sides?", ja: "付け合わせは付いてきますか?" },
+    { sp: "S", en: "Yes, all our steaks come with your choice of chips or mash, and salad or seasonal veggies.", ja: "はい、ステーキには全てポテト(チップスかマッシュ)と、サラダか季節の野菜をお選びいただけます。" },
+    { sp: "C", en: "Do you have anything vegetarian?", ja: "ベジタリアン向けのものはありますか?" },
+    { sp: "S", en: "Of course! We have a grilled vegetable stack and a mushroom risotto. Both are really popular.", ja: "もちろんです!グリル野菜のスタックとマッシュルームのリゾットがあります。どちらも人気です。" },
+    { sp: "C", en: "I'm allergic to nuts. Is the salad okay for me?", ja: "ナッツアレルギーがあるのですが、サラダは大丈夫ですか?" },
+    { sp: "S", en: "Thanks for letting me know. Let me double-check with the kitchen to be safe. I'll be right back.", ja: "教えていただきありがとうございます。念のため厨房に確認してまいります。すぐ戻ります。" },
+    { sp: "S", en: "Good news — the salad is nut-free, and the kitchen will make sure there's no cross-contamination.", ja: "大丈夫でした。サラダにナッツは入っておらず、厨房でも混入がないよう気をつけます。" },
+    { sp: "C", en: "Perfect, thank you so much.", ja: "よかった、本当にありがとう。" }
+  ]
+},
+{
+  id: "order",
+  title: "5. 注文を取る・焼き加減",
+  emoji: "🔥",
+  desc: "ステーキ屋の核心。焼き加減・サイド・ソースの確認、そして復唱まで。",
+  tips: [
+    "焼き加減の質問は \"How would you like your steak (cooked)?\" 一択。丸暗記しよう。",
+    "焼き加減:rare → medium rare → medium → medium well → well done。",
+    "最後に注文を復唱(repeat back)するとミスが激減し、信頼される。\"So that's...\" で始める。"
+  ],
+  lines: [
+    { sp: "S", en: "Are you ready to order?", ja: "ご注文はお決まりですか?" },
+    { sp: "C", en: "Yes, I'll have the 300-gram ribeye, please.", ja: "はい、300グラムのリブアイをお願いします。" },
+    { sp: "S", en: "Great. How would you like your steak cooked?", ja: "かしこまりました。焼き加減はいかがなさいますか?" },
+    { sp: "C", en: "Medium rare, please.", ja: "ミディアムレアでお願いします。" },
+    { sp: "S", en: "And would you like chips or mash for your side?", ja: "付け合わせはチップスとマッシュポテト、どちらになさいますか?" },
+    { sp: "C", en: "Chips, please. And the salad.", ja: "チップスで。あとサラダをお願いします。" },
+    { sp: "S", en: "Would you like any sauce with that? We have mushroom, pepper, and garlic butter.", ja: "ソースはいかがですか?マッシュルーム、ペッパー、ガーリックバターがございます。" },
+    { sp: "C", en: "Pepper sauce, please.", ja: "ペッパーソースをお願いします。" },
+    { sp: "S", en: "Perfect. And for you, madam?", ja: "かしこまりました。お客様はいかがなさいますか?" },
+    { sp: "C", en: "Can I get the chicken schnitzel with mash?", ja: "チキンシュニッツェルをマッシュポテトでもらえますか?" },
+    { sp: "S", en: "Absolutely. Anything else for you guys?", ja: "もちろんです。他にご注文はございますか?" },
+    { sp: "C", en: "That's all for now, thanks.", ja: "今のところそれで全部です、ありがとう。" },
+    { sp: "S", en: "So that's one ribeye, medium rare, with chips, salad and pepper sauce, and one chicken schnitzel with mash. I'll get that started for you!", ja: "ご注文を確認します。リブアイのミディアムレア、チップスとサラダ、ペッパーソース。それからチキンシュニッツェルのマッシュ添え。すぐにお作りします!" }
+  ]
+},
+{
+  id: "serving",
+  title: "6. 料理の提供",
+  emoji: "🍽️",
+  desc: "料理を運ぶときの声かけ。熱いお皿の注意と「他に何か?」の確認。",
+  tips: [
+    "\"Careful, the plate is hot.\" は毎日100回言うレベルの頻出フレーズ。",
+    "誰の料理か分からないときは \"Who's having the ribeye?\" と聞けばOK。",
+    "置いたら \"Enjoy your meal!\" / \"Enjoy, guys!\" で締める。"
+  ],
+  lines: [
+    { sp: "S", en: "Here we go! Who's having the ribeye?", ja: "お待たせしました!リブアイのお客様はどちらですか?" },
+    { sp: "C", en: "That's me, thank you.", ja: "私です、ありがとう。" },
+    { sp: "S", en: "There you go — one ribeye, medium rare, with pepper sauce. Careful, the plate is hot.", ja: "どうぞ。リブアイのミディアムレア、ペッパーソース添えです。お皿が熱いのでお気をつけください。" },
+    { sp: "S", en: "And the chicken schnitzel for you. Enjoy!", ja: "そしてチキンシュニッツェルはこちらのお客様に。どうぞごゆっくり!" },
+    { sp: "C", en: "Could we get some ketchup, please?", ja: "ケチャップをもらえますか?" },
+    { sp: "S", en: "Of course, I'll bring it right over. Anything else? Extra napkins or cutlery?", ja: "もちろんです、すぐお持ちします。他には?ナプキンやカトラリーの追加はいかがですか?" },
+    { sp: "C", en: "No, that's everything. Thanks!", ja: "いえ、それで全部です。ありがとう!" },
+    { sp: "S", en: "No worries. Enjoy your meal, guys!", ja: "かしこまりました。ごゆっくりお召し上がりください!" }
+  ]
+},
+{
+  id: "checkback",
+  title: "7. 中間チェック・お皿下げ",
+  emoji: "✨",
+  desc: "食事中の「お味はいかがですか?」と、食べ終わったお皿の下げ方。",
+  tips: [
+    "提供の2〜3分後に \"How is everything?\" と聞きに行くのが海外の標準サービス。",
+    "\"Are you still working on that?\" = 「まだ召し上がり中ですか?」お皿を下げる前の定番確認。",
+    "おかわりの促し \"Can I get you another round?\" は売上にも貢献できるフレーズ。"
+  ],
+  lines: [
+    { sp: "S", en: "How is everything so far?", ja: "お味はいかがですか?" },
+    { sp: "C", en: "It's delicious, thank you. The steak is cooked perfectly.", ja: "とても美味しいです。ステーキの焼き加減も完璧。" },
+    { sp: "S", en: "That's great to hear! Can I get you another round of drinks?", ja: "それは良かったです!お飲み物のおかわりはいかがですか?" },
+    { sp: "C", en: "Yes, same again, please.", ja: "はい、同じものをお願いします。" },
+    { sp: "S", en: "Two more, coming right up!", ja: "同じものを2つ、すぐお持ちします!" },
+    { sp: "S", en: "Are you still working on that, or may I take your plate?", ja: "まだ召し上がり中ですか?それともお皿をお下げしてもよろしいですか?" },
+    { sp: "C", en: "I'm all done, thanks. You can take it.", ja: "食べ終わりました、ありがとう。下げてもらって大丈夫です。" },
+    { sp: "S", en: "How was everything?", ja: "お料理はいかがでしたか?" },
+    { sp: "C", en: "Amazing. We really enjoyed it.", ja: "最高でした。とても楽しめました。" },
+    { sp: "S", en: "Wonderful! I'll leave the dessert menu with you, just in case.", ja: "嬉しいです!よろしければデザートメニューを置いていきますね。" }
+  ]
+},
+{
+  id: "dessert",
+  title: "8. デザート・追加注文",
+  emoji: "🍰",
+  desc: "デザートとコーヒーのおすすめ。豪定番の flat white も登場。",
+  tips: [
+    "sticky date pudding と pavlova はオーストラリアの定番デザート。名前を覚えておこう。",
+    "\"to share\" = シェア用。\"Would you like two spoons?\" と聞くと気が利く。",
+    "flat white(フラットホワイト)= 豪・NZ発祥のエスプレッソ+スチームミルク。"
+  ],
+  lines: [
+    { sp: "S", en: "Would you like to see the dessert menu? Or have you had a look already?", ja: "デザートメニューはご覧になりますか?もうご覧いただけましたか?" },
+    { sp: "C", en: "We had a look. What's the sticky date pudding like?", ja: "見ました。スティッキーデートプディングってどんな感じですか?" },
+    { sp: "S", en: "It's a warm sponge cake with dates, served with butterscotch sauce and vanilla ice cream. It's my personal favourite.", ja: "デーツ入りの温かいスポンジケーキで、バタースコッチソースとバニラアイス添えです。私の一番のお気に入りです。" },
+    { sp: "C", en: "Sold! We'll share one, please.", ja: "決まり!ひとつをシェアします。" },
+    { sp: "S", en: "Good choice! Would you like two spoons with that?", ja: "いい選択です!スプーンは2つお付けしましょうか?" },
+    { sp: "C", en: "Yes, please.", ja: "はい、お願いします。" },
+    { sp: "S", en: "Any coffee or tea to go with it?", ja: "ご一緒にコーヒーや紅茶はいかがですか?" },
+    { sp: "C", en: "Two flat whites, please.", ja: "フラットホワイトを2つお願いします。" },
+    { sp: "S", en: "Two flat whites and one sticky date pudding with two spoons. Won't be long!", ja: "フラットホワイト2つと、スティッキーデートプディングをスプーン2本で。少々お待ちください!" }
+  ]
+},
+{
+  id: "complaint",
+  title: "9. クレーム対応",
+  emoji: "😥",
+  desc: "焼き加減ミス・提供遅れへの対応。謝罪→即行動→フォローの流れを体で覚える。",
+  tips: [
+    "謝罪はまず \"I'm so sorry about that.\" 言い訳より先に謝る。",
+    "\"straight away / right away\" = 「すぐに」。行動をセットで伝えると誠意が伝わる。",
+    "自分で解決できないときは \"Let me get my manager for you.\" と上に繋ぐのが正解。"
+  ],
+  lines: [
+    { sp: "C", en: "Excuse me, I ordered my steak medium rare, but this is well done.", ja: "すみません、ミディアムレアで頼んだのに、これウェルダンなんですが。" },
+    { sp: "S", en: "Oh, I'm so sorry about that. Let me take it back to the kitchen and get a new one cooked for you right away.", ja: "大変申し訳ございません。すぐに厨房に下げて、新しいものをお作りします。" },
+    { sp: "C", en: "Thank you. Also, we've been waiting for our drinks for about 20 minutes.", ja: "ありがとう。あと、ドリンクを20分くらい待ってるんですが。" },
+    { sp: "S", en: "I apologise for the wait. I'll chase them up straight away.", ja: "お待たせして申し訳ありません。すぐに確認してまいります。" },
+    { sp: "S", en: "Here are your drinks — again, so sorry about the delay.", ja: "お飲み物をお持ちしました。遅くなり重ねてお詫びいたします。" },
+    { sp: "S", en: "And here's your new steak, medium rare this time. I'm really sorry about the mix-up. The manager has taken the sauce off your bill.", ja: "こちらが新しいステーキ、今度はミディアムレアです。手違い、本当に申し訳ありませんでした。お詫びにソース代はお会計から引かせていただきます。" },
+    { sp: "C", en: "Oh, thank you. That's very kind of you.", ja: "まあ、ありがとう。ご親切に。" },
+    { sp: "S", en: "Is there anything else I can do for you? Please let me know if you need anything at all.", ja: "他に何かできることはございますか?何かあればいつでもお声がけください。" }
+  ]
+},
+{
+  id: "payment",
+  title: "10. お会計",
+  emoji: "💳",
+  desc: "伝票、割り勘、カード払い。海外は「テーブル会計」も「レジ会計」もある。",
+  tips: [
+    "bill(英豪)= check(米)= お勘定。豪では bill が普通。",
+    "\"together or separately?\" = 「ご一緒に?別々に?」割り勘文化なので毎回聞く。",
+    "\"Just tap when you're ready.\" = カードをタッチ決済端末にかざす案内。"
+  ],
+  lines: [
+    { sp: "C", en: "Could we get the bill, please?", ja: "お会計をお願いできますか?" },
+    { sp: "S", en: "Of course, I'll bring it right over.", ja: "かしこまりました、すぐお持ちします。" },
+    { sp: "S", en: "Here you are. Would you like to pay together or separately?", ja: "こちらです。お会計はご一緒ですか?それとも別々になさいますか?" },
+    { sp: "C", en: "Separately, please. Can we just split it evenly?", ja: "別々で。単純に割り勘にできますか?" },
+    { sp: "S", en: "No problem, I can split it fifty-fifty. Will that be cash or card?", ja: "問題ありません、半分ずつに分けられます。お支払いは現金ですか、カードですか?" },
+    { sp: "C", en: "Card for both, please.", ja: "2人ともカードでお願いします。" },
+    { sp: "S", en: "Sure. Just tap when you're ready.", ja: "かしこまりました。準備ができたらカードをかざしてください。" },
+    { sp: "S", en: "That's gone through. And you're next — there you go, all done. Would you like a receipt?", ja: "決済完了しました。次のお客様どうぞ。はい、完了です。レシートはご入用ですか?" },
+    { sp: "C", en: "Yes, please.", ja: "はい、お願いします。" },
+    { sp: "S", en: "Here's your receipt. Thank you so much!", ja: "レシートをどうぞ。ありがとうございました!" }
+  ]
+},
+{
+  id: "farewell",
+  title: "11. お見送り",
+  emoji: "👋",
+  desc: "最後の挨拶。気持ちよく帰ってもらえれば、リピーターとチップに繋がる。",
+  tips: [
+    "\"Have a good one!\" = 「良い一日を!」の超カジュアル定番。時間帯を問わず使える。",
+    "\"Take care!\" \"See you next time!\" などバリエーションを持っておくと自然。",
+    "感想を聞く \"How was everything today?\" は見送りでもう一度使える。"
+  ],
+  lines: [
+    { sp: "S", en: "Thank you so much for coming in! How was everything today?", ja: "ご来店ありがとうございました!今日はいかがでしたか?" },
+    { sp: "C", en: "It was fantastic. We'll definitely come back.", ja: "最高でした。絶対また来ます。" },
+    { sp: "S", en: "That's wonderful to hear! We'd love to see you again.", ja: "そう言っていただけて嬉しいです!またのお越しをお待ちしています。" },
+    { sp: "C", en: "Thanks for everything. Bye!", ja: "いろいろありがとう。さようなら!" },
+    { sp: "S", en: "Have a good one, guys! Take care!", ja: "良い一日を!お気をつけて!" }
+  ]
+},
+{
+  id: "misc",
+  title: "12. よくある質問対応",
+  emoji: "❓",
+  desc: "トイレの場所、Wi-Fi、持ち帰りなど、注文以外で毎日聞かれる質問集。",
+  tips: [
+    "toilet / restroom / bathroom はどれでも通じる(豪では toilet が普通)。",
+    "持ち帰りは豪では \"takeaway\"(米は to-go / doggy bag)。",
+    "聞き取れなかったら \"Sorry, could you say that again?\" と堂々と聞き返してOK。誰も気にしない。"
+  ],
+  lines: [
+    { sp: "C", en: "Excuse me, where's the toilet?", ja: "すみません、トイレはどこですか?" },
+    { sp: "S", en: "It's just down the hallway, past the bar, on your left.", ja: "この通路をまっすぐ行って、バーを過ぎた左側にございます。" },
+    { sp: "C", en: "Do you have Wi-Fi here?", ja: "ここにWi-Fiはありますか?" },
+    { sp: "S", en: "Yes, we do. The network is 'AussieGrill Guest' and the password is on the bottom of the menu.", ja: "はい、ございます。ネットワーク名は「AussieGrill Guest」で、パスワードはメニューの下部に載っています。" },
+    { sp: "C", en: "Could I get this wrapped up to take away?", ja: "これ、持ち帰り用に包んでもらえますか?" },
+    { sp: "S", en: "Of course! I'll get you a takeaway container. Give me one sec.", ja: "もちろんです!持ち帰り容器をお持ちします。少々お待ちください。" },
+    { sp: "C", en: "Is it okay if we move to that table by the window?", ja: "あの窓際の席に移動してもいいですか?" },
+    { sp: "S", en: "Let me just check if it's reserved... Yes, that's fine! Go ahead, I'll bring your drinks over.", ja: "予約が入っていないか確認しますね……大丈夫です!どうぞ、お飲み物はお持ちします。" },
+    { sp: "C", en: "Sorry, do you take Japanese yen?", ja: "すみません、日本円は使えますか?" },
+    { sp: "S", en: "I'm afraid we only accept Australian dollars and card. There's an ATM just across the street, though.", ja: "あいにくオーストラリアドルとカードのみのお取り扱いです。ただ、通りの向かいにATMがございますよ。" }
+  ]
+},
+{
+  id: "aussie-customer",
+  title: "13. オージー英語のお客さん",
+  emoji: "🇦🇺",
+  desc: "ゴールドコーストの常連客はスラング全開。地元のオージーとの実戦会話に慣れよう。",
+  tips: [
+    "\"pot\" はクイーンズランド州のビール小グラス(285ml)。シドニーの \"middy\" と同じもの。QLDでは pot / schooner / pint の3サイズが基本。",
+    "\"lemonade\" はレモネードではなくスプライト系の炭酸!\"tomato sauce\" はケチャップ!この2つは要注意。",
+    "\"Ta\" = Thanks、\"sweet as\" = 最高・OK、\"my shout\" = 私のおごり。返しの \"No dramas\" \"Too easy\" が言えたら一気にローカル感が出る。"
+  ],
+  lines: [
+    { sp: "C", en: "G'day mate! How ya going?", ja: "よう!調子どう?(G'day = 定番のオージー挨拶)" },
+    { sp: "S", en: "Good thanks, how are you going? Table for two?", ja: "元気です、そちらは?2名様ですか?" },
+    { sp: "C", en: "Yeah, we're keen for a feed. Bloody starving!", ja: "ああ、メシが食いたくてさ。めちゃくちゃ腹減った!(keen for a feed = 食事したい)" },
+    { sp: "S", en: "Too easy, right this way!", ja: "お安いご用です、こちらへどうぞ!(Too easy = 楽勝/かしこまりました)" },
+    { sp: "C", en: "Ta. Can we grab a pot of Great Northern and a lemonade to start?", ja: "サンキュ。まずグレート・ノーザンをポットと、レモネード(=スプライト系炭酸)もらえる?" },
+    { sp: "S", en: "One pot and one lemonade, no dramas. Are you ready to order, or still having a squiz at the menu?", ja: "ポット1つとレモネード1つ、かしこまりました。ご注文はお決まりですか?まだメニューをご覧中ですか?(have a squiz = ちょっと見る)" },
+    { sp: "C", en: "What's good here, mate? What do you reckon?", ja: "ここは何がうまいの?どう思う?(reckon = think のオージー版)" },
+    { sp: "S", en: "The ribeye's heaps popular — comes with chips and salad. You can't go wrong with it.", ja: "リブアイがめちゃくちゃ人気です。チップスとサラダ付きで、まず外れません。(heaps = very/とても)" },
+    { sp: "C", en: "Reckon I'll go the ribeye then. Medium rare, and chuck some tomato sauce on the side, hey?", ja: "じゃあリブアイにするわ。ミディアムレアで、ケチャップを横に付けといて。(chuck = put のカジュアル版)" },
+    { sp: "S", en: "No dramas at all. Won't be long!", ja: "全く問題ありません。すぐお持ちします!(No dramas = No worries と同じ)" },
+    { sp: "C", en: "Cheers mate, you're a legend.", ja: "サンキュー、あんた最高だね。(legend = いいヤツ/神対応への褒め言葉)" },
+    { sp: "S", en: "How was the steak?", ja: "ステーキはいかがでしたか?" },
+    { sp: "C", en: "That was heaps good. We're heading down to Surfers this arvo — any decent coffee spots around?", ja: "めちゃくちゃうまかったよ。今日の午後サーファーズ(・パラダイス)に行くんだけど、いいカフェある?(arvo = afternoon)" },
+    { sp: "S", en: "Heaps! There's a great café just down the road — their flat whites are unreal.", ja: "たくさんありますよ!すぐそこに良いカフェがあって、フラットホワイトが絶品です。(unreal = ヤバいくらい良い)" },
+    { sp: "C", en: "Sweet as. It's my shout next time, promise!", ja: "最高。次は俺のおごりね、約束!(shout = おごり)" },
+    { sp: "S", en: "Ha, no worries! Have a good one, guys!", ja: "はは、お気になさらず!良い一日を!" }
+  ]
+}
+];
+
+const PHRASES = [
+  { cat: "🔥 焼き加減(絶対暗記)", items: [
+    { en: "Blue rare", ja: "ほぼ生(表面のみ焼く)" },
+    { en: "Rare", ja: "レア(中は赤く冷たい〜ぬるい)" },
+    { en: "Medium rare", ja: "ミディアムレア(一番人気。中は温かい赤)" },
+    { en: "Medium", ja: "ミディアム(中はピンク)" },
+    { en: "Medium well", ja: "ミディアムウェル(ほんのりピンク)" },
+    { en: "Well done", ja: "ウェルダン(完全に火を通す)" },
+    { en: "How would you like your steak cooked?", ja: "焼き加減はいかがなさいますか?" }
+  ]},
+  { cat: "💪 万能お助けフレーズ", items: [
+    { en: "I'll be right with you.", ja: "すぐに伺います。(忙しいときの神フレーズ)" },
+    { en: "Sorry to keep you waiting.", ja: "お待たせしてすみません。" },
+    { en: "Let me check with the kitchen.", ja: "厨房に確認してまいります。" },
+    { en: "Let me get my manager for you.", ja: "マネージャーを呼んでまいります。" },
+    { en: "No worries. / Not a problem.", ja: "大丈夫ですよ/かしこまりました。" },
+    { en: "Coming right up!", ja: "すぐお持ちします!" },
+    { en: "Is there anything else I can get you?", ja: "他に何かお持ちしましょうか?" }
+  ]},
+  { cat: "👂 聞き返し(遠慮なく使おう)", items: [
+    { en: "Sorry, could you say that again?", ja: "すみません、もう一度言っていただけますか?" },
+    { en: "Sorry, I didn't quite catch that.", ja: "すみません、聞き取れませんでした。" },
+    { en: "Could you speak a little slower, please?", ja: "少しゆっくり話していただけますか?" },
+    { en: "Do you mean the ribeye or the sirloin?", ja: "リブアイとサーロイン、どちらのことですか?(確認の聞き方)" },
+    { en: "Just to confirm, that's two medium rare, right?", ja: "確認ですが、ミディアムレアが2つでよろしいですね?" }
+  ]},
+  { cat: "🤝 同僚・キッチンとの会話", items: [
+    { en: "Table five is ready to order.", ja: "5番テーブル、注文お伺いできます。" },
+    { en: "Can you run this to table three?", ja: "これ、3番テーブルに運んでもらえる?" },
+    { en: "How long on the ribeye for table seven?", ja: "7番テーブルのリブアイ、あとどれくらい?" },
+    { en: "86 the salmon.", ja: "サーモン品切れです。(86 = 品切れの業界用語)" },
+    { en: "Behind you! / Corner!", ja: "後ろ通ります!/ 角曲がります!(衝突防止の掛け声)" },
+    { en: "Can I take my break now?", ja: "今、休憩に入ってもいいですか?" },
+    { en: "I'm on open / close tomorrow.", ja: "明日はオープン/クローズのシフトです。" }
+  ]}
+];
+
+const AUSSIE = [
+  { cat: "🍻 QLDのビールサイズ(ゴールドコースト必修)", note: "州によって呼び方が違うので注意。クイーンズランドではこの呼び方。", items: [
+    { en: "a pot", ja: "小グラス285ml(NSWでは middy と呼ぶ。QLDでは pot)" },
+    { en: "a schooner", ja: "中グラス425ml(一番よく出るサイズ)" },
+    { en: "a pint", ja: "大グラス570ml" },
+    { en: "a jug", ja: "ピッチャー(みんなでシェア用)" },
+    { en: "a stubby / a tinnie", ja: "瓶ビール/缶ビール" },
+    { en: "a slab", ja: "ビール1ケース(24本。ボトルショップで登場)" },
+    { en: "What size would you like — pot, schooner or pint?", ja: "サイズはいかがなさいますか?ポット、スクーナー、パイントがございます。" }
+  ]},
+  { cat: "⚠️ 意味を間違えると事故る「罠」単語", note: "日本やアメリカ英語の感覚と違うもの。オーダーミスの原因No.1。", items: [
+    { en: "entrée", ja: "【前菜】のこと!メインではない(アメリカと逆)。メインは main" },
+    { en: "lemonade", ja: "スプライト系の透明炭酸のこと。レモネードではない" },
+    { en: "tomato sauce", ja: "ケチャップのこと。パスタソースではない" },
+    { en: "chips", ja: "フライドポテトのこと(ポテチも chips。文脈で判断)" },
+    { en: "capsicum", ja: "ピーマン/パプリカ(bell pepper とは言わない)" },
+    { en: "rocket", ja: "ルッコラ(サラダの定番。ロケットではない)" },
+    { en: "prawn", ja: "エビ(shrimp より prawn が普通)" },
+    { en: "beetroot", ja: "ビーツ。豪のハンバーガーには定番で入っている" },
+    { en: "cordial", ja: "希釈用シロップジュース(子供に人気)" },
+    { en: "flat white / long black / short black", ja: "豪コーヒー3兄弟:ミルク入り/アメリカーノ風/エスプレッソ" }
+  ]},
+  { cat: "🗣️ オージーの相槌・返事", note: "お客さんが言ってくるもの&自分が返すと一気にローカルになるもの。", items: [
+    { en: "G'day! / How ya going?", ja: "こんにちは!/調子どう?(=How are you?)" },
+    { en: "Not bad! / Can't complain.", ja: "元気だよ/まあまあだね(How ya going? への返し)" },
+    { en: "No worries. / No dramas. / Too easy.", ja: "OK/問題ないよ/お安いご用(接客の三種の神器)" },
+    { en: "Ta! / Cheers!", ja: "ありがとう(超カジュアル。Taは会計時によく聞く)" },
+    { en: "Good on ya!", ja: "いいね!/えらい!" },
+    { en: "Sweet as. / Sounds good.", ja: "最高/いいね、それで" },
+    { en: "Reckon", ja: "〜だと思う(I reckon = I think。豪で超頻出)" },
+    { en: "Heaps", ja: "とても/たくさん(heaps good = めっちゃいい)" },
+    { en: "Keen", ja: "乗り気(I'm keen! = やりたい!行きたい!)" },
+    { en: "Arvo", ja: "午後(this arvo = 今日の午後。シフトの話でも使う)" },
+    { en: "Fair enough.", ja: "まあそうだね/なるほどね" },
+    { en: "You're a legend!", ja: "あんた最高!(良い接客をすると言ってもらえる)" }
+  ]},
+  { cat: "🥪 食べ物の略語(オージーは何でも略す)", note: "", items: [
+    { en: "brekkie", ja: "朝食(breakfast)" },
+    { en: "cuppa", ja: "一杯のお茶・コーヒー(cup of tea/coffee)" },
+    { en: "avo", ja: "アボカド(avo on toast は豪カフェの国民食)" },
+    { en: "sanga", ja: "サンドイッチ(sandwich)" },
+    { en: "snag", ja: "ソーセージ(BBQの主役)" },
+    { en: "chook", ja: "鶏肉・鶏(chicken)" },
+    { en: "barbie", ja: "バーベキュー(BBQ)" },
+    { en: "bikkie / choccy", ja: "ビスケット/チョコ" },
+    { en: "veggies", ja: "野菜(vegetables)" },
+    { en: "Maccas", ja: "マクドナルド(公式にこう名乗るレベルで定着)" },
+    { en: "bottle-o", ja: "酒屋(bottle shop)" },
+    { en: "goon", ja: "箱入り格安ワイン(バックパッカーの友)" }
+  ]},
+  { cat: "💼 バイト・職場で使う言葉", note: "シフトや休憩の会話はスラングだらけ。知らないと指示が聞き取れない。", items: [
+    { en: "smoko", ja: "休憩(タバコ休憩由来だが、今は普通の休憩のこと)" },
+    { en: "Take your smoko now, mate.", ja: "今、休憩入っていいよ。" },
+    { en: "docket", ja: "注文伝票・レシート(Check the docket! = 伝票確認して!)" },
+    { en: "It's my shout.", ja: "私のおごりだよ(shout = おごること)" },
+    { en: "chuck a sickie", ja: "仮病で休む(良くも悪くも豪の文化)" },
+    { en: "arvo shift", ja: "午後シフト(morning shift / arvo shift / close)" },
+    { en: "penalty rates", ja: "週末・祝日の割増賃金(日曜は時給1.5〜2倍!)" },
+    { en: "super (superannuation)", ja: "退職年金。給料と別に雇用主が積み立てる。帰国時に一部返金申請できる" },
+    { en: "TFN (Tax File Number)", ja: "納税者番号。バイト開始前に必ず取得する" },
+    { en: "RSA (Responsible Service of Alcohol)", ja: "アルコール提供資格。QLDで酒を出す店で働くなら必須の講習・証明書" },
+    { en: "tradie", ja: "職人・現場作業員(常連客に多い。ハイビズ(蛍光ベスト)が目印)" }
+  ]},
+  { cat: "🏖️ ゴールドコースト生活の単語", note: "接客中の雑談でよく出る。QLD限定の単語もあるので注意。", items: [
+    { en: "togs", ja: "水着(QLD限定の言い方!シドニーでは swimmers/cossie)" },
+    { en: "thongs", ja: "ビーチサンダルのこと!(下着ではない。flip-flopsとは言わない)" },
+    { en: "sunnies", ja: "サングラス" },
+    { en: "mozzie", ja: "蚊(mosquito)" },
+    { en: "servo", ja: "ガソリンスタンド(コンビニ的にも使われる)" },
+    { en: "Woolies / Coles", ja: "2大スーパー(Woolworths と Coles)" },
+    { en: "Surfers", ja: "サーファーズ・パラダイスの略。「the Goldie」=ゴールドコースト" },
+    { en: "Schoolies", ja: "11月末〜12月の卒業旅行シーズン。サーファーズが高校卒業生で大混雑=飲食店の繁忙期" },
+    { en: "ute", ja: "ピックアップトラック(tradieの相棒)" },
+    { en: "esky", ja: "クーラーボックス(ビーチとBBQの必需品)" },
+    { en: "It's gonna be a scorcher today!", ja: "今日は猛暑になるぞ!(夏の定番雑談)" },
+    { en: "The surf's pumping today.", ja: "今日は波がいいね(サーフィン雑談の定番)" }
+  ]}
+];
+
+const CAFE_SCENES = [
+{
+  id: "cafe-order",
+  title: "1. カウンター注文",
+  emoji: "☕",
+  desc: "オーストラリアのカフェ接客の基本。\"Have here or takeaway?\" は1日に何百回も言う。",
+  tips: [
+    "サイズは small / regular / large。スタバ式(tall / grande)は通じないので注意。",
+    "\"Have here or takeaway?\" = 店内か持ち帰りか。省略して \"Having here?\" とも。",
+    "カップに名前を書くので \"What's your name?\" もセット。聞き取れなければスペルを聞いてOK。"
+  ],
+  lines: [
+    { sp: "S", en: "Hi there! What can I get for you today?", ja: "いらっしゃいませ!今日は何になさいますか?" },
+    { sp: "C", en: "Can I get a large flat white, please?", ja: "フラットホワイトのラージをお願いします。" },
+    { sp: "S", en: "Sure! Having here or taking away?", ja: "かしこまりました!店内でお召し上がりですか、お持ち帰りですか?" },
+    { sp: "C", en: "Takeaway, please.", ja: "持ち帰りでお願いします。" },
+    { sp: "S", en: "Any sugar with that?", ja: "お砂糖はお入れしますか?" },
+    { sp: "C", en: "One sugar, thanks.", ja: "1つお願いします。" },
+    { sp: "S", en: "And what's your name for the order?", ja: "ご注文のお名前をいただけますか?" },
+    { sp: "C", en: "It's Emma.", ja: "エマです。" },
+    { sp: "S", en: "That's $5.50, Emma. Are you paying by card?", ja: "5ドル50セントです、エマ様。お支払いはカードですか?" },
+    { sp: "C", en: "Yep, I'll just tap.", ja: "はい、タッチで払います。" },
+    { sp: "S", en: "Lovely. We'll call your name when it's ready — won't be long!", ja: "ありがとうございます。できあがったらお名前をお呼びします。すぐできますよ!" }
+  ]
+},
+{
+  id: "cafe-coffee",
+  title: "2. コーヒーの細かい注文",
+  emoji: "🥛",
+  desc: "ミルクの種類・濃さ・温度…豪のコーヒー注文は超細かい。ここが聞き取れれば一人前。",
+  tips: [
+    "ミルクは full cream / skim / soy / almond / oat の5種が定番。オーツミルクは特に人気。",
+    "weak(薄め)/ strong(濃いめ・ダブルショット)/ extra hot(熱め)/ decaf(カフェインレス)。",
+    "babyccino(ベビチーノ)= 子ども用の泡ミルク。豪カフェの定番文化。"
+  ],
+  lines: [
+    { sp: "C", en: "Can I get a regular cappuccino with oat milk?", ja: "カプチーノのレギュラーを、オーツミルクでもらえますか?" },
+    { sp: "S", en: "Oat milk cap, no worries. Anything else?", ja: "オーツミルクのカプチーノですね、かしこまりました。他にはいかがですか?" },
+    { sp: "C", en: "Could you make it extra hot, please?", ja: "熱めで作ってもらえますか?" },
+    { sp: "S", en: "Absolutely — one extra hot oat cap. Anything else?", ja: "もちろんです。熱めのオーツカプチーノですね。他には?" },
+    { sp: "C", en: "A weak latte for my friend — she doesn't like it too strong.", ja: "友達に薄めのラテを。濃いのが苦手なんです。" },
+    { sp: "S", en: "Sure. Would you like that with a half shot or a single shot?", ja: "かしこまりました。ショット半分にしますか?それとも1ショットですか?" },
+    { sp: "C", en: "Half a shot, please. And do you have decaf?", ja: "半分でお願いします。あと、デカフェはありますか?" },
+    { sp: "S", en: "We do! We've got full cream, skim, soy, almond and oat milk as well, if she'd prefer.", ja: "ございます!ミルクも普通・無脂肪・ソイ・アーモンド・オーツからお選びいただけますよ。" },
+    { sp: "C", en: "Perfect. Oh, and a babyccino for the little one.", ja: "完璧。あ、それとちびっ子にベビチーノを。" },
+    { sp: "S", en: "Too easy! One babyccino with marshmallows, coming right up.", ja: "お安いご用です!マシュマロ付きベビチーノ、すぐお作りします。" }
+  ]
+},
+{
+  id: "cafe-food",
+  title: "3. フード・ブレッキー注文",
+  emoji: "🥑",
+  desc: "smashed avo(アボカドトースト)と卵料理はブレッキーの王様。卵の焼き方を聞けるようになろう。",
+  tips: [
+    "卵の調理法:poached(ポーチド)/ fried(目玉焼き)/ scrambled(スクランブル)。\"How would you like your eggs?\" で聞く。",
+    "グルテンフリー(GF)対応の質問は毎日ある。追加料金の伝え方も覚えよう。",
+    "\"Take a table number\" = 番号札を持って席へ。豪カフェの定番システム。"
+  ],
+  lines: [
+    { sp: "C", en: "Are you still serving breakfast?", ja: "朝食メニューはまだやっていますか?" },
+    { sp: "S", en: "We serve brekkie all day! The smashed avo is really popular.", ja: "ブレッキーは終日提供しています!スマッシュドアボカドが大人気ですよ。" },
+    { sp: "C", en: "I'll go the smashed avo then.", ja: "じゃあスマッシュドアボカドにします。" },
+    { sp: "S", en: "Good choice! How would you like your eggs — poached, fried or scrambled?", ja: "いい選択です!卵はいかがなさいますか?ポーチド、目玉焼き、スクランブルからどうぞ。" },
+    { sp: "C", en: "Poached, please. Can I get it on gluten-free bread?", ja: "ポーチドで。グルテンフリーのパンに変えられますか?" },
+    { sp: "S", en: "Of course — gluten-free bread is a dollar extra. Is that alright?", ja: "もちろんです。グルテンフリーのパンはプラス1ドルになりますが、よろしいですか?" },
+    { sp: "C", en: "That's fine.", ja: "大丈夫です。" },
+    { sp: "S", en: "Any extra sides? Bacon, halloumi, or mushrooms?", ja: "サイドの追加はいかがですか?ベーコン、ハルーミチーズ、マッシュルームがございます。" },
+    { sp: "C", en: "Add halloumi, please.", ja: "ハルーミを追加してください。" },
+    { sp: "S", en: "Lovely. Take a table number and we'll bring it out to you!", ja: "かしこまりました。番号札をお持ちになってお席でお待ちください。お持ちします!" }
+  ]
+},
+{
+  id: "cafe-serving",
+  title: "4. 提供・ミス対応",
+  emoji: "🫗",
+  desc: "コーヒーを運ぶ、注文ミスに気づかれる、ラストオーダーを伝える。カフェの午後あるある。",
+  tips: [
+    "提供時は注文名を言いながら確認:\"Two flat whites?\" 相手が頷けばOK。",
+    "作り直しは \"I'll get that remade for you straight away.\" 謝罪+即行動。",
+    "ラストオーダーの案内 \"The kitchen closes at ~\" はクローズ担当の必須フレーズ。"
+  ],
+  lines: [
+    { sp: "S", en: "Two flat whites and a babyccino?", ja: "フラットホワイト2つとベビチーノのお客様?" },
+    { sp: "C", en: "That's us!", ja: "私たちです!" },
+    { sp: "S", en: "There you go. And the smashed avo won't be long. Can I grab you anything else?", ja: "どうぞ。スマッシュドアボカドももうすぐお持ちします。他に何かお持ちしましょうか?" },
+    { sp: "C", en: "Sorry, I ordered oat milk, but I think this is regular milk.", ja: "すみません、オーツミルクで頼んだんですが、これ普通のミルクだと思います。" },
+    { sp: "S", en: "Oh, my apologies! I'll get that remade for you straight away.", ja: "申し訳ございません!すぐに作り直してまいります。" },
+    { sp: "S", en: "Here's your oat flat white — so sorry about that.", ja: "オーツミルクのフラットホワイトです。大変失礼いたしました。" },
+    { sp: "C", en: "No worries at all, thanks so much!", ja: "全然大丈夫ですよ、ありがとう!" },
+    { sp: "S", en: "Just to let you know, the kitchen closes at 2:30, so if you'd like anything else to eat, last orders are in ten minutes.", ja: "お知らせですが、キッチンは2時半で閉まります。お食事の追加はあと10分でラストオーダーです。" },
+    { sp: "C", en: "Good to know. We're all good, thanks!", ja: "教えてくれてありがとう。もう大丈夫です!" }
+  ]
+}
+];
+
+const GYM_SCENES = [
+{
+  id: "gym-tour",
+  title: "1. 見学・入会案内",
+  emoji: "🏋️",
+  desc: "入会検討のお客さんへの館内ツアーと料金説明。ジム受付の一番大事な仕事。",
+  tips: [
+    "\"no lock-in contract\" = 契約縛りなし。豪のジムの売り文句の定番。",
+    "料金は週単位(per week)で言うのが豪流。\"$18 a week\" のように。",
+    "\"access fob\" = 入館用のキータグ。24時間ジムでは必須アイテム。"
+  ],
+  lines: [
+    { sp: "C", en: "Hi, I'm thinking about joining. Could I have a look around?", ja: "こんにちは、入会を考えていて。中を見学できますか?" },
+    { sp: "S", en: "Of course! I'll give you a quick tour. Have you trained at a gym before?", ja: "もちろんです!簡単にご案内しますね。ジムで運動されたことはありますか?" },
+    { sp: "C", en: "Yeah, but not for a while.", ja: "ええ、でもしばらくぶりです。" },
+    { sp: "S", en: "No worries. So this is the cardio area, free weights are over there, and group classes run in the studio at the back.", ja: "大丈夫ですよ。こちらが有酸素エリア、あちらがフリーウェイト、奥のスタジオでグループクラスを行っています。" },
+    { sp: "C", en: "How much is a membership?", ja: "会費はいくらですか?" },
+    { sp: "S", en: "It's $18 a week with no lock-in contract, and that includes all the classes.", ja: "週18ドルで契約の縛りはなし、クラスも全部込みです。" },
+    { sp: "C", en: "Is there a joining fee?", ja: "入会金はありますか?" },
+    { sp: "S", en: "There's normally a $50 sign-up fee, but we've got a promo on — it's free if you join today.", ja: "通常は入会金50ドルですが、今キャンペーン中でして、本日ご入会なら無料です。" },
+    { sp: "C", en: "Nice! What are the opening hours?", ja: "いいですね!営業時間は?" },
+    { sp: "S", en: "We're 24/7 for members — you get your own access fob.", ja: "会員様は24時間365日使えます。専用の入館キーをお渡しします。" }
+  ]
+},
+{
+  id: "gym-signup",
+  title: "2. 入会手続き",
+  emoji: "📝",
+  desc: "名前・連絡先・支払い・健康状態の聞き取り。個人情報を聞くときの丁寧な言い回しを覚える。",
+  tips: [
+    "\"Can I grab your ~?\" = 「〜を教えていただけますか?」grab は豪でとにかく多用される。",
+    "\"direct debit\" = 口座/カードからの自動引き落とし。\"fortnightly\" = 隔週(豪の給料も隔週が主流)。",
+    "怪我や持病の確認(injuries or medical conditions)は安全上必須の質問。"
+  ],
+  lines: [
+    { sp: "S", en: "Let's get you signed up! Can I grab your full name and date of birth?", ja: "では入会手続きをしましょう!フルネームと生年月日を教えていただけますか?" },
+    { sp: "C", en: "It's James Miller, 15th of March, 1998.", ja: "ジェームズ・ミラー、1998年3月15日です。" },
+    { sp: "S", en: "And the best mobile number and email for you?", ja: "連絡のつきやすい携帯番号とメールアドレスは?" },
+    { sp: "C", en: "0412 345 678, and it's james miller at gmail dot com.", ja: "0412 345 678、メールは james miller アット gmail ドットコムです。" },
+    { sp: "S", en: "Perfect. The payments come out fortnightly by direct debit — is that okay?", ja: "ありがとうございます。会費は隔週で自動引き落としになりますが、よろしいですか?" },
+    { sp: "C", en: "Yeah, that's fine.", ja: "はい、大丈夫です。" },
+    { sp: "S", en: "And do you have any injuries or medical conditions we should know about?", ja: "それから、こちらで把握しておくべき怪我や持病はありますか?" },
+    { sp: "C", en: "I hurt my knee last year, but it's all good now.", ja: "去年膝を痛めましたが、今はもう大丈夫です。" },
+    { sp: "S", en: "Good to know — just take it easy on the leg machines to start with. Sign here, please... and here's your access fob. Welcome aboard!", ja: "承知しました。最初は脚のマシンは無理せずに。こちらにサインをお願いします……そしてこちらが入館キーです。ようこそ!" }
+  ]
+},
+{
+  id: "gym-floor",
+  title: "3. フロア対応・マシン説明",
+  emoji: "🦾",
+  desc: "マシンの使い方を教え、フォームを直し、マナーをやんわり注意する。フロアスタッフの日常。",
+  tips: [
+    "\"Pull this pin\" = このピンを抜いて。マシン調整の説明はジェスチャー+簡単な動詞でOK。",
+    "注意は命令形でなく \"Please remember to ~\" \"Just a heads-up\" でやんわりと。",
+    "\"re-rack your weights\" = ウェイトを元に戻す。ジムの二大マナー(拭く・戻す)は頻出。"
+  ],
+  lines: [
+    { sp: "C", en: "Excuse me, how do I adjust this machine?", ja: "すみません、このマシンはどうやって調整するんですか?" },
+    { sp: "S", en: "Sure! Pull this pin to change the seat height, and this one here sets the weight.", ja: "はい!このピンを抜くと座席の高さが変えられて、こちらのピンで重さを設定します。" },
+    { sp: "C", en: "Am I doing this right?", ja: "これ、フォーム合ってますか?" },
+    { sp: "S", en: "Almost! Try keeping your back flat against the pad — that'll protect your lower back.", ja: "おしい!背中をパッドにぴったり付けてみてください。腰を守れますよ。" },
+    { sp: "C", en: "Oh, that feels much better. Thanks!", ja: "ああ、その方がずっといい感じです。ありがとう!" },
+    { sp: "S", en: "No worries. And just a heads-up, we ask everyone to wipe down the equipment after use — the spray bottles are on the wall there.", ja: "どういたしまして。それと一点だけ、使用後は器具を拭いていただくようお願いしています。スプレーは壁にありますので。" },
+    { sp: "C", en: "Oh sorry, my bad!", ja: "あ、すみません、うっかりしてました!" },
+    { sp: "S", en: "All good! And if you could re-rack your weights when you're done, that'd be great.", ja: "大丈夫ですよ!あと、終わったらウェイトを元の場所に戻していただけると助かります。" }
+  ]
+},
+{
+  id: "gym-classes",
+  title: "4. クラス予約・トラブル対応",
+  emoji: "🚴",
+  desc: "クラスの予約、キーの紛失、ゲストパス。受付に来る「ちょっとした用事」を全部さばく。",
+  tips: [
+    "\"You're booked in!\" = 予約完了です!予約系の締めフレーズ。",
+    "\"I'll sort that out now.\" = 今すぐ対応しますね。sort out は豪で超頻出の「解決する」。",
+    "\"waiver\" = 免責同意書。ゲストや体験入会では必ずサインしてもらう。"
+  ],
+  lines: [
+    { sp: "C", en: "Hi, how do I book into a class?", ja: "こんにちは、クラスの予約はどうすればいいですか?" },
+    { sp: "S", en: "You can book through our app, or I can do it right here. Which class are you keen on?", ja: "アプリから予約できますし、ここでもお取りできますよ。どのクラスにご興味がありますか?" },
+    { sp: "C", en: "The 6 a.m. spin class on Wednesday.", ja: "水曜の朝6時のスピンクラスです。" },
+    { sp: "S", en: "Done — you're booked in! Just a heads-up, arrive five minutes early so the instructor can set up your bike.", ja: "はい、予約完了です!ひとつだけ、インストラクターがバイクをセッティングできるよう5分前にお越しくださいね。" },
+    { sp: "C", en: "Will do. Oh, and I've lost my access fob...", ja: "わかりました。あと、入館キーをなくしちゃって……" },
+    { sp: "S", en: "No worries, replacements are $10. I'll sort that out for you now.", ja: "大丈夫ですよ、再発行は10ドルです。今すぐお作りしますね。" },
+    { sp: "C", en: "Thanks. Also, can I bring a friend sometime?", ja: "ありがとう。それと、友達を連れてきてもいいですか?" },
+    { sp: "S", en: "Yep! Members get one free guest pass a month. Just have them fill in a waiver at the front desk when they come in.", ja: "はい!会員様は月1回無料のゲストパスが使えます。お友達がいらしたら、受付で免責同意書にご記入いただくだけです。" }
+  ]
+}
+];
+
+const SWIM_SCENES = [
+{
+  id: "swim-enrol",
+  title: "1. 受付・クラス案内",
+  emoji: "🏊",
+  desc: "子どもの水泳レッスンの入会対応。保護者への説明が中心になる仕事。",
+  tips: [
+    "\"enrol\" = 入会・登録する(米語は enroll)。\"How old is she?\" と年齢確認から始まる。",
+    "togs(水着・QLD語)、goggles(ゴーグル)、swim cap(スイムキャップ)は毎日使う持ち物単語。",
+    "\"compulsory\" = 必須。\"Swim caps are compulsory.\" のように使う。"
+  ],
+  lines: [
+    { sp: "C", en: "Hi, I'd like to enrol my daughter in swimming lessons.", ja: "こんにちは、娘を水泳教室に入れたいのですが。" },
+    { sp: "S", en: "Lovely! How old is she, and has she done lessons before?", ja: "ありがとうございます!お嬢さんはおいくつですか?レッスンの経験はありますか?" },
+    { sp: "C", en: "She's five, and she's a complete beginner.", ja: "5歳で、全くの初心者です。" },
+    { sp: "S", en: "Perfect — we'd start her in our Beginner class. It's a 30-minute lesson once a week.", ja: "でしたら初心者クラスからのスタートですね。週1回、30分のレッスンです。" },
+    { sp: "C", en: "How many kids are in a class?", ja: "1クラス何人くらいですか?" },
+    { sp: "S", en: "A maximum of four per instructor, so she'll get plenty of attention.", ja: "インストラクター1人につき最大4人なので、しっかり目が届きますよ。" },
+    { sp: "C", en: "Great. What does she need to bring?", ja: "いいですね。持ち物は何が必要ですか?" },
+    { sp: "S", en: "Just her togs, a towel, and goggles if she has them. Swim caps are compulsory — we sell them at reception for $5.", ja: "水着とタオル、あればゴーグルだけで大丈夫です。スイムキャップは必須ですが、受付で5ドルで販売しています。" },
+    { sp: "C", en: "Can I watch the lesson?", ja: "レッスンを見学できますか?" },
+    { sp: "S", en: "Of course! There's a parents' viewing area right by the pool.", ja: "もちろんです!プールのすぐ横に保護者用の見学エリアがございます。" }
+  ]
+},
+{
+  id: "swim-poolside",
+  title: "2. レッスン前・怖がる子への対応",
+  emoji: "🩱",
+  desc: "プールサイドの安全ルールと、水を怖がる子への声かけ。優しい英語が一番大事な場面。",
+  tips: [
+    "\"Walking, please — no running!\" プールサイドの合言葉。命令形+please で優しく。",
+    "怖がる子には \"That's okay, sweetie.\" \"You can hold my hand.\" と安心させる言葉を。",
+    "保護者へのフォロー \"That's completely normal.\"(よくあることですよ)は魔法のフレーズ。"
+  ],
+  lines: [
+    { sp: "S", en: "Hi everyone! Remember — walking on the pool deck, please. No running!", ja: "みんな、こんにちは!プールサイドは歩いてね。走っちゃダメだよ!" },
+    { sp: "S", en: "Alright guys, come sit on the edge of the pool and pop your legs in the water.", ja: "さあみんな、プールのふちに座って、足を水に入れてみよう。" },
+    { sp: "C", en: "I'm scared...", ja: "こわい……(子ども)" },
+    { sp: "S", en: "That's okay, sweetie. You can hold my hand. We'll just get our toes wet first, okay?", ja: "大丈夫だよ。先生の手をつかんでいいからね。まずはつま先だけ濡らしてみようか?" },
+    { sp: "C", en: "...Okay.", ja: "……うん。(子ども)" },
+    { sp: "S", en: "There you go! See? The water's nice and warm. High five!", ja: "できたね!ほら、お水あったかいでしょ?ハイタッチ!" },
+    { sp: "S", en: "She might be a bit teary for the first couple of weeks — that's completely normal. It usually settles by week three.", ja: "(保護者へ)最初の2週間くらいは泣いてしまうかもしれませんが、まったく普通のことです。だいたい3週目には落ち着きますよ。" },
+    { sp: "C", en: "Thanks, that's really good to know.", ja: "ありがとうございます、それを聞いて安心しました。(保護者)" }
+  ]
+},
+{
+  id: "swim-lesson",
+  title: "3. レッスン中の声かけ",
+  emoji: "🌊",
+  desc: "キック!バブル!グライド!子どもを乗せる元気な英語。単純だが一生使える表現ばかり。",
+  tips: [
+    "指示は短く単純に:\"Kick, kick, kick!\" \"Face in the water... and blow!\"",
+    "褒め言葉のバリエーション:Beautiful! / Amazing! / Great job! / Well done! を回す。",
+    "例え(like a mermaid / like a rocket)を使うと子どもに伝わりやすい。"
+  ],
+  lines: [
+    { sp: "S", en: "Okay, everyone hold the wall. Show me your best kicking! Kick, kick, kick!", ja: "はい、みんな壁につかまって。一番かっこいいキックを見せて!キック、キック、キック!" },
+    { sp: "S", en: "Beautiful kicking, Lily! Straight legs, like a mermaid!", ja: "リリー、すごくいいキック!足をまっすぐ、人魚みたいにね!" },
+    { sp: "S", en: "Now let's blow bubbles. Face in the water... and blow! Like blowing out birthday candles!", ja: "次はバブルの練習。お顔を水につけて……ふーっ!お誕生日のろうそくを消すみたいに!" },
+    { sp: "C", en: "I did it! Did you see me?", ja: "できたよ!見てた?(子ども)" },
+    { sp: "S", en: "I saw you — that was amazing! Ready for a big one? Push off the wall and glide like a rocket... go!", ja: "見てたよ、すごかった!じゃあ大きいのいくよ?壁を蹴って、ロケットみたいにすーっと……それっ!" },
+    { sp: "C", en: "Can we play a game now?", ja: "もうゲームしていい?(子ども)" },
+    { sp: "S", en: "Three more, then we'll play a game — I promise!", ja: "あと3回やったらゲームしよう。約束!" },
+    { sp: "S", en: "Last one! Whoever swims to me first gets to pick the toy!", ja: "ラスト1回!先生のところまで一番に泳げた子が、おもちゃを選べるよ!" }
+  ]
+},
+{
+  id: "swim-parents",
+  title: "4. 保護者への報告・健康確認",
+  emoji: "👨‍👩‍👧",
+  desc: "レッスン後の進捗報告と、体調・振替の相談対応。信頼される先生になるための会話。",
+  tips: [
+    "\"How did she go?\" = 「どうでしたか?」豪では go を do の意味で使う。",
+    "\"milestone\" = 成長の節目。\"That's a big milestone!\" は保護者が一番喜ぶ言葉。",
+    "\"we'll credit the class\" = 振替(クレジット)対応します。欠席連絡の定番回答。"
+  ],
+  lines: [
+    { sp: "C", en: "How did she go today?", ja: "今日はどうでしたか?(保護者)" },
+    { sp: "S", en: "She did so well! She put her face in the water for the first time — that's a big milestone.", ja: "とても頑張りましたよ!初めて顔を水につけられたんです。大きな一歩です。" },
+    { sp: "C", en: "Oh, that's wonderful! Anything we should practise at home?", ja: "まあ、素晴らしい!家で練習したほうがいいことはありますか?" },
+    { sp: "S", en: "If you can, practise blowing bubbles in the bath. It makes a huge difference.", ja: "できれば、お風呂でバブルの練習をしてみてください。ぐっと上達しますよ。" },
+    { sp: "C", en: "Will do. By the way, she gets ear infections sometimes — is that a problem?", ja: "やってみます。ところで、娘は時々耳の炎症を起こすんですが、大丈夫でしょうか?" },
+    { sp: "S", en: "Thanks for letting me know. I'd recommend ear plugs, and please check with your GP if it flares up.", ja: "教えていただきありがとうございます。耳栓をおすすめします。悪化したらかかりつけ医(GP)にご相談くださいね。" },
+    { sp: "C", en: "We're away on holidays in two weeks. Do we lose that lesson?", ja: "2週間後に旅行で休むんですが、その回は無駄になりますか?" },
+    { sp: "S", en: "Not at all — just let reception know before the day, and we'll credit the class to your account.", ja: "いいえ、大丈夫です。前日までに受付にお知らせいただければ、その回は振替クレジットになります。" }
+  ]
+}
+];
+
+const AIRPORT_SCENES = [
+{
+  id: "airport-checkin",
+  title: "1. チェックインカウンター",
+  emoji: "🛂",
+  desc: "グランドスタッフの基本業務。パスポート確認、手荷物、座席希望までの一連の流れ。",
+  tips: [
+    "\"May I see your passport, please?\" — 確認系は May I ~? で丁寧に。",
+    "\"aisle seat\"(通路側)/ \"window seat\"(窓側)。座席希望はほぼ毎回聞かれる。",
+    "締めの \"Have a great flight!\" まで含めてワンセットで体に入れる。"
+  ],
+  lines: [
+    { sp: "S", en: "Good morning! Where are you flying to today?", ja: "おはようございます!本日はどちらまでのご搭乗ですか?" },
+    { sp: "C", en: "Tokyo, via Sydney.", ja: "シドニー経由で東京までです。" },
+    { sp: "S", en: "Lovely. May I see your passport, please?", ja: "かしこまりました。パスポートを拝見できますか?" },
+    { sp: "C", en: "Here you go.", ja: "どうぞ。" },
+    { sp: "S", en: "Thank you. How many bags are you checking in today?", ja: "ありがとうございます。本日お預けのお荷物はいくつですか?" },
+    { sp: "C", en: "Just this one.", ja: "この1つだけです。" },
+    { sp: "S", en: "Could you place it on the scale, please? ... That's 21 kilos — you're all good.", ja: "計量台にお乗せいただけますか?……21キロですので、問題ございません。" },
+    { sp: "C", en: "Could I get an aisle seat, if possible?", ja: "できれば通路側の席にしてもらえますか?" },
+    { sp: "S", en: "Let me have a look... Yes, I've got 32C, an aisle seat towards the back. Is that alright?", ja: "確認いたしますね……はい、32C、後方の通路側がございます。こちらでよろしいですか?" },
+    { sp: "C", en: "Perfect, thank you.", ja: "完璧です、ありがとう。" },
+    { sp: "S", en: "Here are your boarding passes. Boarding starts at 9:40 at gate 12. Have a great flight!", ja: "搭乗券をどうぞ。ご搭乗は9時40分、12番ゲートからです。良いフライトを!" }
+  ]
+},
+{
+  id: "airport-baggage",
+  title: "2. 超過手荷物・規定の説明",
+  emoji: "🧳",
+  desc: "重量オーバーの伝え方と選択肢の提示。言いにくいことを丁寧に伝える練習。",
+  tips: [
+    "\"I'm afraid ~\" = あいにく〜。悪い知らせはこれで切り出す。",
+    "\"You can either A or B.\" = AかBかお選びいただけます。選択肢の提示はこの型。",
+    "モバイルバッテリー(power bank)は預け荷物NG・機内持ち込みのみ。安全規定の頻出案内。"
+  ],
+  lines: [
+    { sp: "S", en: "I'm afraid your bag is over the limit. It's 27 kilos, and the allowance is 23.", ja: "あいにくお荷物が重量超過です。27キロで、規定は23キロまでとなっております。" },
+    { sp: "C", en: "Oh no. What are my options?", ja: "ええっ。どうすればいいですか?" },
+    { sp: "S", en: "You can either pay the excess baggage fee, which is $75, or move some items into your carry-on.", ja: "超過料金の75ドルをお支払いいただくか、機内持ち込みのお荷物に一部移していただくか、お選びいただけます。" },
+    { sp: "C", en: "I'll move some things. How much can my carry-on weigh?", ja: "荷物を移します。持ち込みは何キロまでですか?" },
+    { sp: "S", en: "Carry-on allowance is 7 kilos. There's a repacking area just behind you.", ja: "機内持ち込みは7キロまでです。すぐ後ろに荷物の詰め替えスペースがございます。" },
+    { sp: "C", en: "Can I put this power bank in the checked bag?", ja: "このモバイルバッテリーは預け荷物に入れてもいいですか?" },
+    { sp: "S", en: "Actually, no — power banks must go in your carry-on. It's a safety regulation.", ja: "いいえ、モバイルバッテリーは必ず機内持ち込みにお願いします。安全規定ですので。" },
+    { sp: "C", en: "Good to know, thanks. How's the weight now?", ja: "知らなかった、ありがとう。今何キロですか?" },
+    { sp: "S", en: "That's 23 on the dot — perfect. Here's your baggage receipt, and you're all set!", ja: "ちょうど23キロです。完璧ですね。お荷物の控えをどうぞ。お手続き完了です!" }
+  ]
+},
+{
+  id: "airport-gate",
+  title: "3. 搭乗ゲート・アナウンス",
+  emoji: "📢",
+  desc: "優先搭乗、グループ搭乗、ファイナルコール。ゲート業務の定型アナウンスを丸ごと覚える。",
+  tips: [
+    "アナウンスは定型文。\"We'd like to invite passengers ~\" の型で優先搭乗を案内。",
+    "\"final call\" = 最終搭乗案内。\"Please proceed to gate ~ immediately.\" とセット。",
+    "早く並びすぎた客には \"You'll be in the next group.\" とやんわり案内。"
+  ],
+  lines: [
+    { sp: "S", en: "Good morning, this is the boarding announcement for flight QF520 to Sydney. We'd like to invite passengers travelling with young children, and anyone requiring assistance, to board first.", ja: "(アナウンス)おはようございます。シドニー行きQF520便の搭乗案内です。小さなお子様連れのお客様、お手伝いが必要なお客様から先にご搭乗いただきます。" },
+    { sp: "S", en: "Now boarding rows 20 to 35. Please have your boarding pass and photo ID ready.", ja: "(アナウンス)ただいま20列から35列のお客様がご搭乗いただけます。搭乗券と写真付き身分証をご用意ください。" },
+    { sp: "C", en: "Sorry, can I board now? I'm in row 15.", ja: "すみません、もう搭乗できますか?15列目なんですが。" },
+    { sp: "S", en: "We're boarding rows 20 to 35 first — you'll be in the next group. It won't be long!", ja: "ただいま20〜35列のお客様をご案内しております。お客様は次のグループになります。もうすぐですよ!" },
+    { sp: "S", en: "This is the final call for passenger Tanaka on flight QF520 to Sydney. Please proceed to gate 12 immediately.", ja: "(アナウンス)シドニー行きQF520便にご搭乗のタナカ様、最終のご案内です。ただちに12番ゲートまでお越しください。" },
+    { sp: "C", en: "That's me! I'm so sorry, I fell asleep at the café!", ja: "私です!すみません、カフェで寝ちゃってました!" },
+    { sp: "S", en: "No worries, you've made it! May I scan your boarding pass? ... You're all good. Enjoy your flight!", ja: "大丈夫です、間に合いましたよ!搭乗券を拝見します……はい、結構です。良いフライトを!" }
+  ]
+},
+{
+  id: "airport-delay",
+  title: "4. 遅延・欠航・乗り継ぎ対応",
+  emoji: "🌧️",
+  desc: "遅延の説明、リブック(振替)、ミールバウチャー。イレギュラー対応こそグランドスタッフの腕の見せどころ。",
+  tips: [
+    "\"delayed by ~ minutes due to ~\" = 〜のため〜分遅延。理由+時間をセットで伝える。",
+    "\"rebook\" = 便を取り直す。\"at no charge\" = 無料で。安心させる一言を添える。",
+    "\"Sorry for the inconvenience.\" = ご不便をおかけして申し訳ありません。定番の締め。"
+  ],
+  lines: [
+    { sp: "C", en: "Excuse me, is the 2 o'clock flight to Melbourne delayed?", ja: "すみません、2時のメルボルン行きは遅れていますか?" },
+    { sp: "S", en: "Yes, I'm sorry — it's been delayed by about 90 minutes due to weather in Melbourne.", ja: "はい、申し訳ございません。メルボルンの天候の影響で、約90分の遅延となっております。" },
+    { sp: "C", en: "I have a connecting flight from Melbourne. Will I make it?", ja: "メルボルンで乗り継ぎがあるんですが、間に合いますか?" },
+    { sp: "S", en: "Let me have a look... Your connection is quite tight. I can rebook you on the 6 p.m. connection at no charge, just to be safe.", ja: "お調べしますね……お乗り継ぎはかなりぎりぎりです。念のため、無料で18時発の便にお振替できますよ。" },
+    { sp: "C", en: "Yes, please do that.", ja: "はい、ぜひお願いします。" },
+    { sp: "S", en: "All done — here's your new itinerary. And here's a $15 meal voucher for the wait. Sorry for the inconvenience.", ja: "お手続き完了です。新しい旅程表をどうぞ。それから、お待ちいただく間のお食事券15ドル分です。ご不便をおかけして申し訳ありません。" },
+    { sp: "C", en: "Thanks. What happens if the flight gets cancelled altogether?", ja: "ありがとう。もし欠航になったらどうなりますか?" },
+    { sp: "S", en: "If it's cancelled, we'll rebook you on the next available flight at no cost, and if you're stuck overnight, we'll arrange accommodation for you.", ja: "欠航の場合は、次に空きのある便へ無料でお振替します。万一宿泊が必要になった場合は、宿泊先もこちらで手配いたします。" }
+  ]
+}
+];
+
+const FLIGHTEXP_SCENES = [
+{
+  id: "flightexp-booking",
+  title: "1. 受付・プラン説明",
+  emoji: "🎟️",
+  desc: "フライトシミュレーター体験施設の受付。パッケージの違いを説明して予約を取る。",
+  tips: [
+    "\"Welcome aboard!\" = ようこそご搭乗を!航空系の施設なら挨拶から世界観を作れる。",
+    "プラン説明は「時間+何ができるか」をセットで:\"With 30 minutes you do one take-off and landing.\"",
+    "\"No experience needed — an instructor talks you through everything.\" は鉄板の安心フレーズ。"
+  ],
+  lines: [
+    { sp: "C", en: "Hi, we'd like to try the flight simulator. What are the options?", ja: "こんにちは、フライトシミュレーターをやってみたいんですが、どんなプランがありますか?" },
+    { sp: "S", en: "Welcome aboard! We have three packages: 30 minutes, 60 minutes, and the 90-minute ultimate experience.", ja: "ようこそご搭乗を!プランは3つ、30分、60分、そして90分のアルティメット体験がございます。" },
+    { sp: "C", en: "What's the difference?", ja: "違いは何ですか?" },
+    { sp: "S", en: "With 30 minutes you do one take-off and landing. The 60-minute flight lets you fly into two different airports, and the 90-minute one adds challenging weather and an engine-failure scenario.", ja: "30分は離陸と着陸を1回ずつ。60分は2つの空港へのフライトができて、90分はさらに悪天候やエンジン故障のシナリオに挑戦できます。" },
+    { sp: "C", en: "We'll do the 60-minute one. Do we need any experience?", ja: "60分にします。経験は必要ですか?" },
+    { sp: "S", en: "Not at all! A qualified instructor sits right next to you the whole time and talks you through everything.", ja: "全く必要ありません!資格を持ったインストラクターがずっと隣に座って、すべて丁寧にご案内します。" },
+    { sp: "C", en: "Can my friend watch?", ja: "友達は見学できますか?" },
+    { sp: "S", en: "Absolutely — there are observer seats at the back of the cockpit, and observers come along for free.", ja: "もちろんです。コックピット後方に見学席があり、見学は無料です。" },
+    { sp: "S", en: "You're booked in for 2 p.m. Please arrive ten minutes early for a short pre-flight briefing, Captain!", ja: "14時でご予約をお取りしました。フライト前の簡単なブリーフィングがあるので、10分前にお越しください、機長!" }
+  ]
+},
+{
+  id: "flightexp-briefing",
+  title: "2. フライト前ブリーフィング",
+  emoji: "🎧",
+  desc: "操縦桿とスラストレバーの説明、緊張しているお客さんへの声かけ。安心させるのが仕事。",
+  tips: [
+    "\"pull back to go up, push forward to go down\" — 操作説明は対比でシンプルに。",
+    "\"You can't break anything, I promise.\" 緊張を解く魔法のフレーズ。",
+    "control column(操縦桿)/ thrust levers(スラストレバー)/ rudder pedals(ラダーペダル)は航空基本単語。"
+  ],
+  lines: [
+    { sp: "S", en: "Welcome! Before we hop in, just a quick briefing. Have you ever flown a plane before?", ja: "ようこそ!乗り込む前に、簡単なブリーフィングです。飛行機を操縦したことはありますか?" },
+    { sp: "C", en: "Never. I'm a bit nervous, actually.", ja: "一度もないです。実はちょっと緊張してます。" },
+    { sp: "S", en: "That's completely normal! By the end of today, you'll be landing a 737 by yourself. Trust me.", ja: "それが普通ですよ!今日が終わる頃には、自分の手で737を着陸させていますから。信じてください。" },
+    { sp: "S", en: "You'll be in the captain's seat, on the left. This is the control column — pull back to go up, push forward to go down.", ja: "お客様は左側、機長席に座ります。これが操縦桿。手前に引くと機首が上がり、前に押すと下がります。" },
+    { sp: "S", en: "And these are the thrust levers — they control the engine power.", ja: "そしてこちらがスラストレバー。エンジンの出力をコントロールします。" },
+    { sp: "C", en: "What if I make a mistake?", ja: "もし操作を間違えたら?" },
+    { sp: "S", en: "You can't break anything, I promise! I can take over at any time, so just relax and enjoy the flight.", ja: "何も壊れませんから、ご安心を!私がいつでも代われますので、リラックスしてフライトを楽しんでください。" },
+    { sp: "C", en: "Where are we flying today?", ja: "今日はどこを飛ぶんですか?" },
+    { sp: "S", en: "We'll take off from Gold Coast Airport first — and after that, anywhere in the world you like!", ja: "まずはゴールドコースト空港から離陸します。その後は、世界中どこでもお好きな場所へ!" }
+  ]
+},
+{
+  id: "flightexp-flight",
+  title: "3. フライト中のインストラクション",
+  emoji: "🛩️",
+  desc: "離陸から着陸まで、隣で誘導する実況。褒めながら導く英語の連続。",
+  tips: [
+    "\"rotate!\" = 機首上げ(離陸の掛け声)。\"touchdown\" = 接地。航空用語がそのまま接客英語になる。",
+    "\"ease ~ back a touch\" = 〜を少しだけ戻す。a touch / a little / gently で細かい調整を伝える。",
+    "不安がる客には \"You're all good.\"(大丈夫ですよ)で即座に安心させる。"
+  ],
+  lines: [
+    { sp: "S", en: "Okay Captain, line up on the runway. When you're ready, push the thrust levers forward nice and slowly.", ja: "さあ機長、滑走路に正対してください。準備ができたら、スラストレバーをゆっくり前へ。" },
+    { sp: "C", en: "Like this?", ja: "こんな感じですか?" },
+    { sp: "S", en: "Perfect. Keep it on the centreline with your feet... speed's alive... and rotate! Pull back gently... beautiful take-off!", ja: "完璧です。足元のペダルで中心線をキープして……速度上昇……ローテート!ゆっくり引いて……素晴らしい離陸です!" },
+    { sp: "C", en: "Wow, this feels so real!", ja: "うわあ、本物みたいだ!" },
+    { sp: "S", en: "Doesn't it? Now, gentle turn to the left. Don't bank too steeply... nicely done.", ja: "でしょう?では、ゆっくり左旋回です。傾けすぎないで……お見事。" },
+    { sp: "S", en: "Alright, time to land. Line up with the runway and follow the lights — they'll keep you on the right path.", ja: "さて、着陸の時間です。滑走路に正対して、誘導灯に従ってください。正しい進入角を保てますよ。" },
+    { sp: "C", en: "I think I'm coming in too fast!", ja: "スピードが出すぎてる気がします!" },
+    { sp: "S", en: "You're all good — ease the power back a touch... a little nose up... and... touchdown! Great landing, Captain!", ja: "大丈夫です。パワーをほんの少し戻して……機首を少し上げて……接地!ナイスランディングです、機長!" }
+  ]
+},
+{
+  id: "flightexp-after",
+  title: "4. 体験後・記念品・アップセル",
+  emoji: "📸",
+  desc: "フライト証明書、写真販売、ギフト券。体験の余韻のまま次につなげる接客。",
+  tips: [
+    "\"Congratulations, Captain!\" 体験系接客は最後まで「機長」と呼んで世界観をキープ。",
+    "アップセルは押し売りせず \"it's included free if you ~\" とお得情報として伝える。",
+    "\"gift voucher\" = ギフト券。父の日・誕生日需要の定番トーク。"
+  ],
+  lines: [
+    { sp: "S", en: "Congratulations, Captain! How was your flight?", ja: "おめでとうございます、機長!フライトはいかがでしたか?" },
+    { sp: "C", en: "That was incredible. I want to do it again!", ja: "最高でした。もう一回やりたい!" },
+    { sp: "S", en: "You did really well — especially that landing. Here's your flight certificate with your name on it.", ja: "本当にお上手でした。特にあの着陸は見事です。お名前入りのフライト証明書をどうぞ。" },
+    { sp: "C", en: "Oh, awesome! Can we buy the photos too?", ja: "うわ、嬉しい!写真も買えますか?" },
+    { sp: "S", en: "Yes! The photo package is $25 — or it's included free if you book another flight today.", ja: "はい!フォトパッケージは25ドルです。本日もう1フライトご予約いただくと、無料でお付けします。" },
+    { sp: "C", en: "Tempting! Do you do gift vouchers, by the way?", ja: "それは悩ましい!ところで、ギフト券はありますか?" },
+    { sp: "S", en: "We do — they're really popular for birthdays and Father's Day.", ja: "ございますよ。お誕生日や父の日のプレゼントにとても人気です。" },
+    { sp: "C", en: "I'll grab one for my dad, then. He's always wanted to fly.", ja: "じゃあ父に1枚買っていきます。ずっと飛行機を操縦してみたがってたので。" },
+    { sp: "S", en: "He'll absolutely love it. And if you leave us a review, you'll get 10% off your next flight. See you in the skies again soon!", ja: "きっと大喜びされますよ。それから、レビューを書いていただくと次回フライトが10%オフになります。またの空でお会いしましょう!" }
+  ]
+}
+];
+
+const INTERVIEW_SCENES = [
+{
+  id: "interview-intro",
+  title: "1. 自己紹介30秒",
+  emoji: "🎬",
+  desc: "面接の最初の関門 \"Tell me about yourself.\" 30秒で「名前→ビザと期間→経験→強み」を言い切る。",
+  tips: [
+    "構成は固定: 名前 → ビザ・いつまでいるか → 職歴(インターコンチ) → 強み一言。この順で30秒。",
+    "「2月まで」はネガティブではなく \"I can cover the whole summer peak\"(繁忙期を全部カバーできる)と売りに変える。",
+    "パイロットの話は面接官の記憶に残る最強のフック。聞き返されたら笑顔で答えられるように。"
+  ],
+  lines: [
+    { sp: "C", en: "So, tell me a bit about yourself.", ja: "では、簡単に自己紹介をお願いします。" },
+    { sp: "S", en: "Sure! My name is Kazuki, I'm from Japan, and I'm here on a working holiday until February — so I can cover the whole summer peak, including Christmas and New Year.", ja: "はい!カズキといいます。日本から来ました。2月までワーキングホリデーで滞在するので、クリスマスも年末年始も含めて夏の繁忙期をまるごとカバーできます。" },
+    { sp: "S", en: "Back home, I worked for a year at the InterContinental Yokohama — serving wedding receptions every weekend and working the front desk.", ja: "日本ではインターコンチネンタル横浜で1年働いていました。毎週末の披露宴サービスと、フロント業務です。" },
+    { sp: "S", en: "I'm also a licensed commercial pilot, so I stay calm under pressure and I never miss a shift.", ja: "それから事業用操縦士のライセンスも持っています。なのでプレッシャーに強く、シフトに穴を開けることはありません。" },
+    { sp: "C", en: "A pilot? That's not something we hear every day!", ja: "パイロット?それは珍しいね!" },
+    { sp: "S", en: "Ha, yes — flying taught me to follow procedures and communicate clearly. Honestly, a busy Saturday floor is a kind of flight operation too.", ja: "ええ(笑)。飛行機で、手順を守ることと明確なコミュニケーションを叩き込まれました。正直、土曜の忙しいフロアも一種のフライトオペレーションですよ。" },
+    { sp: "C", en: "Good answer. Let's talk details.", ja: "いい答えだ。じゃあ詳しく聞こうか。" }
+  ]
+},
+{
+  id: "interview-basics",
+  title: "2. 定番質問ラッシュ",
+  emoji: "📋",
+  desc: "店長の確認リスト: いつから?シフトは?ビザは?RSAは?即答できれば合格に大きく近づく。",
+  tips: [
+    "\"When can you start?\" への最強回答は \"Immediately — today if you need me.\"",
+    "ビザの質問には \"subclass 417, full work rights\" + \"Happy to show you my VEVO check.\" まで言えると信頼度が跳ね上がる。",
+    "RSA取得済みになったら \"Yes, I've got my RSA.\" に差し替えて練習しよう。"
+  ],
+  lines: [
+    { sp: "C", en: "When can you start?", ja: "いつから働ける?" },
+    { sp: "S", en: "Immediately — today if you need me.", ja: "すぐにでも。必要なら今日からでも。" },
+    { sp: "C", en: "What's your availability like?", ja: "シフトはどのくらい入れる?" },
+    { sp: "S", en: "Full-time, any shift — evenings, weekends and public holidays are all fine.", ja: "フルタイムでどのシフトでも。夜も週末も祝日も全部大丈夫です。" },
+    { sp: "C", en: "How long are you planning to stay on the Coast?", ja: "ゴールドコーストにはいつまでいる予定?" },
+    { sp: "S", en: "Until February — so I can work right through the busy season.", ja: "2月までです。なので繁忙期はずっと働けます。" },
+    { sp: "C", en: "And you're on a working holiday visa?", ja: "ビザはワーキングホリデー?" },
+    { sp: "S", en: "Yes, subclass 417 with full work rights. Happy to show you my VEVO check.", ja: "はい、サブクラス417でフルタイム就労可能です。VEVOの確認画面もお見せできますよ。" },
+    { sp: "C", en: "Do you have an RSA?", ja: "RSAは持ってる?" },
+    { sp: "S", en: "I'm booked in to finish it this week — I'll have the certificate before my first shift.", ja: "今週中に取得予定です。初シフトまでには証明書をお見せできます。" },
+    { sp: "C", en: "Good. And how are you getting here? Do you drive?", ja: "よし。通勤はどうする?車の運転は?" },
+    { sp: "S", en: "I have my licence and an international driving permit, and I live locally — getting here is no problem at all.", ja: "免許と国際運転免許証を持っていますし、近くに住んでいるので通勤は全く問題ありません。" }
+  ]
+},
+{
+  id: "interview-digging",
+  title: "3. 深掘り質問(強み・弱み・経験)",
+  emoji: "🔍",
+  desc: "\"Why should I hire you?\" \"英語は大丈夫?\" 答えにくい質問こそ、準備した人が勝つ。",
+  tips: [
+    "弱み(英語)は隠さず「確認する習慣」とセットで話すと、むしろ安全な人材に見える。",
+    "経験談は「状況→自分の行動→結果」の3文で。長く話しすぎない。",
+    "\"Why Australia?\" は趣味(水泳・ビーチ)を混ぜると顔を覚えてもらえる。"
+  ],
+  lines: [
+    { sp: "C", en: "Why do you want to work here?", ja: "なぜうちで働きたいの?" },
+    { sp: "S", en: "I love the atmosphere here — busy, friendly, good food. And my banquet experience fits: fast service, high standards, big teams.", ja: "お店の雰囲気が好きなんです。忙しくて、フレンドリーで、料理が美味しい。それに披露宴の経験がそのまま活きます。速いサービス、高い基準、大人数のチームワークです。" },
+    { sp: "C", en: "How's your English? Our floor gets pretty loud.", ja: "英語はどのくらい?うちのフロアはかなり騒がしいよ。" },
+    { sp: "S", en: "Good enough for the floor — I served international guests at the hotel. And if I don't catch something, I always confirm instead of guessing. I'd rather double-check than make a mistake.", ja: "フロアで働くには十分です。ホテルでは外国人のお客様も接客していました。聞き取れなかったときは推測せず必ず確認します。ミスをするより聞き直す方がいいので。" },
+    { sp: "C", en: "Tell me about a time you dealt with a difficult customer.", ja: "難しいお客さんに対応した経験を教えて。" },
+    { sp: "S", en: "At the hotel, a guest was upset because their room wasn't ready. I apologised, stayed calm, offered them a coffee in the lounge and kept them updated. By check-in, they were smiling again.", ja: "ホテルで、部屋の準備が遅れてお客様が苛立っていたことがありました。謝罪して、落ち着いて、ラウンジでコーヒーをお出しし、状況を随時お伝えしました。チェックインの頃には笑顔に戻っていました。" },
+    { sp: "C", en: "What would you say is your weakness?", ja: "自分の弱みは何だと思う?" },
+    { sp: "S", en: "My English isn't perfect yet. But I study every day, and I'm never shy about asking when I'm not sure — so it doesn't cause mistakes on the floor.", ja: "英語がまだ完璧ではないことです。ただ毎日勉強していますし、わからないときは必ず聞くので、フロアでのミスにはつながりません。" },
+    { sp: "C", en: "And why Australia, of all places?", ja: "それにしても、なぜオーストラリアに?" },
+    { sp: "S", en: "I trained as a pilot in the US, and I wanted to live and work in English again. Plus I'm a competitive swimmer — so honestly, the Gold Coast is paradise for me.", ja: "アメリカでパイロット訓練をして、もう一度英語環境で生活して働きたかったんです。それに水泳の選手でもあるので、正直ゴールドコーストは僕にとって楽園です。" }
+  ]
+},
+{
+  id: "interview-questions",
+  title: "4. 逆質問・クロージング",
+  emoji: "🤝",
+  desc: "\"Any questions for us?\" で黙るのはNG。良い逆質問と、トライアルの約束の取り付け方。",
+  tips: [
+    "逆質問は2つ準備: 「忙しい日のチーム体制」と「トライアルはあるか」。やる気が伝わる。",
+    "トライアルに誘われたら即答+服装確認。\"What should I wear?\" はプロっぽい質問。",
+    "最後は名前を呼んで握手。\"Thanks for your time, Dave.\" 名前を覚えて使うと印象が跳ね上がる。"
+  ],
+  lines: [
+    { sp: "C", en: "Do you have any questions for us?", ja: "何か質問はある?" },
+    { sp: "S", en: "Yes — what does a typical Saturday night look like here? How many staff on the floor?", ja: "はい。土曜の夜は普段どんな感じですか?フロアには何人くらい入るんでしょう?" },
+    { sp: "C", en: "Flat out. About two hundred covers, six floor staff. It gets loud.", ja: "てんてこ舞いだよ。200席で、フロアは6人。うるさくなるよ。" },
+    { sp: "S", en: "Sounds like a wedding reception — I'm used to that pace. Would there be a trial shift?", ja: "披露宴みたいですね。そのペースには慣れています。トライアルシフトはありますか?" },
+    { sp: "C", en: "We usually do a paid trial. Could you come in Thursday at five?", ja: "うちは有給トライアルをやってる。木曜の5時に来られる?" },
+    { sp: "S", en: "Absolutely, I'll be there. What should I wear?", ja: "もちろんです、伺います。服装はどうすればいいですか?" },
+    { sp: "C", en: "Black shirt, black pants, closed shoes. We'll sort the rest.", ja: "黒シャツに黒パンツ、つま先の隠れる靴で。あとはこっちで用意するよ。" },
+    { sp: "S", en: "Perfect. Thanks so much for your time, Dave — see you Thursday at five!", ja: "承知しました。お時間ありがとうございました、デイブさん。では木曜5時に!" }
+  ]
+},
+{
+  id: "interview-phone",
+  title: "5. 店からの電話に出る",
+  emoji: "📞",
+  desc: "履歴書を配ると、ある日突然電話が鳴る。聞き取れないときの切り返しまで含めて練習しよう。",
+  tips: [
+    "知らない番号でも明るく \"Hello, Kazuki speaking!\" で出る習慣を(店からかもしれない)。",
+    "聞き取れなかったら \"Sorry, could you say that again?\" を恐れない。1回聞き直すのは全く失礼じゃない。",
+    "電話を切る前に「日時・場所・相手の名前」を必ず復唱。パイロットのリードバックと同じ。"
+  ],
+  lines: [
+    { sp: "C", en: "Hi, is that Kazuki? It's Dave from the Surf Club Bistro — you dropped your resume in on Monday.", ja: "もしもし、カズキさん?サーフクラブ・ビストロのデイブです。月曜に履歴書を置いていってくれたよね。" },
+    { sp: "S", en: "Hi Dave! Yes, that's me. Thanks so much for calling!", ja: "デイブさん、こんにちは!はい、僕です。お電話ありがとうございます!" },
+    { sp: "C", en: "No worries. Listen, are you free for a quick chat Wednesday arvo, say two-ish?", ja: "いえいえ。それでね、水曜の午後、2時ごろにちょっと面接できるかな?" },
+    { sp: "S", en: "Sorry, could you say that again? The line is a bit noisy.", ja: "すみません、もう一度お願いできますか?電波が少し悪くて。" },
+    { sp: "C", en: "Sure — Wednesday afternoon, two o'clock, here at the bistro. Just a casual chat.", ja: "もちろん。水曜の午後2時に、店で。気楽な面談だよ。" },
+    { sp: "S", en: "Wednesday at two at the bistro — perfect, I'll be there. Should I bring anything?", ja: "水曜2時にお店ですね。承知しました、伺います。何か持っていくものはありますか?" },
+    { sp: "C", en: "Just yourself and your visa details. See you then!", ja: "君自身とビザの情報だけでいいよ。じゃあその時に!" },
+    { sp: "S", en: "Will do. Thanks again, Dave — looking forward to it!", ja: "わかりました。ありがとうございます、デイブさん。楽しみにしています!" }
+  ]
+},
+{
+  id: "interview-trial",
+  title: "6. トライアルシフト当日",
+  emoji: "👟",
+  desc: "面接の次はお試し勤務。初日の挨拶、指示の確認、終わり際の一言で採用が決まる。",
+  tips: [
+    "指示は復唱して確認: \"Just to double-check — table five, two pale ales?\" ミスの9割はここで防げる。",
+    "手が空いたら \"What can I do next?\" 積極性はオーストラリアで最も評価される資質。",
+    "終わったら必ず \"What are the next steps?\" と聞く。連絡待ちで終わらせない。"
+  ],
+  lines: [
+    { sp: "S", en: "Hi, I'm Kazuki — I'm here for my trial shift with Dave.", ja: "こんにちは、カズキです。デイブさんとのトライアルシフトで来ました。" },
+    { sp: "C", en: "Ah Kazuki, welcome! I'm Emma, I'll show you around. Ever used this kind of POS before?", ja: "ああカズキ、ようこそ!私はエマ。案内するね。こういうPOSレジは使ったことある?" },
+    { sp: "S", en: "A similar one at the hotel, yes. Could you show me how you do it here? I'll pick it up quickly.", ja: "ホテルで似たものは使っていました。こちらでのやり方を見せてもらえますか?すぐ覚えます。" },
+    { sp: "C", en: "Sure. Righto — can you run these two pale ales to table five?", ja: "いいよ。よし、このペールエール2つをテーブル5に持って行ってくれる?" },
+    { sp: "S", en: "Just to double-check — table five, two pale ales? On my way.", ja: "確認ですが、テーブル5にペールエール2つですね?行ってきます。" },
+    { sp: "C", en: "You've done this before, I can tell. Nice work tonight.", ja: "経験者だね、わかるよ。今夜はいい仕事だった。" },
+    { sp: "S", en: "Thanks, Emma! I really enjoyed it. Is there anything else I can help with before I head off?", ja: "ありがとうございます、エマさん!すごく楽しかったです。上がる前に何か手伝えることはありますか?" },
+    { sp: "C", en: "We're all good. Dave will call you tomorrow.", ja: "もう大丈夫。明日デイブから電話するね。" },
+    { sp: "S", en: "Great — thanks for showing me the ropes today. What are the next steps if it's a yes?", ja: "ありがとうございます、今日は色々教えていただいて。もし採用なら、次はどういう流れになりますか?" },
+    { sp: "C", en: "Paperwork and your first roster. I'd say you're in with a good chance, mate.", ja: "書類手続きと最初のシフト表だね。たぶんいけると思うよ。" }
+  ]
+}
+];
+
+const JOBS = [
+  { id: "steak", name: "ステーキ屋", scenes: STEAK_SCENES },
+  { id: "cafe", name: "カフェ", scenes: CAFE_SCENES },
+  { id: "gym", name: "ジム", scenes: GYM_SCENES },
+  { id: "swim", name: "スイミング", scenes: SWIM_SCENES },
+  { id: "airport", name: "空港", scenes: AIRPORT_SCENES },
+  { id: "flightexp", name: "フライトシミュレーター", scenes: FLIGHTEXP_SCENES },
+  { id: "interview", name: "面接対策", scenes: INTERVIEW_SCENES,
+    youLabel: "YOU", otherLabel: "MANAGER" }
+];
+
+let currentJob = 0;
+let SCENES = JOBS[0].scenes;
+let currentScene = 0;
+let mode = "study";
+let showJa = true;
+let progress = JSON.parse(localStorage.getItem("steakProgress") || "{}");
+let voices = [];
+
+let savedVoiceName = localStorage.getItem("voiceName") || "";
+
+function loadVoices() {
+  voices = speechSynthesis.getVoices();
+  renderVoiceSelect();
+}
+if ("speechSynthesis" in window) {
+  loadVoices();
+  speechSynthesis.onvoiceschanged = loadVoices;
+}
+
+// 高音質(Enhanced/Premium/Siri)の音声を優先してスコア付け
+function voiceScore(v) {
+  let s = 0;
+  const n = v.name.toLowerCase();
+  if (n.includes("siri")) s += 6;
+  if (n.includes("premium") || n.includes("プレミアム")) s += 5;
+  if (n.includes("enhanced") || n.includes("natural") || n.includes("拡張")) s += 4;
+  if (v.lang.startsWith("en-AU")) s += 2;
+  else if (v.lang.startsWith("en-GB") || v.lang.startsWith("en-US")) s += 1;
+  return s;
+}
+
+function englishVoices() {
+  return voices
+    .filter(v => v.lang.toLowerCase().startsWith("en"))
+    .sort((a, b) => voiceScore(b) - voiceScore(a));
+}
+
+function pickVoice() {
+  const list = englishVoices();
+  if (savedVoiceName) {
+    const v = list.find(v => v.name === savedVoiceName);
+    if (v) return v;
+  }
+  return list[0] || null;
+}
+
+function renderVoiceSelect() {
+  const sel = document.getElementById("voice-select");
+  if (!sel) return;
+  const list = englishVoices();
+  if (!list.length) { sel.innerHTML = "<option>英語音声なし</option>"; return; }
+  const current = pickVoice();
+  sel.innerHTML = list.map(v =>
+    `<option value="${esc(v.name)}"${current && v.name === current.name ? " selected" : ""}>🔊 ${esc(v.name)} (${v.lang})</option>`
+  ).join("");
+}
+
+function changeVoice(name) {
+  savedVoiceName = name;
+  localStorage.setItem("voiceName", name);
+  speak("G'day! How are you going today?", false);
+}
+
+function speak(text, isCustomer) {
+  if (!("speechSynthesis" in window)) { alert("このブラウザは音声読み上げに対応していません。"); return; }
+  speechSynthesis.cancel();
+  const u = new SpeechSynthesisUtterance(text);
+  const v = pickVoice();
+  if (v) u.voice = v;
+  u.lang = v ? v.lang : "en-AU";
+  u.rate = 0.92;
+  u.pitch = isCustomer ? 1.1 : 1.0;
+  speechSynthesis.speak(u);
+}
+
+function playAll(sceneIdx) {
+  if (!("speechSynthesis" in window)) return;
+  speechSynthesis.cancel();
+  const lines = SCENES[sceneIdx].lines;
+  let i = 0;
+  function next() {
+    if (i >= lines.length) return;
+    const line = lines[i];
+    const u = new SpeechSynthesisUtterance(line.en);
+    const v = pickVoice();
+    if (v) u.voice = v;
+    u.rate = 0.92;
+    u.pitch = line.sp === "C" ? 1.1 : 1.0;
+    u.onend = () => { i++; setTimeout(next, 500); };
+    // ハイライト
+    document.querySelectorAll(".line").forEach((el, idx) => {
+      el.style.opacity = idx === i ? "1" : "0.45";
+    });
+    speechSynthesis.speak(u);
+  }
+  next();
+}
+
+function stopAll() {
+  speechSynthesis.cancel();
+  document.querySelectorAll(".line").forEach(el => el.style.opacity = "1");
+}
+
+function setMode(m) {
+  mode = m;
+  document.body.classList.toggle("roleplay", m === "roleplay");
+  document.getElementById("mode-study").classList.toggle("active", m === "study");
+  document.getElementById("mode-roleplay").classList.toggle("active", m === "roleplay");
+  renderScene();
+}
+
+function toggleJa() {
+  showJa = !showJa;
+  document.body.classList.toggle("hide-ja", !showJa);
+  const btn = document.getElementById("toggle-ja");
+  btn.textContent = showJa ? "和訳を隠す" : "和訳を表示";
+  btn.classList.toggle("active", showJa);
+}
+
+function toggleComplete(id) {
+  progress[id] = !progress[id];
+  localStorage.setItem("steakProgress", JSON.stringify(progress));
+  renderJobNav();
+  renderNav();
+  renderScene();
+}
+
+function esc(s) { return s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/"/g,"&quot;"); }
+
+function renderNav() {
+  const nav = document.getElementById("nav");
+  let html = "";
+  SCENES.forEach((s, i) => {
+    const cls = [i === currentScene && currentScene < SCENES.length ? "active" : "", progress[s.id] ? "done" : ""].join(" ");
+    html += `<button class="${cls}" onclick="goScene(${i})">${esc(s.title)}</button>`;
+  });
+  html += `<button class="${currentScene === -1 ? "active" : ""}" onclick="goPhrases()">キーフレーズ集</button>`;
+  html += `<button class="${currentScene === -2 ? "active" : ""}" onclick="goAussie()">オージー単語帳</button>`;
+  nav.innerHTML = html;
+}
+
+function renderJobNav() {
+  const nav = document.getElementById("job-nav");
+  nav.innerHTML = JOBS.map((j, i) => {
+    const doneCount = j.scenes.filter(s => progress[s.id]).length;
+    const badge = doneCount > 0 ? ` (${doneCount}/${j.scenes.length})` : "";
+    return `<button class="${i === currentJob ? "active" : ""}" onclick="goJob(${i})">${j.name}${badge}</button>`;
+  }).join("");
+}
+
+function goJob(i) {
+  stopAll();
+  currentJob = i;
+  SCENES = JOBS[i].scenes;
+  currentScene = 0;
+  renderJobNav();
+  renderNav();
+  renderScene();
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+function goScene(i) {
+  stopAll();
+  currentScene = i;
+  renderNav();
+  renderScene();
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+function goPhrases() {
+  stopAll();
+  currentScene = -1;
+  renderNav();
+  renderPhrases();
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+function goAussie() {
+  stopAll();
+  currentScene = -2;
+  renderNav();
+  renderAussie();
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+function renderScene() {
+  if (currentScene === -1) { renderPhrases(); return; }
+  if (currentScene === -2) { renderAussie(); return; }
+  const s = SCENES[currentScene];
+  let html = `
+    <div class="scene-header">
+      <h2>${esc(s.title)}</h2>
+      <p>${esc(s.desc)}</p>
+    </div>
+    <div class="scene-actions">
+      <button onclick="playAll(${currentScene})">通しで再生</button>
+      <button onclick="stopAll()">停止</button>
+    </div>
+  `;
+  const job = JOBS[currentJob];
+  const youLabel = job.youLabel || "YOU";
+  const otherLabel = job.otherLabel || "CUSTOMER";
+  s.lines.forEach((line) => {
+    const isStaff = line.sp === "S";
+    const hiddenCls = (mode === "roleplay" && isStaff) ? "hidden-answer" : "";
+    html += `
+      <div class="line ${isStaff ? "staff" : "customer"}">
+        <div class="who">${isStaff ? youLabel : otherLabel}</div>
+        <div class="bubble ${hiddenCls}" ${hiddenCls ? 'onclick="this.classList.remove(\'hidden-answer\')"' : ""}>
+          <span class="en">${esc(line.en)}</span><button class="play-btn" onclick="event.stopPropagation(); speak(${JSON.stringify(line.en).replace(/"/g, "&quot;")}, ${line.sp === "C"})" title="音声を再生">▶</button>
+          <div class="ja">${esc(line.ja)}</div>
+        </div>
+      </div>`;
+  });
+  html += `
+    <div class="tips">
+      <h3>このシーンのポイント</h3>
+      <ul>${s.tips.map(t => `<li>${esc(t)}</li>`).join("")}</ul>
+    </div>
+    <div class="complete-row">
+      <button class="${progress[s.id] ? "completed" : ""}" onclick="toggleComplete('${s.id}')">
+        ${progress[s.id] ? "✓ マスター済み!" : "このシーンをマスターした"}
+      </button>
+    </div>
+  `;
+  if (currentScene < SCENES.length - 1) {
+    html += `<div class="complete-row" style="margin-top:12px;"><button onclick="goScene(${currentScene + 1})">次のシーンへ →</button></div>`;
+  }
+  document.getElementById("main").innerHTML = html;
+}
+
+function renderPhrases() {
+  let html = `
+    <div class="scene-header">
+      <h2>キーフレーズ集</h2>
+      <p>シーン横断で使う必須表現。スキマ時間にここだけ回すのも効果的。</p>
+    </div>`;
+  PHRASES.forEach(group => {
+    html += `<h3 class="section-title">${esc(group.cat)}</h3><table><tr><th style="width:55%">English</th><th>日本語</th></tr>`;
+    group.items.forEach(item => {
+      html += `<tr><td class="en-cell">${esc(item.en)}<button class="play-btn" onclick="speak(${JSON.stringify(item.en).replace(/"/g, "&quot;")}, false)">▶</button></td><td>${esc(item.ja)}</td></tr>`;
+    });
+    html += `</table>`;
+  });
+  document.getElementById("main").innerHTML = html;
+}
+
+function renderAussie() {
+  let html = `
+    <div class="scene-header">
+      <h2>オージー単語帳(ゴールドコースト仕様)</h2>
+      <p>クイーンズランド州・ゴールドコーストで働くための必修スラング&生活単語。<br>「13. オージー英語のお客さん」のシーンとセットで練習しよう。</p>
+    </div>`;
+  AUSSIE.forEach(group => {
+    html += `<h3 class="section-title">${esc(group.cat)}</h3>`;
+    if (group.note) html += `<p class="section-note">${esc(group.note)}</p>`;
+    html += `<table><tr><th style="width:45%">English</th><th>意味・解説</th></tr>`;
+    group.items.forEach(item => {
+      html += `<tr><td class="en-cell">${esc(item.en)}<button class="play-btn" onclick="speak(${JSON.stringify(item.en).replace(/"/g, "&quot;")}, false)">▶</button></td><td>${esc(item.ja)}</td></tr>`;
+    });
+    html += `</table>`;
+  });
+  document.getElementById("main").innerHTML = html;
+}
+
+renderJobNav();
+renderNav();
+renderScene();
+</script>
+</body>
+</html>
