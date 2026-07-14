@@ -1624,7 +1624,8 @@ function renderAussie() {
 }
 
 /* ===== AIロールプレイ(オージー英語のAI会話練習) ===== */
-const AI_MODEL = "claude-opus-4-8";
+const CHAT_MODEL = "claude-haiku-4-5";      // 会話ターン: 軽量・低コスト
+const FEEDBACK_MODEL = "claude-opus-4-8";   // 総評: 高精度モデルで丁寧に
 const JOB_SETTINGS = {
   steak: "a casual steakhouse restaurant",
   cafe: "a busy specialty cafe",
@@ -1718,7 +1719,7 @@ async function sendChat() {
   renderAIChat();
   try {
     const data = await callClaude({
-      model: AI_MODEL,
+      model: CHAT_MODEL,
       max_tokens: 1024,
       system: aiSystemPrompt(aiChat),
       output_config: {
@@ -1773,7 +1774,7 @@ async function endChat() {
   ).join("\n");
   try {
     const data = await callClaude({
-      model: AI_MODEL,
+      model: FEEDBACK_MODEL,
       max_tokens: 1500,
       system: "You are a supportive English coach for a Japanese working-holiday maker preparing to work on the Gold Coast. You give feedback in Japanese.",
       messages: [{
@@ -1834,7 +1835,7 @@ function renderKeySetup() {
     <div class="scene-actions" style="justify-content:center">
       <button onclick="exitAIChat()">← シーンに戻る</button>
     </div>
-    <p class="section-note" style="text-align:center">料金の目安: 会話1往復あたり1〜3円ほど(自分のクレジットから消費)。</p>`;
+    <p class="section-note" style="text-align:center">料金の目安: 会話1往復あたり0.2〜0.5円、終了時の総評が1回2円ほど(自分のクレジットから消費)。<br>5ドル分で数百回の練習セッションができます。</p>`;
 }
 
 function renderAIChat() {
