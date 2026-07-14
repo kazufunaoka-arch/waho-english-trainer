@@ -1419,7 +1419,7 @@ function changeVoice(name) {
   speak("G'day! How are you going today?", false);
 }
 
-function speak(text, isCustomer) {
+function speak(text, isCustomer, onend) {
   if (!("speechSynthesis" in window)) { alert("このブラウザは音声読み上げに対応していません。"); return; }
   speechSynthesis.cancel();
   const u = new SpeechSynthesisUtterance(text);
@@ -1428,6 +1428,7 @@ function speak(text, isCustomer) {
   u.lang = v ? v.lang : "en-AU";
   u.rate = 0.92;
   u.pitch = isCustomer ? 1.1 : 1.0;
+  if (onend) u.onend = onend;
   speechSynthesis.speak(u);
 }
 
@@ -1651,7 +1652,8 @@ function startAIChat(sceneIdx) {
     messages: [],
     waiting: false,
     error: null,
-    feedback: null
+    feedback: null,
+    handsFree: false
   };
   renderAIChat();
   window.scrollTo({ top: 0, behavior: "smooth" });
@@ -1751,7 +1753,10 @@ async function sendChat() {
     aiChat.messages.push({ role: "assistant", reply: reply, tip: tip });
     aiChat.waiting = false;
     renderAIChat();
-    speak(reply, true);
+    // 連続会話モード: AIの読み上げが終わったら自動でマイクを再開
+    speak(reply, true, () => {
+      if (aiChat && aiChat.handsFree && !aiChat.waiting && !micListening) toggleMic();
+    });
   } catch (e) {
     if (!aiChat) return;
     aiChat.waiting = false;
@@ -1838,9 +1843,17 @@ function renderKeySetup() {
     <p class="section-note" style="text-align:center">料金の目安: 会話1往復あたり0.2〜0.5円、終了時の総評が1回2円ほど(自分のクレジットから消費)。<br>5ドル分で数百回の練習セッションができます。</p>`;
 }
 
+function toggleHandsFree() {
+  if (!aiChat) return;
+  aiChat.handsFree = !aiChat.handsFree;
+  renderAIChat();
+  if (aiChat.handsFree && !micListening && !aiChat.waiting) toggleMic();
+}
+
 function renderAIChat() {
   if (!aiChat) return;
   if (!apiKey) { renderKeySetup(); return; }
+  const hasSR = !!(window.SpeechRecognition || window.webkitSpeechRecognition);
   const firstStaffLine = aiChat.scene.lines.find(l => l.sp === "S");
   let html = `
     <div class="scene-header">
@@ -1850,10 +1863,11 @@ function renderAIChat() {
     <div class="scene-actions">
       <button onclick="exitAIChat()">← シーンに戻る</button>
       <button onclick="endChat()">終了して総評をもらう</button>
+      ${hasSR ? `<button onclick="toggleHandsFree()" style="${aiChat.handsFree ? "background:var(--accent);color:#fff;border-color:var(--accent);" : ""}">🎙️ 連続会話 ${aiChat.handsFree ? "ON" : "OFF"}</button>` : ""}
       <button onclick="changeApiKey()">キーを変更</button>
     </div>`;
   if (!aiChat.messages.length && firstStaffLine) {
-    html += `<p class="ai-hint">まずはあなたから。例: "${esc(firstStaffLine.en)}"</p>`;
+    html += `<p class="ai-hint">まずはあなたから。例: "${esc(firstStaffLine.en)}"${hasSR ? "<br>🎤で話すと自動送信。「🎙️ 連続会話」をONにすると、ボタンに触らず声だけで会話が続きます。" : ""}</p>`;
   }
   aiChat.messages.forEach(m => {
     if (m.role === "user") {
@@ -1870,10 +1884,9 @@ function renderAIChat() {
     html += `<div class="tips"><h3>コーチの総評</h3><div style="white-space:pre-wrap">${esc(aiChat.feedback)}</div></div>
       <div class="complete-row"><button onclick="startAIChat(${aiChat.sceneIdx})">もう一度挑戦する</button></div>`;
   }
-  const hasSR = !!(window.SpeechRecognition || window.webkitSpeechRecognition);
   html += `
     <div class="chat-input-row">
-      ${hasSR ? '<button id="mic-btn" onclick="toggleMic()" title="マイクで英語入力">🎤</button>' : ""}
+      ${hasSR ? '<button id="mic-btn" onclick="toggleMic()" title="マイクで英語入力(話し終わると自動送信)">🎤</button>' : ""}
       <input id="chat-input" type="text" placeholder="英語で入力(日本語で助けを求めてもOK)" autocomplete="off"
         onkeydown="if(event.key==='Enter'){event.preventDefault();sendChat();}" ${aiChat.waiting ? "disabled" : ""}>
       <button onclick="sendChat()" ${aiChat.waiting ? "disabled" : ""}>送信</button>
@@ -1898,7 +1911,10 @@ function toggleMic() {
   micRec.onresult = e => {
     const t = e.results[0][0].transcript;
     const input = document.getElementById("chat-input");
-    if (input) input.value = (input.value ? input.value + " " : "") + t;
+    if (input) {
+      input.value = (input.value ? input.value + " " : "") + t;
+      sendChat(); // 話し終わったら自動送信
+    }
   };
   micRec.onend = () => {
     micListening = false;
