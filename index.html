@@ -204,6 +204,37 @@
   }
   .play-btn:hover { color: var(--accent); }
 
+  /* AIロールプレイ */
+  .chat-input-row { display: flex; gap: 8px; margin: 18px 0; }
+  .chat-input-row input {
+    flex: 1;
+    min-width: 0;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    padding: 10px 12px;
+    font-size: 16px;
+    font-family: inherit;
+    background: var(--card);
+    color: var(--ink);
+  }
+  .chat-input-row input:focus { outline: none; border-color: var(--accent); }
+  .chat-input-row button {
+    border: 1px solid var(--line);
+    background: var(--card);
+    color: var(--ink);
+    border-radius: 6px;
+    padding: 10px 14px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    white-space: nowrap;
+  }
+  .chat-input-row button:hover { border-color: var(--accent); }
+  #mic-btn.listening { background: var(--accent); color: #fff; border-color: var(--accent); animation: mic-pulse 1.2s infinite; }
+  @keyframes mic-pulse { 50% { opacity: 0.55; } }
+  @media (prefers-reduced-motion: reduce) { #mic-btn.listening { animation: none; } }
+  .ai-error { color: #a03535; font-size: 0.85rem; margin: 10px 0; text-align: center; }
+  .ai-hint { text-align: center; color: var(--muted); font-size: 0.85rem; margin: 26px 0; }
+
   /* ロールプレイモード: 自分のセリフを隠す */
   body.roleplay .line.staff .bubble.hidden-answer .en,
   body.roleplay .line.staff .bubble.hidden-answer .ja,
@@ -1511,6 +1542,7 @@ function goAussie() {
 }
 
 function renderScene() {
+  aiChat = null; // AI会話中に他画面へ移動したら会話状態を破棄
   if (currentScene === -1) { renderPhrases(); return; }
   if (currentScene === -2) { renderAussie(); return; }
   const s = SCENES[currentScene];
@@ -1522,6 +1554,7 @@ function renderScene() {
     <div class="scene-actions">
       <button onclick="playAll(${currentScene})">通しで再生</button>
       <button onclick="stopAll()">停止</button>
+      <button onclick="startAIChat(${currentScene})">AIと実戦練習</button>
     </div>
   `;
   const job = JOBS[currentJob];
@@ -1588,6 +1621,291 @@ function renderAussie() {
     html += `</table>`;
   });
   document.getElementById("main").innerHTML = html;
+}
+
+/* ===== AIロールプレイ(オージー英語のAI会話練習) ===== */
+const AI_MODEL = "claude-opus-4-8";
+const JOB_SETTINGS = {
+  steak: "a casual steakhouse restaurant",
+  cafe: "a busy specialty cafe",
+  gym: "a 24/7 gym (the learner works at the front desk and on the gym floor)",
+  swim: "a swim school (the learner is a swimming instructor assistant; the other party may be a parent or a young child)",
+  airport: "an airport (the learner is ground staff at check-in and the boarding gate)",
+  flightexp: "a Boeing 737 flight simulator experience attraction in Surfers Paradise (the learner is front-desk staff and instructor)",
+  interview: "a job interview / trial shift at a hospitality venue (you are the hiring manager or a senior colleague)"
+};
+
+let apiKey = localStorage.getItem("anthropicApiKey") || "";
+let aiChat = null;
+
+function startAIChat(sceneIdx) {
+  stopAll();
+  const job = JOBS[currentJob];
+  aiChat = {
+    scene: SCENES[sceneIdx],
+    sceneIdx: sceneIdx,
+    jobId: job.id,
+    youLabel: job.youLabel || "YOU",
+    otherLabel: job.otherLabel || "CUSTOMER",
+    messages: [],
+    waiting: false,
+    error: null,
+    feedback: null
+  };
+  renderAIChat();
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+function exitAIChat() {
+  aiChat = null;
+  renderScene();
+}
+
+function aiSystemPrompt(chat) {
+  const ref = chat.scene.lines.slice(0, 6)
+    .map(l => `${l.sp === "S" ? "STAFF" : chat.otherLabel}: ${l.en}`).join("\n");
+  return `You are an English conversation partner helping a Japanese working-holiday maker practise workplace English through role-play.
+
+Setting: ${JOB_SETTINGS[chat.jobId] || "a workplace"} on the Gold Coast, Australia.
+Scene: ${chat.scene.title} — ${chat.scene.desc}
+Your role: you play the ${chat.otherLabel === "MANAGER" ? "hiring manager or senior colleague" : "customer (or whoever the staff member serves in this scene)"}. The learner plays the staff member and speaks first.
+
+Guidelines:
+- Speak natural, friendly Australian English (no worries, heaps, arvo, ta, mate...). Keep each reply to 1-2 short, spoken-style sentences.
+- Stay in character and within this scene. React naturally and move the situation forward; occasionally add a realistic twist such as a special request, a follow-up question, or a mild complaint.
+- Match the learner's level: if they struggle, use simpler English and slow the scene down. If they write in Japanese or ask for help, help briefly via the tip (in Japanese) but keep your reply in English and in character.
+- tip: if the learner's last message has a clear error or a much more natural phrasing, give ONE short tip in Japanese (about 60 characters max), e.g. 「★5 wait → Could you wait... の方が丁寧」. If their English was fine, use null.
+
+Reference dialogue for tone (do not copy it verbatim):
+${ref}`;
+}
+
+async function callClaude(body) {
+  const res = await fetch("https://api.anthropic.com/v1/messages", {
+    method: "POST",
+    headers: {
+      "content-type": "application/json",
+      "x-api-key": apiKey,
+      "anthropic-version": "2023-06-01",
+      "anthropic-dangerous-direct-browser-access": "true"
+    },
+    body: JSON.stringify(body)
+  });
+  const data = await res.json().catch(() => ({}));
+  if (!res.ok) {
+    const err = new Error((data.error && data.error.message) || ("HTTP " + res.status));
+    err.status = res.status;
+    throw err;
+  }
+  return data;
+}
+
+function aiErrorMessage(e) {
+  if (e.status === 401) return "APIキーが無効です。「キーを変更」から設定し直してください。";
+  if (e.status === 429) return "リクエストが多すぎます。少し待ってからもう一度どうぞ。";
+  if (e.status >= 500) return "Anthropic側が混み合っています。少し待ってからもう一度どうぞ。";
+  return "エラーが発生しました: " + e.message;
+}
+
+async function sendChat() {
+  if (!aiChat || aiChat.waiting) return;
+  const input = document.getElementById("chat-input");
+  const text = input ? input.value.trim() : "";
+  if (!text) return;
+  aiChat.messages.push({ role: "user", content: text });
+  aiChat.waiting = true;
+  aiChat.error = null;
+  renderAIChat();
+  try {
+    const data = await callClaude({
+      model: AI_MODEL,
+      max_tokens: 1024,
+      system: aiSystemPrompt(aiChat),
+      output_config: {
+        format: {
+          type: "json_schema",
+          schema: {
+            type: "object",
+            properties: {
+              reply: { type: "string", description: "Your next line in English, staying in character. 1-2 short spoken sentences." },
+              tip: { anyOf: [{ type: "string" }, { type: "null" }], description: "One short Japanese tip about the learner's last message, or null if it was fine." }
+            },
+            required: ["reply", "tip"],
+            additionalProperties: false
+          }
+        }
+      },
+      messages: aiChat.messages.map(m =>
+        m.role === "user" ? { role: "user", content: m.content } : { role: "assistant", content: m.reply }
+      )
+    });
+    if (!aiChat) return; // 画面遷移済みなら破棄
+    const block = (data.content || []).find(b => b.type === "text");
+    let reply = "", tip = null;
+    if (block) {
+      try { const p = JSON.parse(block.text); reply = p.reply || ""; tip = p.tip || null; }
+      catch (e) { reply = block.text; }
+    }
+    if (!reply) throw new Error("応答が空でした。もう一度送信してください。");
+    aiChat.messages.push({ role: "assistant", reply: reply, tip: tip });
+    aiChat.waiting = false;
+    renderAIChat();
+    speak(reply, true);
+  } catch (e) {
+    if (!aiChat) return;
+    aiChat.waiting = false;
+    aiChat.error = aiErrorMessage(e);
+    const undone = aiChat.messages.pop(); // 送信失敗分を入力欄に戻す
+    renderAIChat();
+    const inp = document.getElementById("chat-input");
+    if (inp && undone && undone.role === "user") inp.value = undone.content;
+  }
+}
+
+async function endChat() {
+  if (!aiChat || aiChat.waiting) return;
+  if (aiChat.messages.length < 2) { aiChat.error = "まずは何往復か会話してから総評をもらいましょう。"; renderAIChat(); return; }
+  aiChat.waiting = true;
+  aiChat.error = null;
+  renderAIChat();
+  const transcript = aiChat.messages.map(m =>
+    m.role === "user" ? `STAFF(学習者): ${m.content}` : `${aiChat.otherLabel}: ${m.reply}`
+  ).join("\n");
+  try {
+    const data = await callClaude({
+      model: AI_MODEL,
+      max_tokens: 1500,
+      system: "You are a supportive English coach for a Japanese working-holiday maker preparing to work on the Gold Coast. You give feedback in Japanese.",
+      messages: [{
+        role: "user",
+        content: `以下はロールプレイ練習の会話記録です(場面: ${aiChat.scene.title})。学習者(STAFF)の英語について日本語で総評してください。構成: ①良かった点(2〜3個) ②改善点(2〜3個、より自然な言い方の例文付き) ③この場面で丸暗記すべきフレーズ3つ。励ます調子で、簡潔に。\n\n${transcript}`
+      }]
+    });
+    if (!aiChat) return;
+    aiChat.feedback = (data.content || []).filter(b => b.type === "text").map(b => b.text).join("");
+    aiChat.waiting = false;
+    renderAIChat();
+  } catch (e) {
+    if (!aiChat) return;
+    aiChat.waiting = false;
+    aiChat.error = aiErrorMessage(e);
+    renderAIChat();
+  }
+}
+
+function saveApiKey() {
+  const input = document.getElementById("api-key-input");
+  const key = input ? input.value.trim() : "";
+  if (!key || key.indexOf("sk-ant") !== 0) {
+    const el = document.getElementById("key-error");
+    if (el) el.textContent = "キーの形式が正しくないようです(sk-ant-で始まります)。";
+    return;
+  }
+  apiKey = key;
+  localStorage.setItem("anthropicApiKey", key);
+  renderAIChat();
+}
+
+function changeApiKey() {
+  apiKey = "";
+  localStorage.removeItem("anthropicApiKey");
+  renderAIChat();
+}
+
+function renderKeySetup() {
+  document.getElementById("main").innerHTML = `
+    <div class="scene-header">
+      <h2>AIロールプレイの初期設定(初回のみ)</h2>
+      <p>AI会話には、あなた専用のAnthropic APIキーが必要です。キーはこの端末のブラウザにだけ保存され、Anthropic以外に送信されることはありません。</p>
+    </div>
+    <div class="tips">
+      <h3>APIキーの取得手順(5分)</h3>
+      <ul>
+        <li><a href="https://console.anthropic.com/" target="_blank" rel="noopener">console.anthropic.com</a> でアカウントを作成(無料)</li>
+        <li>Billing でクレジットを購入(最低5ドル)</li>
+        <li>API Keys → Create Key でキーを作成し、下に貼り付けて保存</li>
+      </ul>
+    </div>
+    <div class="chat-input-row">
+      <input id="api-key-input" type="password" placeholder="sk-ant-..." autocomplete="off">
+      <button onclick="saveApiKey()">保存</button>
+    </div>
+    <p class="ai-error" id="key-error"></p>
+    <div class="scene-actions" style="justify-content:center">
+      <button onclick="exitAIChat()">← シーンに戻る</button>
+    </div>
+    <p class="section-note" style="text-align:center">料金の目安: 会話1往復あたり1〜3円ほど(自分のクレジットから消費)。</p>`;
+}
+
+function renderAIChat() {
+  if (!aiChat) return;
+  if (!apiKey) { renderKeySetup(); return; }
+  const firstStaffLine = aiChat.scene.lines.find(l => l.sp === "S");
+  let html = `
+    <div class="scene-header">
+      <h2>AIロールプレイ — ${esc(aiChat.scene.title)}</h2>
+      <p>${esc(aiChat.scene.desc)}<br>あなたがスタッフ役。相手役はAIが演じます。英語で話しかけてみよう。</p>
+    </div>
+    <div class="scene-actions">
+      <button onclick="exitAIChat()">← シーンに戻る</button>
+      <button onclick="endChat()">終了して総評をもらう</button>
+      <button onclick="changeApiKey()">キーを変更</button>
+    </div>`;
+  if (!aiChat.messages.length && firstStaffLine) {
+    html += `<p class="ai-hint">まずはあなたから。例: "${esc(firstStaffLine.en)}"</p>`;
+  }
+  aiChat.messages.forEach(m => {
+    if (m.role === "user") {
+      html += `<div class="line staff"><div class="who">${esc(aiChat.youLabel)}(あなた)</div><div class="bubble"><span class="en">${esc(m.content)}</span></div></div>`;
+    } else {
+      html += `<div class="line customer"><div class="who">${esc(aiChat.otherLabel)}(AI)</div><div class="bubble"><span class="en">${esc(m.reply)}</span><button class="play-btn" onclick="speak(${JSON.stringify(m.reply).replace(/"/g, "&quot;")}, true)">▶</button>${m.tip ? `<div class="ja">💡 ${esc(m.tip)}</div>` : ""}</div></div>`;
+    }
+  });
+  if (aiChat.waiting) {
+    html += `<div class="line customer"><div class="who">${esc(aiChat.otherLabel)}(AI)</div><div class="bubble"><span class="en">…</span></div></div>`;
+  }
+  if (aiChat.error) html += `<p class="ai-error">${esc(aiChat.error)}</p>`;
+  if (aiChat.feedback) {
+    html += `<div class="tips"><h3>コーチの総評</h3><div style="white-space:pre-wrap">${esc(aiChat.feedback)}</div></div>
+      <div class="complete-row"><button onclick="startAIChat(${aiChat.sceneIdx})">もう一度挑戦する</button></div>`;
+  }
+  const hasSR = !!(window.SpeechRecognition || window.webkitSpeechRecognition);
+  html += `
+    <div class="chat-input-row">
+      ${hasSR ? '<button id="mic-btn" onclick="toggleMic()" title="マイクで英語入力">🎤</button>' : ""}
+      <input id="chat-input" type="text" placeholder="英語で入力(日本語で助けを求めてもOK)" autocomplete="off"
+        onkeydown="if(event.key==='Enter'){event.preventDefault();sendChat();}" ${aiChat.waiting ? "disabled" : ""}>
+      <button onclick="sendChat()" ${aiChat.waiting ? "disabled" : ""}>送信</button>
+    </div>`;
+  document.getElementById("main").innerHTML = html;
+  const inp = document.getElementById("chat-input");
+  if (inp && !aiChat.waiting) inp.focus();
+  window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
+}
+
+let micRec = null, micListening = false;
+function toggleMic() {
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if (!SR) return;
+  if (micListening && micRec) { micRec.stop(); return; }
+  micRec = new SR();
+  micRec.lang = "en-AU";
+  micRec.interimResults = false;
+  micListening = true;
+  const btn = document.getElementById("mic-btn");
+  if (btn) btn.classList.add("listening");
+  micRec.onresult = e => {
+    const t = e.results[0][0].transcript;
+    const input = document.getElementById("chat-input");
+    if (input) input.value = (input.value ? input.value + " " : "") + t;
+  };
+  micRec.onend = () => {
+    micListening = false;
+    const b = document.getElementById("mic-btn");
+    if (b) b.classList.remove("listening");
+  };
+  micRec.onerror = micRec.onend;
+  micRec.start();
 }
 
 renderJobNav();
