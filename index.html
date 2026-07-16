@@ -1345,9 +1345,311 @@ const INTERVIEW_SCENES = [
 }
 ];
 
+const HOTEL_SCENES = [
+{
+  id: "hotel-briefing",
+  title: "1. 朝のブリーフィング",
+  emoji: "🛏️",
+  otherLabel: "SUPERVISOR",
+  desc: "スーパーバイザーから今日の担当部屋と特記事項を聞き取る。数字の聞き取りと復唱が命。",
+  tips: [
+    "departure(チェックアウト部屋)と stay-over(連泊部屋)は掃除内容が違う。毎朝必ず出てくる二大用語。",
+    "部屋番号・時間などの数字は必ず復唱して確認。「305 after eleven, got it.」のように。",
+    "late checkout(レイトチェックアウト)の部屋は後回し。指示を聞き逃すとクレームに直結する。"
+  ],
+  lines: [
+    { sp: "C", en: "Morning! Here is your worksheet — you have twelve rooms today, eight departures and four stay-overs.", ja: "おはよう!今日のワークシートよ。担当は12部屋、チェックアウトが8部屋、連泊が4部屋ね。(上司)" },
+    { sp: "S", en: "Got it. Twelve rooms, eight departures. Which floor am I on?", ja: "了解です。12部屋、チェックアウト8部屋ですね。担当は何階ですか?" },
+    { sp: "C", en: "Level three, rooms 301 to 312. Room 305 is a late checkout, so leave it until after eleven.", ja: "3階、301から312号室。305はレイトチェックアウトだから、11時以降に回して。" },
+    { sp: "S", en: "No worries — 305 after eleven. Anything else I should know?", ja: "わかりました。305は11時以降ですね。他に知っておくことはありますか?" },
+    { sp: "C", en: "Yes — 310 requested extra towels and a cot for a baby.", ja: "ええ、310号室からタオルの追加と赤ちゃん用ベビーベッドのリクエストが入ってるわ。" },
+    { sp: "S", en: "Extra towels and a baby cot for 310. Where do I find the cots?", ja: "310にタオル追加とベビーベッドですね。ベビーベッドはどこにありますか?" },
+    { sp: "C", en: "In the storeroom next to the service lift. Ask Jo if you cannot find it.", ja: "業務用エレベーター横の倉庫よ。見つからなかったらジョーに聞いて。" },
+    { sp: "S", en: "Thanks! Also, my trolley is running low on shampoo. Can I grab more from the store?", ja: "ありがとうございます!それと、カートのシャンプーが少なくなっています。倉庫から補充していいですか?" },
+    { sp: "C", en: "Of course. Take what you need and note it on the sheet.", ja: "もちろん。必要な分を持って行って、シートに記録しておいてね。" },
+    { sp: "S", en: "Will do. I will get started then!", ja: "そうします。では作業を始めます!" }
+  ]
+},
+{
+  id: "hotel-guest",
+  title: "2. 客室での宿泊客対応",
+  emoji: "🚪",
+  otherLabel: "GUEST",
+  desc: "入室時の声かけと、部屋にいる宿泊客への対応。ハウスキーピングで一番英語を使う瞬間。",
+  tips: [
+    "入室前は「ノック2回+ Housekeeping!」を2セット。返事がなければゆっくり開けるのが世界共通の型。",
+    "客がいたら Would you like your room serviced now, or shall I come back later? が黄金フレーズ。",
+    "DND(Do Not Disturb)サインの部屋は絶対にノックしない。飛ばして後でスーパーバイザーに報告。"
+  ],
+  lines: [
+    { sp: "S", en: "Housekeeping! ... Housekeeping, may I come in?", ja: "ハウスキーピングです!……ハウスキーピングです、入ってもよろしいですか?" },
+    { sp: "C", en: "Oh, hi! We are actually still in the room.", ja: "あら、こんにちは!実はまだ部屋にいるんです。" },
+    { sp: "S", en: "I am so sorry to disturb you. Would you like your room serviced now, or shall I come back later?", ja: "お邪魔して申し訳ありません。今お部屋の清掃をしましょうか?それとも後ほど伺いましょうか?" },
+    { sp: "C", en: "Could you come back in about an hour? We are just heading out.", ja: "1時間後くらいに来てもらえますか?ちょうど出かけるところなので。" },
+    { sp: "S", en: "Of course! I will come back after eleven. Enjoy your day!", ja: "かしこまりました!11時以降にまた伺います。良い一日を!" },
+    { sp: "C", en: "Oh wait — could we get a couple of extra towels?", ja: "あ、待って。タオルを2〜3枚追加でもらえますか?" },
+    { sp: "S", en: "Absolutely. Shall I bring them in now, or leave them at your door?", ja: "もちろんです。今お持ちしますか?それともドアの前に置いておきましょうか?" },
+    { sp: "C", en: "Now would be great, thanks.", ja: "今もらえると助かります、ありがとう。" },
+    { sp: "S", en: "Here you are — two bath towels. Is there anything else you need?", ja: "どうぞ、バスタオル2枚です。他に何か必要なものはございますか?" },
+    { sp: "C", en: "No, that is perfect. Thank you!", ja: "いえ、完璧です。ありがとう!" },
+    { sp: "S", en: "My pleasure. Have a lovely day!", ja: "どういたしまして。素敵な一日を!" }
+  ]
+},
+{
+  id: "hotel-supplies",
+  title: "3. 備品・リネンの補充と報告",
+  emoji: "🧴",
+  otherLabel: "SUPERVISOR",
+  desc: "リネン不足の相談と、設備の不具合報告。「気づいて報告できる人」が現場で信頼される。",
+  tips: [
+    "壊れたものは自分で直さず報告: I would like to report a maintenance issue in 307. が定型。",
+    "リネン用語: fitted sheet(ボックスシーツ)/ flat sheet / pillowcase / doona cover(豪では布団カバー=doona)。",
+    "running low on ~(〜が残り少ない)/ restock(補充する)は倉庫まわりの超頻出表現。"
+  ],
+  lines: [
+    { sp: "S", en: "Hi Sam, quick question — we are out of king-size fitted sheets on level three. Is more linen coming?", ja: "サムさん、ちょっといいですか。3階のキングサイズのボックスシーツが切れています。リネンの補充は来ますか?" },
+    { sp: "C", en: "The linen delivery arrives at midday. Take what is left from level two for now.", ja: "リネンの配達は正午に来るわ。それまでは2階の残りを使って。" },
+    { sp: "S", en: "Okay, I will borrow from level two. Also, I would like to report a maintenance issue in 307.", ja: "わかりました、2階から借ります。それと、307号室の設備の不具合を報告したいのですが。" },
+    { sp: "C", en: "What is the problem?", ja: "どうしたの?" },
+    { sp: "S", en: "The bathroom tap keeps dripping, and one of the bedside lamps is not working.", ja: "バスルームの蛇口から水が垂れ続けていて、ベッドサイドランプが1つ点きません。" },
+    { sp: "C", en: "Good catch. Log it on the app and I will let maintenance know. Anything else?", ja: "よく気づいたわね。アプリに記録しておいて。メンテナンスには私から伝えるから。他には?" },
+    { sp: "S", en: "The vacuum on my trolley is making a strange noise. Can I swap it?", ja: "カートの掃除機が変な音を立てています。交換してもいいですか?" },
+    { sp: "C", en: "There is a spare in the storeroom. Leave the broken one there with a note on it.", ja: "倉庫に予備があるわ。壊れた方はメモを付けて置いておいて。" },
+    { sp: "S", en: "Will do. And we are running low on coffee pods and doona covers.", ja: "そうします。あと、コーヒーポッドと布団カバーが残り少なくなっています。" },
+    { sp: "C", en: "Noted — I will add them to the order. Thanks for flagging it.", ja: "了解、発注リストに追加しておくわ。報告ありがとう。" }
+  ]
+},
+{
+  id: "hotel-lost",
+  title: "4. 忘れ物・トラブル対応",
+  emoji: "⌚",
+  otherLabel: "SUPERVISOR",
+  desc: "忘れ物の処理と、部屋の破損の報告。「掃除前に報告」があなたの身を守る。",
+  tips: [
+    "忘れ物(lost property)は勝手に動かさずまず報告。部屋番号・日付・自分の名前をセットで記録。",
+    "破損は掃除前に報告+写真。It was already like that when I came in.(入った時からこうでした)が身を守る一言。",
+    "貴重品や判断に迷うものは Better safe than sorry.(念には念を)でスーパーバイザーへ直行。"
+  ],
+  lines: [
+    { sp: "S", en: "Sam, I found a phone charger and a watch in 304 — the guest checked out this morning.", ja: "サムさん、304号室で充電器と腕時計を見つけました。今朝チェックアウトしたお部屋です。" },
+    { sp: "C", en: "Okay. Pop them in a lost property bag and write the room number, the date and your name on it.", ja: "わかったわ。忘れ物袋に入れて、部屋番号と日付とあなたの名前を書いておいて。" },
+    { sp: "S", en: "Room 304, today, my name. Where do I hand it in?", ja: "304号室、今日の日付、私の名前ですね。どこに提出しますか?" },
+    { sp: "C", en: "Reception. They will log it in case the guest calls. Was the watch valuable?", ja: "フロントよ。お客様から電話があった時のために記録してくれるわ。時計は高価そうだった?" },
+    { sp: "S", en: "It looks quite expensive, to be honest.", ja: "正直、かなり高そうに見えます。" },
+    { sp: "C", en: "Then bring it straight to me and we will log it together. Better safe than sorry.", ja: "それなら直接私のところへ持ってきて。一緒に記録しましょう。念には念を、よ。" },
+    { sp: "S", en: "Understood. One more thing — there is a stain on the carpet in 309 and a broken glass. It was already like that when I came in.", ja: "わかりました。もう一つ、309号室のカーペットにシミがあって、グラスが割れています。入った時からその状態でした。" },
+    { sp: "C", en: "Thanks for telling me before you cleaned. Take a photo and log it, so the right person is charged — and you are not blamed either.", ja: "掃除する前に言ってくれて助かるわ。写真を撮って記録して。請求先を間違えないためでもあるし、あなたが疑われないためでもあるから。" },
+    { sp: "S", en: "Good idea. I will photograph it now.", ja: "そうですね。今すぐ写真を撮ります。" },
+    { sp: "C", en: "Perfect. You are doing great — keep it up!", ja: "完璧よ。いい仕事してるわ、その調子!" }
+  ]
+}
+];
+
+const THAI_SCENES = [
+{
+  id: "thai-order",
+  title: "1. 注文・辛さの確認",
+  emoji: "🍛",
+  desc: "タイ料理店の看板業務。辛さレベルの確認とライスのおすすめを型で覚える。",
+  tips: [
+    "辛さ確認は How spicy would you like it? — mild / medium / hot / Thai hot の4段階が定番。",
+    "「辛さは後から足せるが引けない」= The chef can always add more heat, but we cannot take it out. は鉄板の説明。",
+    "カレーはライス別売りの店が多い。Would you like jasmine rice with that? を忘れずに。"
+  ],
+  lines: [
+    { sp: "C", en: "Hi! Could we get one pad thai with chicken and one green curry?", ja: "こんにちは!チキンのパッタイ1つとグリーンカレー1つをもらえますか?" },
+    { sp: "S", en: "Sure! How spicy would you like the green curry — mild, medium, hot, or Thai hot?", ja: "かしこまりました!グリーンカレーの辛さはいかがしますか?マイルド、ミディアム、ホット、タイホットがございます。" },
+    { sp: "C", en: "What is Thai hot like?", ja: "タイホットってどんな感じですか?" },
+    { sp: "S", en: "Very spicy! Most customers go with medium. The chef can always add more heat, but we cannot take it out.", ja: "かなり辛いです!ほとんどのお客様はミディアムを選ばれます。辛さは後から足せますが、引くことはできないので。" },
+    { sp: "C", en: "Ha! Medium then, please.", ja: "はは!じゃあミディアムで。" },
+    { sp: "S", en: "Good choice. The green curry does not come with rice — would you like jasmine rice with that?", ja: "いい選択です。グリーンカレーにライスは付いていませんが、ジャスミンライスはいかがですか?" },
+    { sp: "C", en: "Oh yes, two jasmine rice, please.", ja: "あ、はい。ジャスミンライスを2つお願いします。" },
+    { sp: "S", en: "Two jasmine rice. Anything to drink? We have Thai iced tea and fresh coconut juice.", ja: "ジャスミンライス2つですね。お飲み物は?タイアイスティーとフレッシュココナッツジュースがございます。" },
+    { sp: "C", en: "One Thai iced tea, please.", ja: "タイアイスティーを1つください。" },
+    { sp: "S", en: "Lovely. So that is one chicken pad thai, one medium green curry, two jasmine rice and a Thai iced tea. Will not be long!", ja: "ありがとうございます。ご注文はチキンパッタイ、ミディアムのグリーンカレー、ジャスミンライス2つ、タイアイスティーですね。すぐお持ちします!" }
+  ]
+},
+{
+  id: "thai-allergy",
+  title: "2. アレルギー・食材の説明",
+  emoji: "🥜",
+  desc: "タイ料理の二大確認事項=ピーナッツとナンプラー。命に関わるので厨房確認を徹底する。",
+  tips: [
+    "タイ料理の2大アレルゲン: ピーナッツ(パッタイに必ず入る)と fish sauce(ナンプラー。ほぼ全料理に入る)。",
+    "アレルギーと聞いたら即 Let me check with the kitchen. 記憶で答えるのは絶対NG。",
+    "ベジタリアン対応の聞き方: Can the kitchen make it without fish sauce?(ナンプラー抜きで作れますか?)"
+  ],
+  lines: [
+    { sp: "C", en: "Excuse me, does the pad thai contain peanuts?", ja: "すみません、パッタイにピーナッツは入っていますか?" },
+    { sp: "S", en: "Yes, it is topped with crushed peanuts, and the sauce contains peanut too. Do you have an allergy?", ja: "はい、砕いたピーナッツがトッピングされていて、ソースにもピーナッツが入っています。アレルギーをお持ちですか?" },
+    { sp: "C", en: "My daughter is allergic to peanuts, yes.", ja: "ええ、娘がピーナッツアレルギーなんです。" },
+    { sp: "S", en: "Thank you for letting me know. Let me check with the kitchen which dishes are completely peanut-free.", ja: "教えていただきありがとうございます。完全にピーナッツ不使用の料理を厨房に確認してまいります。" },
+    { sp: "S", en: "So the green curry, the basil stir-fry and the tom yum soup are all peanut-free, and the kitchen will use separate utensils for your order.", ja: "グリーンカレー、バジル炒め、トムヤムスープはすべてピーナッツ不使用です。調理器具も別のものを使うと厨房が言っています。" },
+    { sp: "C", en: "That is very reassuring. And is the tom yum vegetarian?", ja: "それは安心です。トムヤムはベジタリアン対応ですか?" },
+    { sp: "S", en: "The standard one uses shrimp, but we can make a vegetarian version with mushrooms and tofu — without fish sauce as well.", ja: "通常はエビを使いますが、マッシュルームと豆腐のベジタリアン版もお作りできます。ナンプラーも抜きで。" },
+    { sp: "C", en: "Perfect. One vegetarian tom yum and one green curry with chicken, then.", ja: "完璧です。じゃあベジタリアンのトムヤム1つと、チキンのグリーンカレー1つで。" },
+    { sp: "S", en: "No worries. I will mark the peanut allergy clearly on the order for the kitchen.", ja: "かしこまりました。ピーナッツアレルギーの旨、厨房への伝票にはっきり書いておきますね。" },
+    { sp: "C", en: "Thank you so much!", ja: "本当にありがとう!" }
+  ]
+},
+{
+  id: "thai-phone",
+  title: "3. 電話注文・テイクアウェイ",
+  emoji: "📞",
+  desc: "英語聞き取りの最難関=電話注文。復唱と定型の締めフレーズで乗り切る。",
+  tips: [
+    "第一声の型: Good evening, (店名), this is Kazu speaking. How can I help you?",
+    "pick-up(店受け取り)か delivery(配達)かの確認が最優先。名前と電話番号は必ず復唱。",
+    "締めの型を丸暗記: All up, that comes to $46.80, and it will be ready in about twenty minutes."
+  ],
+  lines: [
+    { sp: "S", en: "Good evening, Bangkok Garden, this is Kazu speaking. How can I help you?", ja: "こんばんは、バンコクガーデンです。カズが承ります。ご用件をどうぞ。" },
+    { sp: "C", en: "Hi, I would like to place a takeaway order, please.", ja: "こんにちは、テイクアウェイの注文をしたいのですが。" },
+    { sp: "S", en: "Of course! Is that pick-up or delivery?", ja: "かしこまりました!お受け取りは店頭ですか、配達ですか?" },
+    { sp: "C", en: "Pick-up, please.", ja: "店頭受け取りでお願いします。" },
+    { sp: "S", en: "Great. What would you like?", ja: "承知しました。ご注文をどうぞ。" },
+    { sp: "C", en: "Two pad see ew with beef, one massaman curry, and three spring rolls.", ja: "ビーフのパッシーユー2つ、マッサマンカレー1つ、春巻き3本。" },
+    { sp: "S", en: "Two beef pad see ew, one massaman curry, three spring rolls. How spicy for the massaman?", ja: "ビーフのパッシーユー2つ、マッサマンカレー1つ、春巻き3本ですね。マッサマンの辛さはいかがしますか?" },
+    { sp: "C", en: "Mild, please. It is for the kids.", ja: "マイルドで。子ども用なので。" },
+    { sp: "S", en: "No worries, mild it is. Can I grab a name and phone number for the order?", ja: "かしこまりました、マイルドですね。ご注文のお名前とお電話番号をいただけますか?" },
+    { sp: "C", en: "It is Lisa, 0432 118 967.", ja: "リサです。0432 118 967。" },
+    { sp: "S", en: "Lisa, 0432 118 967 — let me confirm. All up, that comes to $46.80, and it will be ready in about twenty minutes.", ja: "リサ様、0432 118 967ですね、復唱しました。合計46ドル80セント、20分ほどでご用意できます。" },
+    { sp: "C", en: "Perfect, see you soon!", ja: "完璧、じゃあ後ほど!" },
+    { sp: "S", en: "Thanks, Lisa. See you soon!", ja: "ありがとうございます、リサ様。お待ちしております!" }
+  ]
+},
+{
+  id: "thai-kitchen",
+  title: "4. キッチンハンドの一日",
+  emoji: "🔪",
+  otherLabel: "CHEF",
+  desc: "WHVの入口ジョブ代表・キッチンハンド。シェフの短い指示を聞き取り、復唱して動く。",
+  tips: [
+    "シェフの指示は短い命令形。Yes chef! と Sorry, say that again?(すみません、もう一度)をセットで使う。",
+    "仕込み3大動詞: prep(仕込む)/ dice(角切り)/ slice(薄切り)。数量とセットで復唱する癖を。",
+    "洗い場は dish pit。Running low on ~(〜が少ない)と先回りで報告できると一気に信頼される。"
+  ],
+  lines: [
+    { sp: "C", en: "Kazu! Can you prep the veggies for tonight? Dice two tubs of capsicum and slice the onions.", ja: "カズ!今夜用の野菜の仕込みを頼む。パプリカを2容器分角切り、玉ねぎはスライスだ。(シェフ)" },
+    { sp: "S", en: "Yes chef! Two tubs of diced capsicum, sliced onions. How thin for the onions?", ja: "はい、シェフ!パプリカ角切り2容器、玉ねぎスライスですね。玉ねぎの厚さはどれくらいですか?" },
+    { sp: "C", en: "Nice and thin, for the stir-fries. When you are done, stock up the herbs — basil and coriander.", ja: "炒め物用に薄めで。終わったらハーブの補充を頼む。バジルとコリアンダーだ。" },
+    { sp: "S", en: "Got it. By the way, we are running low on spring roll wrappers.", ja: "了解です。ところで、春巻きの皮が残り少なくなっています。" },
+    { sp: "C", en: "Good spot. Write it on the order board. Can you also run these plates through the dish pit? We are getting slammed.", ja: "よく気づいた。発注ボードに書いておいてくれ。それとこの皿を洗い場に通してくれるか?忙しくなってきた。" },
+    { sp: "S", en: "On it! ... Chef, sorry, say that again? The fryer — what temperature?", ja: "すぐやります!……シェフ、すみません、もう一度お願いします。フライヤーは何度でしたか?" },
+    { sp: "C", en: "One-eighty. And careful, the oil is fresh — it spits.", ja: "180度だ。気をつけろよ、油が新しいから跳ねるぞ。" },
+    { sp: "S", en: "One-eighty, and watch the oil. Thanks chef!", ja: "180度、油に注意ですね。ありがとうございます、シェフ!" },
+    { sp: "C", en: "You are picking this up fast. Keep this pace and I will put you on the wok section one day.", ja: "覚えが早いな。この調子なら、いつか中華鍋のセクションを任せるぞ。" },
+    { sp: "S", en: "Ha! Looking forward to it, chef!", ja: "はは!楽しみにしています、シェフ!" }
+  ]
+}
+];
+
+const KEBAB_SCENES = [
+{
+  id: "kebab-order",
+  title: "1. カウンター注文の型",
+  emoji: "🌯",
+  desc: "ケバブ注文は「肉→パン→サラダ→ソース」の4連コンボ。この型を体に入れれば一人前。",
+  tips: [
+    "注文の型: 肉(lamb / chicken / mixed)→ パン(wrap / pita)→ サラダ(the lot?)→ ソース(garlic / chilli / BBQ)。",
+    "the lot = 全部入り。With the lot? / The lot, but no onion. はオージー頻出のやりとり。",
+    "ソース確認の定番: Garlic, chilli, or both? / easy on the ~(〜は控えめで)も覚えておく。"
+  ],
+  lines: [
+    { sp: "C", en: "G'day mate, can I get a large kebab?", ja: "よう!ラージのケバブをくれる?" },
+    { sp: "S", en: "Sure thing! Lamb, chicken, or mixed?", ja: "かしこまり!お肉はラム、チキン、ミックスのどれにします?" },
+    { sp: "C", en: "Mixed, please.", ja: "ミックスで。" },
+    { sp: "S", en: "Wrap or pita bread?", ja: "ラップとピタパン、どちらにしますか?" },
+    { sp: "C", en: "Wrap, thanks.", ja: "ラップで、サンキュ。" },
+    { sp: "S", en: "Would you like the lot on it — lettuce, tomato, onion, cheese?", ja: "サラダは全部入りにしますか?レタス、トマト、玉ねぎ、チーズです。" },
+    { sp: "C", en: "The lot, but no onion, please.", ja: "全部入り、ただし玉ねぎ抜きで。" },
+    { sp: "S", en: "No worries, everything except onion. And sauces — garlic, chilli, or both?", ja: "了解です、玉ねぎ以外全部ですね。ソースはガーリック、チリ、それとも両方?" },
+    { sp: "C", en: "Both, but easy on the chilli.", ja: "両方。でもチリは控えめでね。" },
+    { sp: "S", en: "Mixed kebab on wrap, the lot minus onion, garlic and a little chilli. Toasted?", ja: "ミックスケバブのラップ、玉ねぎ抜きの全部入り、ガーリックとチリ少なめですね。トーストしますか?" },
+    { sp: "C", en: "Yeah, toasted, cheers.", ja: "うん、トーストで。サンキュ。" },
+    { sp: "S", en: "That is $14.50. Will not be a sec!", ja: "14ドル50セントです。すぐできますよ!" }
+  ]
+},
+{
+  id: "kebab-hsp",
+  title: "2. HSPとミールディール",
+  emoji: "🍟",
+  desc: "HSP(ハラールスナックパック)は豪ケバブ屋の国民食。知らないと会話にならない看板商品。",
+  tips: [
+    "HSP = Halal Snack Pack。チップスの上にケバブ肉+ソースをかけた豪名物。深夜の大人気メニュー。",
+    "ソース3種(garlic + chilli + BBQ)は常連の間で the holy trinity(三種の神器)と呼ばれる定番の組み合わせ。",
+    "アップセルの型: Would you like to make it a meal? Add a can of drink for two bucks.(2ドルでドリンク付きに)"
+  ],
+  lines: [
+    { sp: "C", en: "Can I get a large HSP?", ja: "ラージのHSPをくれる?" },
+    { sp: "S", en: "One large HSP! Lamb, chicken, or mixed?", ja: "ラージHSP1つ!お肉はラム、チキン、ミックスのどれにします?" },
+    { sp: "C", en: "Lamb, all the way.", ja: "断然ラムで。" },
+    { sp: "S", en: "And sauces? Garlic, chilli, BBQ?", ja: "ソースは?ガーリック、チリ、BBQがありますよ。" },
+    { sp: "C", en: "The holy trinity, mate. All three.", ja: "三種の神器だろ、全部のせで。" },
+    { sp: "S", en: "Ha! Garlic, chilli and BBQ — you know what is good. Cheese on top?", ja: "はは!ガーリック、チリ、BBQ、わかってますね。チーズはのせますか?" },
+    { sp: "C", en: "Of course.", ja: "もちろん。" },
+    { sp: "S", en: "Would you like to make it a meal? Add a can of drink for two bucks.", ja: "セットにしますか?プラス2ドルで缶ドリンクが付きますよ。" },
+    { sp: "C", en: "Yeah, go on then. A Coke, thanks.", ja: "お、いいね。コーラで。" },
+    { sp: "S", en: "Large lamb HSP with the holy trinity, cheese, and a Coke. That is $19.90.", ja: "ラムのラージHSP、ソース3種にチーズ、コーラ付きで19ドル90セントです。" },
+    { sp: "C", en: "Cheers, legend.", ja: "サンキュー、あんた最高。" },
+    { sp: "S", en: "Take a seat — I will call you when it is ready!", ja: "お掛けになってお待ちください。できたらお呼びします!" }
+  ]
+},
+{
+  id: "kebab-latenight",
+  title: "3. 深夜シフトの接客",
+  emoji: "🌙",
+  desc: "金土の深夜はパブ帰りで大混雑。にぎやかなお客さんをフレンドリーにさばく英語。",
+  tips: [
+    "深夜の合言葉: Keep it friendly, keep it moving.(フレンドリーに、でも流れは止めない)",
+    "注文が二転三転したら復唱で確定: One lamb, two chicken — locked in!(確定ね!)",
+    "場を仕切るフレーズ: Sorry mate, one at a time! / Grab a seat, I will call your number."
+  ],
+  lines: [
+    { sp: "C", en: "Maaate! Two kebabs! Actually — three! Three kebabs!", ja: "よぉぉ!ケバブ2つ!いや、3つだ!ケバブ3つ!" },
+    { sp: "S", en: "Ha! Big night? Three kebabs — lamb, chicken or mixed?", ja: "はは!今夜は盛り上がってますね?ケバブ3つ、ラム、チキン、ミックスどれにします?" },
+    { sp: "C", en: "Uhh... two lamb, one chicken. No wait. One lamb, two chicken!", ja: "えーっと……ラム2つ、チキン1つ。いや待って。ラム1つ、チキン2つだ!" },
+    { sp: "S", en: "One lamb, two chicken — locked in! The lot on all three?", ja: "ラム1つ、チキン2つで確定ですね!3つとも全部入りにします?" },
+    { sp: "C", en: "Yes! And garlic sauce. Heaps of garlic sauce.", ja: "そう!あとガーリックソース。ガーリックソースをたっぷりだ。" },
+    { sp: "S", en: "Heaps of garlic it is. That is $43.50 all up.", ja: "ガーリックたっぷりですね。合計43ドル50セントです。" },
+    { sp: "C", en: "You are a legend. Best kebabs in Surfers, I am telling ya.", ja: "あんた最高だよ。サーファーズで一番うまいケバブだって、マジで。" },
+    { sp: "S", en: "Ha, cheers mate! Grab a seat — I will call your number when it is ready. Number twenty-three!", ja: "はは、ありがとうございます!お掛けください、できたら番号でお呼びします。23番です!" },
+    { sp: "C", en: "Twenty-three, got it... what was my number again?", ja: "23番ね、了解……で、俺の番号何だっけ?" },
+    { sp: "S", en: "Twenty-three, mate. It is on your receipt. Water is in the fridge if you need it!", ja: "23番ですよ。レシートにも書いてあります。お水は冷蔵庫にあるのでどうぞ!" }
+  ]
+},
+{
+  id: "kebab-prep",
+  title: "4. 開店準備・シフトの会話",
+  emoji: "🔥",
+  otherLabel: "COWORKER",
+  desc: "仕込みと引き継ぎの同僚英語。指示の聞き取り+先回りの報告で「使えるやつ」になる。",
+  tips: [
+    "仕込み3大動詞: fire up the grill(鉄板に火を入れる)/ shave the meat(肉を削ぐ)/ top up(補充する)。",
+    "引き継ぎの型: We are low on ~ / The delivery comes at ~ が言えれば最低限OK。",
+    "閉め作業(close)の3点セット: scrub the grill, mop the floors, empty the bins。"
+  ],
+  lines: [
+    { sp: "C", en: "Hey! You are on prep today. Can you fire up the grills and get the salads topped up?", ja: "おはよう!今日は仕込み担当ね。グリルに火を入れて、サラダの補充をお願いできる?(同僚)" },
+    { sp: "S", en: "Morning! Grills on, salads topped up — which ones are low?", ja: "おはようございます!グリル点火とサラダ補充ですね。どのサラダが減ってますか?" },
+    { sp: "C", en: "Lettuce and tomato mainly. The tabouli is fresh from yesterday.", ja: "主にレタスとトマトかな。タブーリは昨日作ったばかりでまだ新しいよ。" },
+    { sp: "S", en: "Got it. Do you want me to start shaving the lamb when it is ready?", ja: "了解です。ラム肉の準備ができたら、削ぎ始めましょうか?" },
+    { sp: "C", en: "Yeah, once the outside is nice and crispy. Not too thick, eh.", ja: "ああ、表面がカリッとしてきたらね。厚く削ぎすぎないでよ。" },
+    { sp: "S", en: "Nice and thin, no worries. Oh — we are almost out of garlic sauce tubs.", ja: "薄めですね、了解です。あ、ガーリックソースの容器がほとんど無くなりそうです。" },
+    { sp: "C", en: "Seriously? Check the cold room, there should be a box. If not, text the boss.", ja: "マジで?冷蔵室を見てみて、1箱あるはずだから。無かったらボスにメッセージして。" },
+    { sp: "S", en: "Found them! Also, the drink fridge needs restocking.", ja: "ありました!それと、ドリンクの冷蔵庫も補充が必要です。" },
+    { sp: "C", en: "Good on ya. Do the Cokes first, they go quickest. I will handle the register float.", ja: "ナイス。コーラから先にやって、一番売れるから。レジの釣り銭は私がやっておくよ。" },
+    { sp: "S", en: "On it. We will be ready well before the lunch rush!", ja: "任せてください。ランチラッシュのだいぶ前に準備完了できますね!" }
+  ]
+}
+];
+
 const JOBS = [
   { id: "steak", name: "ステーキ屋", scenes: STEAK_SCENES },
   { id: "cafe", name: "カフェ", scenes: CAFE_SCENES },
+  { id: "thai", name: "タイ料理店", scenes: THAI_SCENES },
+  { id: "kebab", name: "ケバブ屋", scenes: KEBAB_SCENES },
+  { id: "hotel", name: "ホテル清掃", scenes: HOTEL_SCENES, otherLabel: "GUEST" },
   { id: "gym", name: "ジム", scenes: GYM_SCENES },
   { id: "swim", name: "スイミング", scenes: SWIM_SCENES },
   { id: "airport", name: "空港", scenes: AIRPORT_SCENES },
@@ -1560,7 +1862,7 @@ function renderScene() {
   `;
   const job = JOBS[currentJob];
   const youLabel = job.youLabel || "YOU";
-  const otherLabel = job.otherLabel || "CUSTOMER";
+  const otherLabel = s.otherLabel || job.otherLabel || "CUSTOMER";
   s.lines.forEach((line) => {
     const isStaff = line.sp === "S";
     const hiddenCls = (mode === "roleplay" && isStaff) ? "hidden-answer" : "";
@@ -1634,7 +1936,18 @@ const JOB_SETTINGS = {
   swim: "a swim school (the learner is a swimming instructor assistant; the other party may be a parent or a young child)",
   airport: "an airport (the learner is ground staff at check-in and the boarding gate)",
   flightexp: "a Boeing 737 flight simulator experience attraction in Surfers Paradise (the learner is front-desk staff and instructor)",
-  interview: "a job interview / trial shift at a hospitality venue (you are the hiring manager or a senior colleague)"
+  interview: "a job interview / trial shift at a hospitality venue (you are the hiring manager or a senior colleague)",
+  hotel: "a hotel on the Gold Coast (the learner is a housekeeper / room attendant)",
+  thai: "a Thai restaurant (the learner waits tables, takes phone orders, and helps as a kitchen hand)",
+  kebab: "a kebab shop in Surfers Paradise (the learner takes orders and makes kebabs, including late-night shifts)"
+};
+
+const AI_ROLES = {
+  MANAGER: "hiring manager or senior colleague",
+  SUPERVISOR: "housekeeping supervisor who gives instructions and receives reports",
+  GUEST: "hotel guest",
+  CHEF: "head chef or kitchen coworker giving instructions",
+  COWORKER: "coworker on the same shift"
 };
 
 let apiKey = localStorage.getItem("anthropicApiKey") || "";
@@ -1648,7 +1961,7 @@ function startAIChat(sceneIdx) {
     sceneIdx: sceneIdx,
     jobId: job.id,
     youLabel: job.youLabel || "YOU",
-    otherLabel: job.otherLabel || "CUSTOMER",
+    otherLabel: SCENES[sceneIdx].otherLabel || job.otherLabel || "CUSTOMER",
     messages: [],
     waiting: false,
     error: null,
@@ -1671,7 +1984,7 @@ function aiSystemPrompt(chat) {
 
 Setting: ${JOB_SETTINGS[chat.jobId] || "a workplace"} on the Gold Coast, Australia.
 Scene: ${chat.scene.title} — ${chat.scene.desc}
-Your role: you play the ${chat.otherLabel === "MANAGER" ? "hiring manager or senior colleague" : "customer (or whoever the staff member serves in this scene)"}. The learner plays the staff member and speaks first.
+Your role: you play the ${AI_ROLES[chat.otherLabel] || "customer (or whoever the staff member serves in this scene)"}. The learner plays the staff member and speaks first.
 
 Guidelines:
 - Speak natural, friendly Australian English (no worries, heaps, arvo, ta, mate...). Keep each reply to 1-2 short, spoken-style sentences.
