@@ -235,6 +235,56 @@
   .ai-error { color: #a03535; font-size: 0.85rem; margin: 10px 0; text-align: center; }
   .ai-hint { text-align: center; color: var(--muted); font-size: 0.85rem; margin: 26px 0; }
 
+  /* 瞬間英作文 */
+  .sed-card {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 34px 24px;
+    text-align: center;
+    margin: 22px 0;
+  }
+  .sed-ja { font-size: 1.15rem; font-weight: 600; line-height: 1.7; }
+  .sed-en {
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 1.05rem;
+    margin-top: 16px;
+    color: var(--accent);
+  }
+  .sed-timer {
+    height: 4px;
+    background: var(--line);
+    margin: 20px auto 0;
+    width: 70%;
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  .sed-timer > div { height: 100%; background: var(--accent); animation: sed-shrink 2s linear forwards; }
+  @keyframes sed-shrink { from { width: 100%; } to { width: 0; } }
+  @media (prefers-reduced-motion: reduce) { .sed-timer > div { animation: none; } }
+  .sed-btns { display: flex; gap: 10px; justify-content: center; margin-top: 22px; flex-wrap: wrap; }
+  .sed-btns button {
+    border: 1px solid var(--line);
+    background: var(--card);
+    border-radius: 8px;
+    padding: 12px 22px;
+    font-size: 0.95rem;
+    cursor: pointer;
+    color: var(--ink);
+  }
+  .sed-btns button:hover { border-color: var(--accent); }
+  .sed-btns .sed-ok { border-color: var(--done); color: var(--done); }
+  .sed-btns .sed-ng { border-color: #a03535; color: #a03535; }
+  .sed-select {
+    border: 1px solid var(--line);
+    background: var(--card);
+    color: var(--ink);
+    padding: 6px 8px;
+    border-radius: 4px;
+    font-family: inherit;
+    font-size: 0.85rem;
+  }
+
   /* ロールプレイモード: 自分のセリフを隠す */
   body.roleplay .line.staff .bubble.hidden-answer .en,
   body.roleplay .line.staff .bubble.hidden-answer .ja,
@@ -1899,6 +1949,7 @@ function renderNav() {
   });
   html += `<button class="${currentScene === -1 ? "active" : ""}" onclick="goPhrases()">キーフレーズ集</button>`;
   html += `<button class="${currentScene === -2 ? "active" : ""}" onclick="goAussie()">オージー単語帳</button>`;
+  html += `<button class="${currentScene === -3 ? "active" : ""}" onclick="goInstant()">⚡瞬間英作文</button>`;
   nav.innerHTML = html;
 }
 
@@ -1950,6 +2001,7 @@ function renderScene() {
   aiChat = null; // AI会話中に他画面へ移動したら会話状態を破棄
   if (currentScene === -1) { renderPhrases(); return; }
   if (currentScene === -2) { renderAussie(); return; }
+  if (currentScene === -3) { renderInstant(); return; }
   const s = SCENES[currentScene];
   let html = `
     <div class="scene-header">
@@ -2341,6 +2393,145 @@ function toggleMic() {
   };
   micRec.onerror = micRec.onend;
   micRec.start();
+}
+
+/* ===== 瞬間英作文トレーナー(間隔反復) ===== */
+const SRS_INTERVALS = [1, 3, 7, 14, 30]; // ○の回数に応じて次回出題までの日数が伸びる
+let srs = JSON.parse(localStorage.getItem("srsData") || "{}");
+if (!srs.cards) srs.cards = {};
+if (!srs.day) srs.day = {};
+
+function srsDateStr(offsetDays) {
+  const d = new Date();
+  d.setDate(d.getDate() + (offsetDays || 0));
+  return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0");
+}
+function srsSave() { localStorage.setItem("srsData", JSON.stringify(srs)); }
+
+// カード素材 = 全職種のスタッフ側セリフ + キーフレーズ集
+function srsPool() {
+  const pool = [], seen = {};
+  JOBS.forEach(j => j.scenes.forEach(s => s.lines.forEach(l => {
+    if (l.sp === "S" && !seen[l.en]) { seen[l.en] = 1; pool.push({ en: l.en, ja: l.ja, job: j.id }); }
+  })));
+  PHRASES.forEach(g => g.items.forEach(it => {
+    if (!seen[it.en]) { seen[it.en] = 1; pool.push({ en: it.en, ja: it.ja, job: "phrases" }); }
+  }));
+  return pool;
+}
+
+let sedQueue = [], sedCurrent = null, sedRevealed = false;
+
+function goInstant() {
+  stopAll();
+  currentScene = -3;
+  renderNav();
+  startInstantSession(false);
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+function setJobFilter(v) {
+  srs.jobFilter = v;
+  srsSave();
+  startInstantSession(false);
+}
+
+function startInstantSession(extraNew) {
+  const today = srsDateStr(0);
+  if (srs.day.date !== today) srs.day = { date: today, newUsed: 0, reviewsDone: 0, ok: 0, ng: 0, extra: 0 };
+  if (extraNew) srs.day.extra = (srs.day.extra || 0) + 5;
+  srsSave();
+  const filter = srs.jobFilter || "";
+  const due = [], fresh = [];
+  srsPool().forEach(c => {
+    const st = srs.cards[c.en];
+    if (st) { if (st.d <= today) due.push({ c: c, d: st.d }); }
+    else if (!filter || c.job === filter) fresh.push(c);
+  });
+  due.sort((a, b) => (a.d < b.d ? -1 : 1)); // 期限が古い順に復習
+  const reviewSlots = Math.max(0, 15 - srs.day.reviewsDone);
+  const newSlots = Math.max(0, 5 + (srs.day.extra || 0) - srs.day.newUsed);
+  sedQueue = due.slice(0, reviewSlots).map(x => ({ card: x.c, isNew: false }))
+    .concat(fresh.slice(0, newSlots).map(c => ({ card: c, isNew: true })));
+  sedNext();
+}
+
+function sedNext() {
+  sedCurrent = sedQueue.length ? sedQueue.shift() : null;
+  sedRevealed = false;
+  renderInstant();
+}
+
+function sedReveal() {
+  if (!sedCurrent || sedRevealed) return;
+  sedRevealed = true;
+  renderInstant();
+  speak(sedCurrent.card.en, false);
+}
+
+function sedGrade(ok) {
+  if (!sedCurrent) return;
+  const en = sedCurrent.card.en;
+  const st = srs.cards[en] || { l: 0, d: "" };
+  if (ok) {
+    st.d = srsDateStr(SRS_INTERVALS[Math.min(st.l, SRS_INTERVALS.length - 1)]);
+    st.l = Math.min(st.l + 1, SRS_INTERVALS.length);
+    srs.day.ok++;
+  } else {
+    st.l = 0;
+    st.d = srsDateStr(1); // 言えなかったら明日また
+    srs.day.ng++;
+  }
+  srs.cards[en] = st;
+  if (sedCurrent.isNew) srs.day.newUsed++; else srs.day.reviewsDone++;
+  srsSave();
+  sedNext();
+}
+
+function renderInstant() {
+  aiChat = null;
+  const today = srsDateStr(0);
+  const remaining = sedQueue.length + (sedCurrent ? 1 : 0);
+  const jobOptions = ['<option value="">全職種(シーン順)</option>']
+    .concat(JOBS.map(j => `<option value="${j.id}"${srs.jobFilter === j.id ? " selected" : ""}>${esc(j.name)}</option>`))
+    .join("");
+  let html = `
+    <div class="scene-header">
+      <h2>瞬間英作文 — 接客フレーズ</h2>
+      <p>日本語を見たら<strong>2秒以内に声に出して</strong>英語で言う → 答えを見て○✗を自己判定。<br>今日のメニュー: 復習15 + 新規5。✗は明日、○は1日→3日→7日→14日→30日後に再出題されます。</p>
+    </div>
+    <div class="scene-actions" style="align-items:center">
+      <span class="section-note">新規カードの職種:</span>
+      <select class="sed-select" onchange="setJobFilter(this.value)">${jobOptions}</select>
+    </div>`;
+  if (sedCurrent) {
+    const c = sedCurrent.card;
+    html += `
+    <div class="sed-card">
+      <div class="section-note">${sedCurrent.isNew ? "新規" : "復習"} ・ 残り${remaining}枚</div>
+      <div class="sed-ja">${esc(c.ja)}</div>
+      ${sedRevealed
+        ? `<div class="sed-en">${esc(c.en)}<button class="play-btn" onclick="speak(${JSON.stringify(c.en).replace(/"/g, "&quot;")}, false)">▶</button></div>
+           <div class="sed-btns">
+             <button class="sed-ok" onclick="sedGrade(true)">○ 2秒で言えた</button>
+             <button class="sed-ng" onclick="sedGrade(false)">✗ 言えなかった</button>
+           </div>`
+        : `<div class="sed-timer"><div></div></div>
+           <div class="sed-btns"><button onclick="sedReveal()">答えを見る</button></div>`}
+    </div>`;
+  } else {
+    const d = srs.day;
+    const dueTomorrow = Object.keys(srs.cards).filter(k => srs.cards[k].d <= srsDateStr(1)).length;
+    html += `
+    <div class="sed-card">
+      <div class="sed-ja">今日の分は完了!おつかれさま 🎉</div>
+      <p class="section-note" style="margin-top:12px">今日の成績: ○ ${d.ok} / ✗ ${d.ng}${d.ng ? "(✗は明日また出ます)" : ""}<br>明日の予定: 復習${Math.min(dueTomorrow, 15)}枚 + 新規5枚</p>
+      <div class="sed-btns">
+        <button onclick="startInstantSession(true)">余力があるので追加で新規5枚</button>
+      </div>
+    </div>`;
+  }
+  document.getElementById("main").innerHTML = html;
 }
 
 renderJobNav();
