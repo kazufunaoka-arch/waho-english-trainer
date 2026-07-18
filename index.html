@@ -1644,12 +1644,114 @@ const KEBAB_SCENES = [
 }
 ];
 
+const DEMIPAIR_SCENES = [
+{
+  id: "demipair-firstday",
+  title: "1. 初日・ハウスルール",
+  emoji: "🏡",
+  otherLabel: "PARENT",
+  desc: "ホストファミリー宅に到着した初日。仕事内容・時間・家のルールを最初に確認するのが成功の鍵。",
+  tips: [
+    "初日に確認する3点セット: 担当時間(What are my hours?)・子どもの日課・家のルール。曖昧なまま始めるとトラブルの元。",
+    "Help yourself to ~(〜は自由に取ってね)は homestay 頻出。冷蔵庫・洗濯機のルールはここで出てくる。",
+    "school run = 学校の送り迎え。デミペア業務の中心になる単語。"
+  ],
+  lines: [
+    { sp: "C", en: "Welcome, Yuki! Come in — let me show you around. This will be your room.", ja: "ようこそ、ユキ!入って、家を案内するわね。ここがあなたの部屋よ。(ホストマザー)" },
+    { sp: "S", en: "Thank you so much! It is lovely. I am really excited to be here.", ja: "ありがとうございます!素敵なお部屋ですね。ここに来られて本当にうれしいです。" },
+    { sp: "C", en: "These are the kids — Oliver, he is seven, and Mia, she is four.", ja: "この子たちがうちの子。オリバーは7歳、ミアは4歳よ。" },
+    { sp: "S", en: "Hi Oliver, hi Mia! I am Yuki. I have been looking forward to meeting you!", ja: "こんにちはオリバー、こんにちはミア!ユキだよ。会えるのを楽しみにしてたんだ!" },
+    { sp: "C", en: "Your main jobs are the school run in the afternoon and watching the kids until six.", ja: "あなたのメインのお仕事は、午後の学校のお迎えと、6時までの子守りよ。" },
+    { sp: "S", en: "School pickup and looking after them until six — got it. What time does school finish?", ja: "お迎えと6時までのお世話ですね、わかりました。学校は何時に終わりますか?" },
+    { sp: "C", en: "Three o'clock. Oliver's school is a ten-minute walk, and Mia's daycare is on the same street.", ja: "3時よ。オリバーの学校は歩いて10分、ミアの保育園は同じ通りにあるわ。" },
+    { sp: "S", en: "Understood. Are there any house rules I should know?", ja: "わかりました。知っておくべき家のルールはありますか?" },
+    { sp: "C", en: "Help yourself to anything in the fridge, and dinner is together at six thirty. Just let us know if you will be out late.", ja: "冷蔵庫のものは自由に食べてね。夕食は6時半にみんなで。遅くなる日は知らせてくれればOKよ。" },
+    { sp: "S", en: "That sounds great. Thank you — I will do my best!", ja: "すごく助かります。ありがとうございます、頑張ります!" }
+  ]
+},
+{
+  id: "demipair-kids",
+  title: "2. 子どものお世話",
+  emoji: "🦖",
+  otherLabel: "KID",
+  desc: "お迎え・おやつ・宿題・遊び。子ども英語はシンプル+ハイテンションが正解。",
+  tips: [
+    "子どもへの英語は短く元気に: Homework first, then dinosaurs. Deal?(宿題が先、恐竜はその後。約束ね?)",
+    "嫌がられたらゲーム化が魔法: How about we race?(競争しない?)タイマー作戦は世界共通で効く。",
+    "褒めのバリエーションを回す: Well done! / High five! / That was fast! / Good job, buddy!"
+  ],
+  lines: [
+    { sp: "S", en: "Hi Oliver! How was school today?", ja: "オリバー、おかえり!今日の学校はどうだった?" },
+    { sp: "C", en: "Good! We did painting. Can we get ice cream on the way home?", ja: "楽しかった!絵の具やったんだ。帰りにアイス買っていい?(子ども)" },
+    { sp: "S", en: "Nice try! Not today, mate. But there are apple slices at home for snack time.", ja: "言うと思った!今日はダメだよ。でもおうちにおやつのりんごがあるよ。" },
+    { sp: "C", en: "Aww... okay. Will you play dinosaurs with me?", ja: "えー……わかった。じゃあ恐竜ごっこして遊んでくれる?" },
+    { sp: "S", en: "Of course! Homework first, then dinosaurs. Deal?", ja: "もちろん!でも宿題が先、恐竜はその後。約束できる?" },
+    { sp: "C", en: "Deal! ... I do not want to do maths. Maths is boring!", ja: "約束!……算数やりたくない。算数つまんない!" },
+    { sp: "S", en: "I know, but it is only one page. How about we race? If you finish before the timer, you pick the game.", ja: "わかるよ。でもたった1ページだよ。競争しない?タイマーより早く終わったら、遊びを選んでいいよ。" },
+    { sp: "C", en: "Okay! Set the timer!", ja: "やる!タイマーセットして!" },
+    { sp: "S", en: "Wow, all done — that was fast! High five! Now, dinosaurs or hide-and-seek?", ja: "わあ、全部終わった、速い!ハイタッチ!さて、恐竜ごっこ?それともかくれんぼ?" },
+    { sp: "C", en: "Dinosaurs! You are the T-rex!", ja: "恐竜!ユキがティラノサウルスね!" },
+    { sp: "S", en: "Rawr! Here comes the T-rex!", ja: "ガオー!ティラノサウルスが来たぞー!" }
+  ]
+},
+{
+  id: "demipair-dinner",
+  title: "3. 夕食・家族との会話",
+  emoji: "🍽️",
+  otherLabel: "PARENT",
+  desc: "1日の報告と食卓の雑談。デミペアで英語が一番伸びるのは実はこの時間。",
+  tips: [
+    "1日の報告の型: Oliver finished his homework, and we played ~. 事実+ほっこりエピソードを1つ添える。",
+    "文化の話は最強の会話ネタ。In Japan, we often ~ から始めれば話題が尽きない。",
+    "日本食を振る舞う約束は距離を縮める鉄板ムーブ。カレーライスは子どもウケNo.1。"
+  ],
+  lines: [
+    { sp: "C", en: "Dinner is ready! How did it go with the kids today, Yuki?", ja: "夕食できたわよ!ユキ、今日の子どもたちはどうだった?" },
+    { sp: "S", en: "Really well! Oliver finished his homework, and we played dinosaurs. Mia drew you a picture — it is on the fridge.", ja: "とても良かったですよ!オリバーは宿題を終わらせて、恐竜ごっこをしました。ミアはあなたに絵を描いたんです。冷蔵庫に貼ってあります。" },
+    { sp: "C", en: "Oh, that is adorable. Was Mia okay at pickup? She was teary this morning.", ja: "まあ、かわいい。ミアはお迎えのとき大丈夫だった?今朝は泣きそうだったから。" },
+    { sp: "S", en: "She was a little quiet at first, but she cheered up when we read her favourite book.", ja: "最初は少しおとなしかったですが、お気に入りの絵本を読んだら元気になりました。" },
+    { sp: "C", en: "You are so good with her. By the way, this is a classic Aussie roast. Have you had one before?", ja: "あなたは本当にミアの扱いが上手ね。ところで、これは定番のオージーロースト。食べたことある?" },
+    { sp: "S", en: "No, first time — it smells amazing! In Japan, we often have rice and miso soup for dinner.", ja: "いえ、初めてです。すごくいい匂い!日本では夕食にご飯と味噌汁をよく食べるんですよ。" },
+    { sp: "C", en: "Oh, I love miso soup! Maybe you could cook us a Japanese dinner one night?", ja: "味噌汁大好きよ!いつか日本の夕食を作ってくれない?" },
+    { sp: "S", en: "I would love to! I make a pretty good curry rice — kids usually love it.", ja: "ぜひ!カレーライスは得意なんです。子どもはだいたい大好きですよ。" },
+    { sp: "C", en: "It is a date. Oliver, two more bites of broccoli before dessert, please.", ja: "決まりね。オリバー、デザートの前にブロッコリーをあと2口食べて。" },
+    { sp: "S", en: "He ate all his carrots at snack time — he is getting better with veggies!", ja: "オリバー、おやつの時間ににんじんを全部食べたんですよ。野菜、上手になってきてます!" }
+  ]
+},
+{
+  id: "demipair-schedule",
+  title: "4. スケジュール相談・困りごと",
+  emoji: "🗓️",
+  otherLabel: "PARENT",
+  desc: "語学学校との両立、友達を呼ぶ許可、ルールのすり合わせ。「早めに相談」が信頼を作る。",
+  tips: [
+    "相談の切り出し: Do you have a minute? I wanted to check ~ / ask about ~ が丁寧で自然。",
+    "遅れる・予定が変わるは先回りで: Thanks for the heads-up.(先に言ってくれて助かる)と言われる側になる。",
+    "screen time(画面を見る時間)は現代の子育て頻出ワード。ルールを確認して代替案まで聞けると◎。"
+  ],
+  lines: [
+    { sp: "S", en: "Sarah, do you have a minute? I wanted to check next week's schedule.", ja: "サラさん、少しいいですか?来週のスケジュールを確認したくて。" },
+    { sp: "C", en: "Of course! What is up?", ja: "もちろん!どうしたの?" },
+    { sp: "S", en: "My language school has an excursion on Friday, so I might be fifteen minutes late for pickup. Would that be okay?", ja: "金曜に語学学校の課外活動があって、お迎えに15分ほど遅れそうなんです。大丈夫でしょうか?" },
+    { sp: "C", en: "Thanks for the heads-up. I will ask my mum to get Oliver on Friday, so do not worry.", ja: "先に言ってくれてありがとう。金曜は私の母にオリバーのお迎えを頼むから、心配しないで。" },
+    { sp: "S", en: "Thank you! Also, may I invite a friend from school over on Sunday afternoon?", ja: "ありがとうございます!それと、日曜の午後に学校の友達を家に呼んでもいいですか?" },
+    { sp: "C", en: "Absolutely, friends are always welcome. Will you be here for Sunday dinner?", ja: "もちろん、お友達はいつでも歓迎よ。日曜の夕食は家で食べる?" },
+    { sp: "S", en: "Yes, we will just study in my room and maybe go to the beach.", ja: "はい、部屋で勉強して、ビーチに行くくらいなので。" },
+    { sp: "C", en: "Sounds lovely. Oh, and one thing from me — could you keep Mia's screen time under thirty minutes on weekdays?", ja: "いいわね。あ、私からも一つ。平日のミアのスクリーンタイムは30分以内にしてもらえる?" },
+    { sp: "S", en: "Of course, thirty minutes max. Should I offer drawing or blocks instead when time is up?", ja: "もちろんです、最大30分ですね。時間になったら、代わりにお絵かきやブロックを提案しましょうか?" },
+    { sp: "C", en: "Perfect — you get how it works. Honestly, the kids adore you already.", ja: "完璧、よくわかってるわね。正直、子どもたちはもうあなたに夢中よ。" },
+    { sp: "S", en: "That makes me so happy. Thank you for making me feel at home!", ja: "それはうれしいです。我が家のように迎えてくださってありがとうございます!" }
+  ]
+}
+];
+
 const JOBS = [
   { id: "steak", name: "ステーキ屋", scenes: STEAK_SCENES },
   { id: "cafe", name: "カフェ", scenes: CAFE_SCENES },
   { id: "thai", name: "タイ料理店", scenes: THAI_SCENES },
   { id: "kebab", name: "ケバブ屋", scenes: KEBAB_SCENES },
   { id: "hotel", name: "ホテル清掃", scenes: HOTEL_SCENES, otherLabel: "GUEST" },
+  { id: "demipair", name: "デミペア", scenes: DEMIPAIR_SCENES, otherLabel: "PARENT" },
   { id: "gym", name: "ジム", scenes: GYM_SCENES },
   { id: "swim", name: "スイミング", scenes: SWIM_SCENES },
   { id: "airport", name: "空港", scenes: AIRPORT_SCENES },
@@ -1939,7 +2041,8 @@ const JOB_SETTINGS = {
   interview: "a job interview / trial shift at a hospitality venue (you are the hiring manager or a senior colleague)",
   hotel: "a hotel on the Gold Coast (the learner is a housekeeper / room attendant)",
   thai: "a Thai restaurant (the learner waits tables, takes phone orders, and helps as a kitchen hand)",
-  kebab: "a kebab shop in Surfers Paradise (the learner takes orders and makes kebabs, including late-night shifts)"
+  kebab: "a kebab shop in Surfers Paradise (the learner takes orders and makes kebabs, including late-night shifts)",
+  demipair: "an Australian host family's home on the Gold Coast (the learner is a demi pair — childcare and light housework in exchange for homestay, while studying at a language school)"
 };
 
 const AI_ROLES = {
@@ -1947,7 +2050,9 @@ const AI_ROLES = {
   SUPERVISOR: "housekeeping supervisor who gives instructions and receives reports",
   GUEST: "hotel guest",
   CHEF: "head chef or kitchen coworker giving instructions",
-  COWORKER: "coworker on the same shift"
+  COWORKER: "coworker on the same shift",
+  PARENT: "host parent of the family (warm, appreciative, occasionally asking about the kids or setting house rules)",
+  KID: "young child of the host family, about 4-7 years old — speak in very short, simple, playful sentences, sometimes whiny or easily distracted, like a real kid"
 };
 
 let apiKey = localStorage.getItem("anthropicApiKey") || "";
