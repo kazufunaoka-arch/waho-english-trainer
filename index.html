@@ -145,7 +145,15 @@
   }
   .scene-header p { color: var(--muted); font-size: 0.85rem; margin-top: 4px; }
 
-  .scene-actions { display: flex; gap: 8px; margin: 12px 0 22px; }
+  .shadow-audio {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 12px 0 4px;
+    flex-wrap: wrap;
+  }
+  .shadow-audio audio { height: 36px; max-width: 100%; flex: 1; min-width: 220px; }
+  .scene-actions { display: flex; gap: 8px; margin: 12px 0 22px; flex-wrap: wrap; }
   .scene-actions button {
     background: none;
     border: 1px solid var(--line);
@@ -2008,8 +2016,13 @@ function renderScene() {
       <h2>${esc(s.title)}</h2>
       <p>${esc(s.desc)}</p>
     </div>
+    <div class="shadow-audio">
+      <span class="section-note">🎧 ネイティブ音声:</span>
+      <audio id="shadow-audio" controls preload="none" src="audio/${s.id}.mp3" onerror="this.parentElement.style.display='none'"></audio>
+      <label class="section-note" style="white-space:nowrap"><input type="checkbox" onchange="document.getElementById('shadow-audio').loop=this.checked"> ループ</label>
+    </div>
     <div class="scene-actions">
-      <button onclick="playAll(${currentScene})">通しで再生</button>
+      <button onclick="playAll(${currentScene})">端末音声で再生</button>
       <button onclick="stopAll()">停止</button>
       <button onclick="startAIChat(${currentScene})">AIと実戦練習</button>
     </div>
