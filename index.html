@@ -1405,7 +1405,7 @@ const INTERVIEW_SCENES = [
     { sp: "C", en: "So, tell me a bit about yourself.", ja: "では、簡単に自己紹介をお願いします。" },
     { sp: "S", en: "Sure! My name is Kazuki, I'm from Japan, and I'm here on a working holiday until February — so I can cover the whole summer peak, including Christmas and New Year.", ja: "はい!カズキといいます。日本から来ました。2月までワーキングホリデーで滞在するので、クリスマスも年末年始も含めて夏の繁忙期をまるごとカバーできます。" },
     { sp: "S", en: "Back home, I worked for a year at the InterContinental Yokohama — serving wedding receptions every weekend and working the front desk.", ja: "日本ではインターコンチネンタル横浜で1年働いていました。毎週末の披露宴サービスと、フロント業務です。" },
-    { sp: "S", en: "I'm also a licensed commercial pilot, so I stay calm under pressure and I never miss a shift.", ja: "それから事業用操縦士のライセンスも持っています。なのでプレッシャーに強く、シフトに穴を開けることはありません。" },
+    { sp: "S", en: "I'm also a licensed commercial pilot. My strength is consistency — I've kept up daily training and study for years without missing a single day, so I'll never leave the team short on a shift.", ja: "それから事業用操縦士のライセンスも持っています。強みは継続力です。何年も毎日のトレーニングと勉強を一日も欠かしたことがないので、シフトでチームに穴を開けることは絶対にありません。" },
     { sp: "C", en: "A pilot? That's not something we hear every day!", ja: "パイロット?それは珍しいね!" },
     { sp: "S", en: "Ha, yes — flying taught me to follow procedures and communicate clearly. Honestly, a busy Saturday floor is a kind of flight operation too.", ja: "ええ(笑)。飛行機で、手順を守ることと明確なコミュニケーションを叩き込まれました。正直、土曜の忙しいフロアも一種のフライトオペレーションですよ。" },
     { sp: "C", en: "Good answer. Let's talk details.", ja: "いい答えだ。じゃあ詳しく聞こうか。" }
@@ -1442,7 +1442,7 @@ const INTERVIEW_SCENES = [
   emoji: "🔍",
   desc: "\"Why should I hire you?\" \"英語は大丈夫?\" 答えにくい質問こそ、準備した人が勝つ。",
   tips: [
-    "弱み(英語)は隠さず「確認する習慣」とセットで話すと、むしろ安全な人材に見える。",
+    "弱み=「突発事態に焦りやすい」は必ず対処の型とセットで: stop → breathe → say the facts → pick one priority. 対処法まで語れる弱みは強みに変わる。",
     "経験談は「状況→自分の行動→結果」の3文で。長く話しすぎない。",
     "\"Why Australia?\" は趣味(水泳・ビーチ)を混ぜると顔を覚えてもらえる。"
   ],
@@ -1454,7 +1454,7 @@ const INTERVIEW_SCENES = [
     { sp: "C", en: "Tell me about a time you dealt with a difficult customer.", ja: "難しいお客さんに対応した経験を教えて。" },
     { sp: "S", en: "At the hotel, a guest was upset because their room wasn't ready. I apologised, stayed calm, offered them a coffee in the lounge and kept them updated. By check-in, they were smiling again.", ja: "ホテルで、部屋の準備が遅れてお客様が苛立っていたことがありました。謝罪して、落ち着いて、ラウンジでコーヒーをお出しし、状況を随時お伝えしました。チェックインの頃には笑顔に戻っていました。" },
     { sp: "C", en: "What would you say is your weakness?", ja: "自分の弱みは何だと思う?" },
-    { sp: "S", en: "My English isn't perfect yet. But I study every day, and I'm never shy about asking when I'm not sure — so it doesn't cause mistakes on the floor.", ja: "英語がまだ完璧ではないことです。ただ毎日勉強していますし、わからないときは必ず聞くので、フロアでのミスにはつながりません。" },
+    { sp: "S", en: "Honestly? I can get flustered when something unexpected happens. So I trained myself with a rule from flying: stop, take a breath, say the facts out loud, and pick one priority. On a busy floor, that habit actually makes me the calm one.", ja: "正直に言うと、想定外のことが起きると焦りやすいところです。なので飛行機で学んだ型を自分に叩き込みました。「止まる、深呼吸、事実を口に出す、最優先を1つ決める」。忙しいフロアでは、この習慣のおかげでむしろ落ち着いている側になれます。" },
     { sp: "C", en: "And why Australia, of all places?", ja: "それにしても、なぜオーストラリアに?" },
     { sp: "S", en: "I trained as a pilot in the US, and I wanted to live and work in English again. Plus I'm a competitive swimmer — so honestly, the Gold Coast is paradise for me.", ja: "アメリカでパイロット訓練をして、もう一度英語環境で生活して働きたかったんです。それに水泳の選手でもあるので、正直ゴールドコーストは僕にとって楽園です。" }
   ]
@@ -1960,15 +1960,20 @@ if ("speechSynthesis" in window) {
   speechSynthesis.onvoiceschanged = loadVoices;
 }
 
-// 高音質(Enhanced/Premium/Siri)の音声を優先してスコア付け
+// オージー英語(en-AU)を最優先し、高音質(Natural/Enhanced)を選ぶスコア付け
 function voiceScore(v) {
   let s = 0;
   const n = v.name.toLowerCase();
-  if (n.includes("siri")) s += 6;
-  if (n.includes("premium") || n.includes("プレミアム")) s += 5;
-  if (n.includes("enhanced") || n.includes("natural") || n.includes("拡張")) s += 4;
-  if (v.lang.startsWith("en-AU")) s += 2;
-  else if (v.lang.startsWith("en-GB") || v.lang.startsWith("en-US")) s += 1;
+  const lang = (v.lang || "").toLowerCase().replace("_", "-");
+  if (lang.startsWith("en-au")) s += 10;      // オージー英語を最優先
+  else if (lang.startsWith("en-gb")) s += 3;
+  else if (lang.startsWith("en-us")) s += 2;
+  else if (lang.startsWith("en-in")) s -= 8;  // インド英語は最後尾へ
+  if (n.includes("natural") || n.includes("neural")) s += 4;
+  if (n.includes("enhanced") || n.includes("premium") || n.includes("拡張") || n.includes("プレミアム")) s += 4;
+  if (n.includes("siri")) s += 5;
+  if (n.includes("multilingual") || n.includes("マルチリンガル")) s -= 3; // 多言語音声はアクセントが平板になりがち
+  if (n.includes("natasha") || n.includes("william") || n.includes("karen")) s += 1; // 豪の代表ボイス
   return s;
 }
 
@@ -1982,7 +1987,8 @@ function pickVoice() {
   const list = englishVoices();
   if (savedVoiceName) {
     const v = list.find(v => v.name === savedVoiceName);
-    if (v) return v;
+    // 手動選択がインド英語だった場合は無視して自動選択に戻す
+    if (v && !(v.lang || "").toLowerCase().replace("_", "-").startsWith("en-in")) return v;
   }
   return list[0] || null;
 }
