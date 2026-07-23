@@ -2369,7 +2369,7 @@ async function sendChat() {
     markPracticed();
     // 連続会話モード: AIの読み上げが終わったら自動でマイクを再開
     speak(reply, true, () => {
-      if (aiChat && aiChat.handsFree && !aiChat.waiting && !micListening) toggleMic();
+      micAutoStart();
     });
   } catch (e) {
     if (!aiChat) return;
@@ -2462,7 +2462,7 @@ function toggleHandsFree() {
   if (!aiChat) return;
   aiChat.handsFree = !aiChat.handsFree;
   renderAIChat();
-  if (aiChat.handsFree && !micListening && !aiChat.waiting) toggleMic();
+  if (aiChat.handsFree) micAutoStart();
 }
 
 function renderAIChat() {
@@ -2505,39 +2505,102 @@ function renderAIChat() {
       <input id="chat-input" type="text" placeholder="英語で入力(日本語で助けを求めてもOK)" autocomplete="off"
         onkeydown="if(event.key==='Enter'){event.preventDefault();sendChat();}" ${aiChat.waiting ? "disabled" : ""}>
       <button onclick="sendChat()" ${aiChat.waiting ? "disabled" : ""}>送信</button>
-    </div>`;
+    </div>
+    ${IS_IOS ? '<p class="section-note" style="text-align:center;margin-top:-8px">🎤が反応しないときは、入力欄をタップ → キーボードの🎤(音声入力)で話しても英語が入ります。</p>' : ""}`;
   document.getElementById("main").innerHTML = html;
   const inp = document.getElementById("chat-input");
   if (inp && !aiChat.waiting) inp.focus();
   window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
 }
 
-let micRec = null, micListening = false;
-function toggleMic() {
+const IS_IOS = /iPad|iPhone|iPod/.test(navigator.userAgent) ||
+  (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+const IS_STANDALONE = window.navigator.standalone === true ||
+  (window.matchMedia && window.matchMedia("(display-mode: standalone)").matches);
+
+let micRec = null, micListening = false, micTranscript = "", micBase = "";
+
+function micSetBtn(on) {
+  micListening = on;
+  const b = document.getElementById("mic-btn");
+  if (b) b.classList.toggle("listening", on);
+}
+
+function micError(msg) {
+  if (!aiChat) return;
+  aiChat.error = msg;
+  renderAIChat();
+}
+
+function toggleMic(auto) {
   const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
   if (!SR) return;
-  if (micListening && micRec) { micRec.stop(); return; }
+  if (micListening && micRec) { try { micRec.stop(); } catch (e) {} return; }
+
+  // iOSは読み上げ中だと録音を開始できないので必ず止めてから
+  try { speechSynthesis.cancel(); } catch (e) {}
+
   micRec = new SR();
   micRec.lang = "en-AU";
-  micRec.interimResults = false;
-  micListening = true;
-  const btn = document.getElementById("mic-btn");
-  if (btn) btn.classList.add("listening");
+  micRec.interimResults = true;  // iOSは中間結果しか返さないことがある
+  micRec.continuous = false;
+  micRec.maxAlternatives = 1;
+  micTranscript = "";
+  const input = document.getElementById("chat-input");
+  micBase = input ? input.value.trim() : "";
+
+  micRec.onstart = () => micSetBtn(true);
+
   micRec.onresult = e => {
-    const t = e.results[0][0].transcript;
-    const input = document.getElementById("chat-input");
-    if (input) {
-      input.value = (input.value ? input.value + " " : "") + t;
-      sendChat(); // 話し終わったら自動送信
+    let t = "";
+    for (let i = 0; i < e.results.length; i++) t += e.results[i][0].transcript;
+    micTranscript = t.trim();
+    const el = document.getElementById("chat-input");
+    if (el) el.value = (micBase ? micBase + " " : "") + micTranscript; // 話しながら表示
+  };
+
+  micRec.onerror = e => {
+    micSetBtn(false);
+    const code = e && e.error;
+    if (code === "no-speech") return; // 無音は無視
+    if (code === "not-allowed" || code === "service-not-allowed") {
+      micError(IS_STANDALONE
+        ? "マイクを使えません。ホーム画面のアプリではなく、Safariでこのページを開いてお試しください。"
+        : "マイクの使用が許可されていません。設定 → Safari → マイク を「許可」にしてください。キーボードの🎤(音声入力)でも入力できます。");
+    } else if (code === "audio-capture") {
+      micError("マイクが見つかりませんでした。");
+    } else if (code === "network") {
+      micError("音声認識サーバーに接続できませんでした。通信環境を確認してください。");
     }
   };
+
   micRec.onend = () => {
-    micListening = false;
-    const b = document.getElementById("mic-btn");
-    if (b) b.classList.remove("listening");
+    micSetBtn(false);
+    if (micTranscript) sendChat(); // 話し終わったら自動送信
   };
-  micRec.onerror = micRec.onend;
-  micRec.start();
+
+  try {
+    micRec.start();
+  } catch (e) {
+    micSetBtn(false);
+    if (!auto) micError("マイクを開始できませんでした。もう一度🎤を押してみてください。");
+  }
+}
+
+// 連続会話モード: 読み上げ後の自動再開(iOSはユーザー操作なしの起動が塞がれることがある)
+function micAutoStart() {
+  if (!aiChat || !aiChat.handsFree || aiChat.waiting || micListening) return;
+  setTimeout(() => {
+    if (!aiChat || !aiChat.handsFree || aiChat.waiting || micListening) return;
+    toggleMic(true);
+    // 起動できなければ手動を促す
+    setTimeout(() => {
+      if (aiChat && aiChat.handsFree && !micListening && !aiChat.waiting && IS_IOS) {
+        aiChat.error = "iPhoneでは自動でマイクが開かないことがあります。🎤を押して話してください。";
+        renderAIChat();
+      }
+    }, 600);
+  }, 350);
 }
 
 /* ===== 瞬間英作文トレーナー(間隔反復) ===== */
