@@ -409,6 +409,17 @@
   }
   @keyframes mic-pulse { 50% { opacity: 0.55; } }
   @media (prefers-reduced-motion: reduce) { #mic-btn.listening { animation: none; } }
+  .voice-help {
+    background: var(--sand);
+    border-radius: 14px;
+    padding: 12px 16px;
+    margin: 14px 0;
+    font-size: 0.85rem;
+  }
+  .voice-help summary { cursor: pointer; font-weight: 700; color: #D45A2A; }
+  .voice-help p { margin-top: 8px; }
+  .voice-help ol { margin: 6px 0 6px 20px; }
+  .voice-help li { margin-bottom: 4px; }
   .ai-error { color: #C0392B; font-size: 0.85rem; margin: 10px 0; text-align: center; font-weight: 700; }
   .ai-hint { text-align: center; color: var(--muted); font-size: 0.85rem; margin: 26px 0; }
 
@@ -2506,7 +2517,21 @@ function renderAIChat() {
         onkeydown="if(event.key==='Enter'){event.preventDefault();sendChat();}" ${aiChat.waiting ? "disabled" : ""}>
       <button onclick="sendChat()" ${aiChat.waiting ? "disabled" : ""}>送信</button>
     </div>
-    ${IS_IOS ? '<p class="section-note" style="text-align:center;margin-top:-8px">🎤が反応しないときは、入力欄をタップ → キーボードの🎤(音声入力)で話しても英語が入ります。</p>' : ""}`;
+    ${IS_IOS ? '<p class="section-note" style="text-align:center;margin-top:-8px">🎤が反応しないときは、入力欄をタップ → キーボードの🎤(音声入力)で話しても英語が入ります。</p>' : ""}
+    <details class="voice-help">
+      <summary>🔊 AIの声がロボットっぽい?(1分で直せます)</summary>
+      ${IS_IOS
+        ? `<p><b>iPhone/iPad:</b> 高品質な豪州音声を無料でダウンロードできます。</p>
+           <ol>
+             <li>設定 → アクセシビリティ → <b>読み上げコンテンツ</b></li>
+             <li><b>声</b> → <b>英語</b> → <b>Karen(オーストラリア)</b></li>
+             <li>「<b>Karen(拡張)</b>」または「プレミアム」の⬇️をタップしてダウンロード</li>
+             <li>このページを開き直し、上の音声メニューでその声を選ぶ</li>
+           </ol>`
+        : `<p><b>PC:</b> 上の音声メニューから名前に <b>Natural</b> が付いた豪州英語(例: Natasha / William)を選ぶと自然になります。<br>
+           Microsoft Edge が最も高品質な音声を持っています(Chromeで機械っぽい場合はEdgeでこのページを開いてみてください)。</p>`}
+      <p class="section-note">※ シーンの🎧ネイティブ音声は最初から高品質です。ここで直るのはAIの返答の声だけです。</p>
+    </details>`;
   document.getElementById("main").innerHTML = html;
   const inp = document.getElementById("chat-input");
   if (inp && !aiChat.waiting) inp.focus();
