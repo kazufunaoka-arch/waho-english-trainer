@@ -4,6 +4,11 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ワーホリ英会話トレーナー</title>
+<link rel="icon" type="image/svg+xml" href="icon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="theme-color" content="#FF8B54">
+<meta name="apple-mobile-web-app-title" content="ワーホリ英会話">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@500;700;900&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
@@ -63,6 +68,20 @@
     font-size: 0.68rem;
     letter-spacing: 0.28em;
     color: rgba(255, 255, 255, 0.9);
+  }
+  .hero-lockup {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 4px;
+  }
+  .hero-mark {
+    width: 46px;
+    height: 46px;
+    flex-shrink: 0;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(170, 70, 20, 0.28);
   }
   header h1 {
     font-size: 1.55rem;
@@ -489,7 +508,9 @@
   /* ===== モバイル ===== */
   @media (max-width: 600px) {
     header { padding: 30px 16px 58px; }
-    header h1 { font-size: 1.3rem; }
+    header h1 { font-size: 1.18rem; }
+    .hero-mark { width: 38px; height: 38px; border-radius: 10px; }
+    .hero-lockup { gap: 9px; }
     .hero-tag { font-size: 0.85rem; }
     .bubble { max-width: 88%; }
     .play-btn { font-size: 1.05rem; padding: 2px 8px; }
@@ -506,7 +527,24 @@
   <div class="hero-sun"></div>
   <div class="hero-inner">
     <div class="hero-eyebrow">GOLD COAST MORNING</div>
-    <h1>ワーホリ英会話トレーナー</h1>
+    <div class="hero-lockup">
+      <svg class="hero-mark" viewBox="0 0 512 512" aria-hidden="true">
+        <defs>
+          <linearGradient id="logoSky" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#FF6B4A"/><stop offset=".55" stop-color="#FFA62B"/><stop offset="1" stop-color="#FFC145"/>
+          </linearGradient>
+          <clipPath id="logoSq"><rect width="512" height="512" rx="115"/></clipPath>
+        </defs>
+        <g clip-path="url(#logoSq)">
+          <rect width="512" height="512" fill="url(#logoSky)"/>
+          <circle cx="256" cy="248" r="150" fill="#FFF6CE" opacity=".35"/>
+          <circle cx="256" cy="248" r="94" fill="#FFF8E7"/>
+          <path d="M0,330 C90,300 160,368 256,344 C356,318 424,372 512,338 L512,512 L0,512 Z" fill="#fff" opacity=".5"/>
+          <path d="M0,378 C100,346 172,412 272,386 C372,360 436,414 512,388 L512,512 L0,512 Z" fill="#0E7C86"/>
+        </g>
+      </svg>
+      <h1>ワーホリ英会話トレーナー</h1>
+    </div>
     <p class="hero-tag">Have a crack, mate.</p>
     <div class="hero-chips"><span class="chip" id="streak-chip">☀️ 今日から始めよう</span></div>
   </div>

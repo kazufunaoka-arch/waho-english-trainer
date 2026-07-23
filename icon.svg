@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <title>ワーホリ英会話トレーナー</title>
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FF6B4A"/>
+      <stop offset=".55" stop-color="#FFA62B"/>
+      <stop offset="1" stop-color="#FFC145"/>
+    </linearGradient>
+    <clipPath id="sq"><rect width="512" height="512" rx="115"/></clipPath>
+  </defs>
+  <g clip-path="url(#sq)">
+    <rect width="512" height="512" fill="url(#sky)"/>
+    <circle cx="256" cy="248" r="150" fill="#FFF6CE" opacity=".35"/>
+    <circle cx="256" cy="248" r="94" fill="#FFF8E7"/>
+    <path d="M0,330 C90,300 160,368 256,344 C356,318 424,372 512,338 L512,512 L0,512 Z" fill="#fff" opacity=".5"/>
+    <path d="M0,378 C100,346 172,412 272,386 C372,360 436,414 512,388 L512,512 L0,512 Z" fill="#0E7C86"/>
+  </g>
+</svg>
