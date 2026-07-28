@@ -1500,8 +1500,9 @@ const INTERVIEW_SCENES = [
     { sp: "S", en: "I love the atmosphere here — busy, friendly, good food. And my banquet experience fits: fast service, high standards, big teams.", ja: "お店の雰囲気が好きなんです。忙しくて、フレンドリーで、料理が美味しい。それに披露宴の経験がそのまま活きます。速いサービス、高い基準、大人数のチームワークです。" },
     { sp: "C", en: "How's your English? Our floor gets pretty loud.", ja: "英語はどのくらい?うちのフロアはかなり騒がしいよ。" },
     { sp: "S", en: "Good enough for the floor — I served international guests at the hotel. And if I don't catch something, I always confirm instead of guessing. I'd rather double-check than make a mistake.", ja: "フロアで働くには十分です。ホテルでは外国人のお客様も接客していました。聞き取れなかったときは推測せず必ず確認します。ミスをするより聞き直す方がいいので。" },
-    { sp: "C", en: "Tell me about a time you dealt with a difficult customer.", ja: "難しいお客さんに対応した経験を教えて。" },
-    { sp: "S", en: "At the hotel, a guest was upset because their room wasn't ready. I apologised, stayed calm, offered them a coffee in the lounge and kept them updated. By check-in, they were smiling again.", ja: "ホテルで、部屋の準備が遅れてお客様が苛立っていたことがありました。謝罪して、落ち着いて、ラウンジでコーヒーをお出しし、状況を随時お伝えしました。チェックインの頃には笑顔に戻っていました。" },
+    { sp: "C", en: "Tell me about a time you had to work under pressure.", ja: "プレッシャーのかかる状況で働いた経験を教えて。" },
+    { sp: "S", en: "Every weekend, really — wedding receptions. A hundred guests, everything on a strict timeline, and no second chance because it's their one big day.", ja: "毎週末がそうでした。披露宴です。100人規模で、進行は分刻み。その人にとって一生に一度の日なので、やり直しがききません。" },
+    { sp: "S", en: "What got me through it was the run sheet. We checked the timing and the special meals before every service, so when something did go wrong we already knew who was doing what.", ja: "支えになったのは進行表でした。毎回サービス前に進行と特別食を確認していたので、何か起きても誰が何をするかが既に決まっている状態でした。" },
     { sp: "C", en: "What would you say is your weakness?", ja: "自分の弱みは何だと思う?" },
     { sp: "S", en: "Honestly? I can get flustered when something unexpected happens. So I trained myself with a rule from flying: stop, take a breath, say the facts out loud, and pick one priority. On a busy floor, that habit actually makes me the calm one.", ja: "正直に言うと、想定外のことが起きると焦りやすいところです。なので飛行機で学んだ型を自分に叩き込みました。「止まる、深呼吸、事実を口に出す、最優先を1つ決める」。忙しいフロアでは、この習慣のおかげでむしろ落ち着いている側になれます。" },
     { sp: "C", en: "And why Australia, of all places?", ja: "それにしても、なぜオーストラリアに?" },
@@ -1571,6 +1572,100 @@ const INTERVIEW_SCENES = [
     { sp: "C", en: "We're all good. Dave will call you tomorrow.", ja: "もう大丈夫。明日デイブから電話するね。" },
     { sp: "S", en: "Great — thanks for showing me the ropes today. What are the next steps if it's a yes?", ja: "ありがとうございます、今日は色々教えていただいて。もし採用なら、次はどういう流れになりますか?" },
     { sp: "C", en: "Paperwork and your first roster. I'd say you're in with a good chance, mate.", ja: "書類手続きと最初のシフト表だね。たぶんいけると思うよ。" }
+  ]
+},
+{
+  id: "interview-resume",
+  title: "7. 履歴書を配る(レジュメドロップ)",
+  emoji: "📄",
+  desc: "ゴールドコーストの仕事は9割が「店に直接持ち込み」。この30秒の立ち話が全ての入口。",
+  tips: [
+    "行く時間帯が命: ランチ後の14〜16時。忙しい時間に行くと確実に嫌がられる。",
+    "第一声の型: \"Hi! Are you guys taking on any staff at the moment?\" 元気に、笑顔で、短く。",
+    "「いらない」と言われても \"No worries, I'll leave it here just in case.\" と置いていく。3週間後に電話が来ることもある。",
+    "必ず店長の名前を聞く: \"Sorry, what was your name?\" 次に来たとき名前を呼べると一気に有利。"
+  ],
+  lines: [
+    { sp: "S", en: "Hi! Sorry to bother you — are you guys taking on any staff at the moment?", ja: "こんにちは!お忙しいところすみません。今スタッフは募集していますか?" },
+    { sp: "C", en: "Uh, not sure. Have you got a resume?", ja: "うーん、どうかな。履歴書は持ってる?" },
+    { sp: "S", en: "Yes, right here. I'm Kazuki — I've got a year of hospitality experience from a hotel in Japan, weddings and front desk.", ja: "はい、こちらです。カズキといいます。日本のホテルで1年、披露宴とフロントの経験があります。" },
+    { sp: "C", en: "Cool. Are you on a working holiday visa?", ja: "なるほど。ワーキングホリデービザ?" },
+    { sp: "S", en: "Yes, full work rights until February — so I can cover the whole summer, including Christmas.", ja: "はい、2月までフルタイムで働けます。クリスマスも含めて夏の間ずっと働けます。" },
+    { sp: "C", en: "Right. I'll pass it on to the manager, but I can't promise anything.", ja: "そうか。マネージャーに渡しておくけど、約束はできないよ。" },
+    { sp: "S", en: "No worries at all, I appreciate it. Sorry, what was your name?", ja: "全く問題ありません、ありがとうございます。すみません、お名前を伺ってもいいですか?" },
+    { sp: "C", en: "I'm Tom.", ja: "トムだよ。" },
+    { sp: "S", en: "Thanks Tom! Is the manager usually in during the week?", ja: "ありがとうございます、トムさん!マネージャーは平日はいらっしゃいますか?" },
+    { sp: "C", en: "Yeah, Dave's here most mornings.", ja: "ああ、デイブはだいたい午前中にいるよ。" },
+    { sp: "S", en: "Perfect — I might pop back and say hello. Thanks again, have a good one!", ja: "承知しました。またご挨拶に伺うかもしれません。ありがとうございました、良い一日を!" }
+  ]
+},
+{
+  id: "interview-story",
+  title: "8. 経験を語る(STAR法)",
+  emoji: "⭐",
+  desc: "\"Tell me about a time...\" 系の質問全部に効く型。状況→課題→行動→結果の4文で答える。",
+  tips: [
+    "STAR = Situation(状況)→ Task(課題)→ Action(行動)→ Result(結果)。1文ずつ、計4文で切る。",
+    "長く話しすぎない。30秒で言い切って、相手が興味を持ったら深掘りしてもらう。",
+    "ミスの話は必ず「学んだこと」で終える。隠す人より、認めて直した人が信用される。"
+  ],
+  lines: [
+    { sp: "C", en: "Tell me about a time you made a mistake at work.", ja: "仕事でミスをした経験を教えて。" },
+    { sp: "S", en: "Sure. At a wedding reception, I served a dish to a guest who had a seafood allergy noted on the run sheet.", ja: "はい。披露宴で、進行表に甲殻類アレルギーと書かれていたお客様に、その料理を出してしまったことがあります。" },
+    { sp: "S", en: "I noticed before they ate it, so I apologised straight away, took the plate back, and told my supervisor immediately rather than hiding it.", ja: "召し上がる前に気づいたので、すぐ謝罪して皿を下げ、隠さずにその場で上司に報告しました。" },
+    { sp: "S", en: "Nobody was harmed, but it shook me. After that I started checking the allergy list out loud with the kitchen before every service — and I've never had a near-miss since.", ja: "実害はありませんでしたが、こたえました。それ以来、サービス前に必ず厨房とアレルギーリストを声に出して確認するようにして、以降ヒヤリハットはゼロです。" },
+    { sp: "C", en: "That's a good answer. What about a time you helped a teammate?", ja: "いい答えだね。じゃあ同僚を助けた経験は?" },
+    { sp: "S", en: "One night we were short-staffed and a new server was falling behind on drinks.", ja: "ある晩、人手が足りず、新人のサーバーがドリンクの提供で遅れていました。" },
+    { sp: "S", en: "I finished my section early, so I took over her drink orders while she focused on food, without being asked.", ja: "自分の担当が早く終わったので、言われる前に彼女のドリンク注文を引き取り、彼女は料理に集中できるようにしました。" },
+    { sp: "S", en: "We caught up within twenty minutes, and she still messages me now. I like a team where people cover each other.", ja: "20分で遅れを取り戻せました。今でも連絡を取り合っています。お互いをカバーし合えるチームが好きなんです。" },
+    { sp: "C", en: "Sounds like you'd fit in well here.", ja: "うちに合いそうだね。" },
+    { sp: "S", en: "I'd like to think so — that's exactly the kind of floor I'm looking for.", ja: "そう思っていただけたら嬉しいです。まさにそういう職場を探しています。" }
+  ]
+},
+{
+  id: "interview-hard",
+  title: "9. 答えにくい質問",
+  emoji: "😰",
+  desc: "経験がない、時給、英語力への不安。ごまかさず、正直に、でも前向きに返す型を身につける。",
+  tips: [
+    "経験がないときは嘘をつかない。「近い経験+覚える速さ」に変換する。",
+    "時給を聞かれたら \"What's the standard rate for this role?\" と聞き返すのが安全(豪州には最低賃金があるので下手に安く言う必要はない)。",
+    "「なぜうちなの?」には具体を1つ入れる。店の名前・場所・雰囲気に触れると本気度が伝わる。"
+  ],
+  lines: [
+    { sp: "C", en: "You've never worked in a café before, have you?", ja: "カフェで働いた経験はないよね?" },
+    { sp: "S", en: "Not in a café, no — I'll be straight with you. But I've done a year of high-volume table service, so the floor side I know well. The coffee side I'd need to learn, and I learn fast.", ja: "カフェは経験がありません、正直に申し上げます。ただ、忙しいテーブルサービスを1年やってきたので、フロアのことは分かります。コーヒーは学ぶ必要がありますが、覚えるのは早いです。" },
+    { sp: "C", en: "How do I know you'll stick around? A lot of backpackers leave after a month.", ja: "長く続けてくれるか分からないよね。バックパッカーは1ヶ月で辞める人も多いから。" },
+    { sp: "S", en: "Fair question. I'm here until February and I'm not travelling around — I'm based here on the Coast. And honestly, consistency is my thing: I've trained every day for years without skipping. I don't start things I don't finish.", ja: "もっともなご質問です。2月までここにいますし、旅を続ける予定もありません。拠点はゴールドコーストです。それに継続は自分の強みで、何年も毎日欠かさずトレーニングを続けてきました。始めたことを途中で投げ出しません。" },
+    { sp: "C", en: "What sort of money are you after?", ja: "時給はどれくらい希望?" },
+    { sp: "S", en: "I'd rather ask you — what's the standard rate for this role? I'm mainly after the experience and steady hours.", ja: "むしろ伺いたいのですが、このポジションの標準的な時給はいくらでしょうか?私が求めているのは主に経験と安定したシフトです。" },
+    { sp: "C", en: "We start casuals at award rate. Last one — your English. Can you handle a rush?", ja: "カジュアルは法定賃金からスタートだね。最後に、英語のこと。ラッシュ時に対応できる?" },
+    { sp: "S", en: "During a rush I keep it simple: I confirm the order back, and if I don't catch something I ask once rather than guess. That's how I avoid mistakes — and my English gets better every week.", ja: "ラッシュ時はシンプルにやります。注文を復唱し、聞き取れなければ推測せず一度聞き返します。それでミスを防いでいます。英語も毎週上達しています。" },
+    { sp: "C", en: "Honest answers. I like that.", ja: "正直な答えだ。そういうの好きだよ。" },
+    { sp: "S", en: "Thank you. I'd rather tell you what I can't do yet than promise something I can't deliver.", ja: "ありがとうございます。できないことを隠して約束するより、正直にお伝えしたいので。" }
+  ]
+},
+{
+  id: "interview-result",
+  title: "10. 採用連絡・条件の確認",
+  emoji: "🎉",
+  desc: "「採用」の電話が来たら。初日の確認事項と、TFN・銀行口座など働き始める手続きの英語。",
+  tips: [
+    "採用連絡で確認する3点: 初日の日時 / 服装 / 持ち物(TFN・銀行口座・ビザ情報)。",
+    "TFN(納税者番号)と super(退職年金)は初日に必ず聞かれる。事前に取得しておく。",
+    "断るときも礼儀正しく: \"I've accepted another role, but thank you so much for the opportunity.\" 業界は狭いので敵を作らない。"
+  ],
+  lines: [
+    { sp: "C", en: "Hi Kazuki, it's Dave. Good news — we'd love to have you on the team.", ja: "カズキ、デイブだよ。いい知らせだ。ぜひうちのチームに入ってほしい。" },
+    { sp: "S", en: "That's fantastic — thank you so much, Dave! I'm really looking forward to it.", ja: "本当に嬉しいです。ありがとうございます、デイブさん!とても楽しみです。" },
+    { sp: "C", en: "Can you start Monday? Five o'clock for the dinner service.", ja: "月曜から始められる?ディナーサービスで5時からだ。" },
+    { sp: "S", en: "Monday at five — yes, absolutely. What should I bring on the first day?", ja: "月曜5時ですね、もちろん大丈夫です。初日は何を持っていけばいいですか?" },
+    { sp: "C", en: "Your TFN, bank details for payroll, and a copy of your visa. You got a TFN yet?", ja: "TFNと給与振込用の銀行口座情報、それとビザのコピーだね。TFNはもう取った?" },
+    { sp: "S", en: "Yes, I applied online and I've got the number. I'll bring my bank details and my VEVO printout too.", ja: "はい、オンラインで申請して番号を持っています。銀行口座の情報とVEVOの印刷も持っていきます。" },
+    { sp: "C", en: "Good on ya. Wear black — shirt, pants, closed-in shoes.", ja: "いいね。服は黒で。シャツ、パンツ、つま先の隠れる靴。" },
+    { sp: "S", en: "Black shirt, black pants, closed shoes. And how many hours would I be getting a week?", ja: "黒シャツ、黒パンツ、つま先の隠れる靴ですね。週に何時間くらい入れますか?" },
+    { sp: "C", en: "Start around twenty-five, more once you're up to speed. Sound alright?", ja: "最初は25時間くらいで、慣れたら増やせる。それでいい?" },
+    { sp: "S", en: "That sounds great. Thanks again for the opportunity, Dave — see you Monday at five!", ja: "とても嬉しいです。機会をいただきありがとうございます、デイブさん。月曜5時に伺います!" }
   ]
 }
 ];
