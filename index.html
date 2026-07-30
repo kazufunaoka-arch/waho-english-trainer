@@ -9,6 +9,14 @@
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <meta name="theme-color" content="#FF8B54">
 <meta name="apple-mobile-web-app-title" content="ワーホリ英会話">
+<meta name="description" content="オーストラリアのワーホリで働くための英語を、職場の場面ごとに練習。11職種59シーン、ネイティブ音声とAIロールプレイ付き。完全無料・登録不要。">
+<meta property="og:type" content="website">
+<meta property="og:title" content="ワーホリ英会話トレーナー">
+<meta property="og:description" content="オーストラリアの職場で使う英語を、場面ごとに。11職種59シーン・ネイティブ音声・AIロールプレイ。完全無料/登録不要。">
+<meta property="og:image" content="https://kazufunaoka-arch.github.io/waho-english-trainer/og-image.png">
+<meta property="og:url" content="https://kazufunaoka-arch.github.io/waho-english-trainer/">
+<meta property="og:locale" content="ja_JP">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@500;700;900&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
@@ -2232,6 +2240,7 @@ function renderNav() {
   html += `<button class="${currentScene === -1 ? "active" : ""}" onclick="goPhrases()">キーフレーズ集</button>`;
   html += `<button class="${currentScene === -2 ? "active" : ""}" onclick="goAussie()">オージー単語帳</button>`;
   html += `<button class="${currentScene === -3 ? "active" : ""}" onclick="goInstant()">⚡瞬間英作文</button>`;
+  html += `<button class="${currentScene === -4 ? "active" : ""}" onclick="goHowTo()">📖 使い方</button>`;
   nav.innerHTML = html;
 }
 
@@ -2284,6 +2293,7 @@ function renderScene() {
   if (currentScene === -1) { renderPhrases(); return; }
   if (currentScene === -2) { renderAussie(); return; }
   if (currentScene === -3) { renderInstant(); return; }
+  if (currentScene === -4) { renderHowTo(); return; }
   const s = SCENES[currentScene];
   let html = `
     <div class="scene-header">
@@ -2973,9 +2983,83 @@ function celebrate() {
   })();
 }
 
+function goHowTo() {
+  stopAll();
+  currentScene = -4;
+  localStorage.setItem("seenHowTo", "1");
+  renderNav();
+  renderHowTo();
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+function renderHowTo() {
+  aiChat = null;
+  const sceneCount = JOBS.reduce((a, j) => a + j.scenes.length, 0);
+  document.getElementById("main").innerHTML = `
+    <div class="scene-header">
+      <h2>使い方 — 1日30分の型</h2>
+      <p>オーストラリアの職場で実際に使う英語を、${JOBS.length}職種${sceneCount}シーンで練習できます。<br>
+      全機能・完全無料。登録もインストールも不要です。</p>
+    </div>
+
+    <div class="tips">
+      <h3>おすすめの毎日ルーティン</h3>
+      <ul>
+        <li><b>① シャドーイング(10分)</b> — 職場とシーンを選び、🎧ネイティブ音声を再生。聞こえた英語を影のように追いかけて声に出します。「ループ」にチェックを入れると繰り返し再生されます。<b>1週間は同じシーン</b>を続けるのがコツ。</li>
+        <li><b>② 瞬間英作文(5〜10分)</b> — 上の「⚡瞬間英作文」へ。日本語を見て<b>2秒以内に声に出して</b>英語で言い、答え合わせ。○✗を押すだけで復習日は自動管理されます。</li>
+        <li><b>③ AIと実戦練習(10分)</b> — 同じシーンの「AIと実戦練習」で、AIを相手に自由会話。終わったら総評をもらいます。</li>
+      </ul>
+      <p class="section-note" style="margin-top:8px">忙しい日は②だけでOK。続けることが一番効きます。</p>
+    </div>
+
+    <h3 class="section-title">できること</h3>
+    <table>
+      <tr><th style="width:34%">機能</th><th>内容</th></tr>
+      <tr><td class="en-cell">🎧 ネイティブ音声</td><td>全シーンにオーストラリア英語の音声付き。シャドーイングの教材になります。</td></tr>
+      <tr><td class="en-cell">🎭 ロールプレイ</td><td>上部で切り替えると自分のセリフが隠れます。声に出してから答え合わせ。</td></tr>
+      <tr><td class="en-cell">⚡ 瞬間英作文</td><td>日本語→英語を2秒で。間隔反復で復習日を自動管理します。</td></tr>
+      <tr><td class="en-cell">🤖 AIと実戦練習</td><td>AIが客・上司・子ども役を演じ、自由に英会話。日本語でワンポイント添削も出ます。</td></tr>
+      <tr><td class="en-cell">🇦🇺 オージー単語帳</td><td>ポット、アルボ、スモーコなど、現地で必須のスラングと生活単語。</td></tr>
+    </table>
+
+    <div class="tips">
+      <h3>スマホのホーム画面に置く</h3>
+      <ul>
+        <li><b>iPhone(Safari):</b> 共有ボタン → 「ホーム画面に追加」</li>
+        <li><b>Android(Chrome):</b> ⋮メニュー → 「ホーム画面に追加」</li>
+      </ul>
+      <p class="section-note" style="margin-top:8px">アプリのように起動できます。学習の進み具合はお使いの端末にだけ保存されます。</p>
+    </div>
+
+    <div class="tips">
+      <h3>AIと実戦練習について</h3>
+      <ul>
+        <li>この機能だけ、<b>ご自身のAnthropic APIキー</b>が必要です(初回に設定画面が出ます)。</li>
+        <li>目安は会話1往復0.2〜0.5円、終了時の総評が1回2円ほど。最低5ドルのチャージで数百回練習できます。</li>
+        <li>キーはお使いのブラウザにだけ保存され、Anthropic以外には送信されません。</li>
+        <li><b>他の機能はすべてキー不要</b>で使えます。</li>
+      </ul>
+    </div>
+
+    <div class="complete-row">
+      <button onclick="goJob(0)">練習を始める</button>
+    </div>
+    <p class="section-note" style="text-align:center;margin-top:18px">
+      ワーホリ準備中に自分用として作ったものを公開しています。<br>
+      内容の正確性は保証しきれないので、ビザや就労のルールは必ず公式情報をご確認ください。
+    </p>`;
+}
+
 renderJobNav();
 renderNav();
-renderScene();
+if (!localStorage.getItem("seenHowTo")) {
+  currentScene = -4;
+  localStorage.setItem("seenHowTo", "1");
+  renderNav();
+  renderHowTo();
+} else {
+  renderScene();
+}
 updateStreakChip();
 </script>
 </body>
