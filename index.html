@@ -2078,7 +2078,105 @@ const DEMIPAIR_SCENES = [
 }
 ];
 
+const UBER_SCENES = [
+{
+  id: "uber-pickup",
+  title: "1. 店で商品を受け取る",
+  emoji: "🏪",
+  otherLabel: "RESTAURANT",
+  desc: "配達の起点。名前と注文番号を伝えて、中身を確認して出る。この30秒を毎回くり返す。",
+  tips: [
+    "第一声は \"Hi, I'm here for an Uber pickup.\" 店員はこれで全部わかる。",
+    "注文は客の名前で管理されている。\"It's under Jessica.\"(ジェシカで入っています)が定型。",
+    "受け取る前に必ず \"Is that everything?\"(全部揃っていますか?)。中身不足は配達員の評価に響く。",
+    "オーストラリアで配達をするには ABN(事業者番号)が必要。TFNとは別物なので事前に無料で取得する。"
+  ],
+  lines: [
+    { sp: "S", en: "Hi, I'm here for an Uber pickup.", ja: "こんにちは、Uberの受け取りに来ました。" },
+    { sp: "C", en: "Sure. What's the name on the order?", ja: "はい。ご注文のお名前は?(店員)" },
+    { sp: "S", en: "It's under Jessica. Order number four-seven-two.", ja: "ジェシカで入っています。注文番号は472です。" },
+    { sp: "C", en: "Yep, that one's still cooking. Give it two minutes.", ja: "ああ、それはまだ調理中だね。2分ちょうだい。" },
+    { sp: "S", en: "No worries, I'll wait over here.", ja: "大丈夫です、こちらで待ちます。" },
+    { sp: "C", en: "Righto, here you go. Two burgers and a salad.", ja: "はい、どうぞ。バーガー2つとサラダね。" },
+    { sp: "S", en: "Thanks! Is that everything? I think there were drinks on the order.", ja: "ありがとうございます!これで全部ですか?注文にドリンクもあった気がするのですが。" },
+    { sp: "C", en: "Oh, good pick-up. Two Cokes — here.", ja: "お、よく気づいたね。コーラ2つ、はい。" },
+    { sp: "S", en: "Cheers. Are the sauces in the bag as well?", ja: "ありがとうございます。ソースも袋に入っていますか?" },
+    { sp: "C", en: "Yep, all in there, mate.", ja: "うん、全部入ってるよ。" },
+    { sp: "S", en: "Beauty. Thanks a lot — have a good one!", ja: "完璧です。ありがとうございました、良い一日を!" }
+  ]
+},
+{
+  id: "uber-dropoff",
+  title: "2. お客さんに渡す",
+  emoji: "🛵",
+  desc: "受け渡しは10秒で終わる。だからこそ、明るい一言で星5をもらいに行く。",
+  tips: [
+    "\"Uber Eats — order for Tom?\" と名前で確認するのが基本。間違い配達を防げる。",
+    "leave at door(玄関に置く)指定なら、置いて写真を撮り、\"Your order's at the door.\" とメッセージ。",
+    "最後は必ず \"Enjoy your meal!\" か \"Have a good night!\"。この一言が評価に効く。"
+  ],
+  lines: [
+    { sp: "S", en: "Hi! Uber Eats — order for Tom?", ja: "こんにちは!Uber Eatsです。トムさんのご注文ですか?" },
+    { sp: "C", en: "Yeah, that's me. Thanks for that!", ja: "はい、私です。ありがとう!" },
+    { sp: "S", en: "No worries. Here you go — and the drinks are in the tray on top.", ja: "とんでもないです。どうぞ。ドリンクは上のトレーに入っています。" },
+    { sp: "C", en: "Legend. Did they put the extra sauce in?", ja: "助かる。追加のソースは入ってた?" },
+    { sp: "S", en: "I asked at the restaurant and they said yes — it should be in the side pocket.", ja: "お店で確認したら入っているとのことでした。横のポケットにあるはずです。" },
+    { sp: "C", en: "Perfect, thanks mate.", ja: "完璧、ありがとう。" },
+    { sp: "S", en: "All good. Enjoy your meal — have a good night!", ja: "とんでもないです。お食事お楽しみください、良い夜を!" },
+    { sp: "C", en: "You too, drive safe!", ja: "君もね、気をつけて!" }
+  ]
+},
+{
+  id: "uber-phone",
+  title: "3. 場所がわからず電話する",
+  emoji: "📱",
+  desc: "ゴールドコーストは高層アパートだらけ。ロビーで入れない、部屋番号がない — 配達英語の最難関。",
+  tips: [
+    "電話の第一声を丸暗記: \"Hi, it's your Uber Eats driver — I'm downstairs but I can't get in.\"",
+    "建物用語: lobby(ロビー)/ intercom(インターホン)/ buzz me in(解錠して)/ lift(エレベーター)/ unit(部屋)。",
+    "聞き取れなければ \"Could you say the unit number again?\" と番号だけ聞き返す。数字は必ず復唱。",
+    "路上駐車は罰金が高い。\"I'm parked out the front, so I can't stay long.\" と伝えて急いでもらうのもアリ。"
+  ],
+  lines: [
+    { sp: "S", en: "Hi, it's your Uber Eats driver. I'm downstairs in the lobby, but I can't get through the security door.", ja: "こんにちは、Uber Eatsの配達員です。今下のロビーにいるのですが、セキュリティドアが開けられなくて。" },
+    { sp: "C", en: "Oh sorry! I forgot to put the unit number in. It's twelve-oh-four.", ja: "ごめんなさい!部屋番号を入れ忘れてました。1204です。" },
+    { sp: "S", en: "Sorry, could you say that again? Twelve-oh-four?", ja: "すみません、もう一度お願いできますか?1204ですか?" },
+    { sp: "C", en: "Yeah, 1204. Just buzz it on the intercom and I'll let you in.", ja: "そう、1204。インターホンで呼んでくれれば開けるから。" },
+    { sp: "S", en: "Got it. Do I need a code for the lift as well?", ja: "承知しました。エレベーターにも暗証番号が必要ですか?" },
+    { sp: "C", en: "Nah, I'll release it from up here. Come to level twelve.", ja: "いや、こっちから解除するよ。12階まで来て。" },
+    { sp: "S", en: "No worries. Just so you know, I'm parked out the front, so I'll be as quick as I can.", ja: "了解です。一応お伝えすると、正面に駐車しているので、なるべく急ぎます。" },
+    { sp: "C", en: "All good, I'll meet you at the lift.", ja: "大丈夫、エレベーターのところで待ってるよ。" },
+    { sp: "S", en: "Perfect, see you in a minute.", ja: "承知しました、すぐ伺います。" }
+  ]
+},
+{
+  id: "uber-trouble",
+  title: "4. 遅れ・品切れ・住所ミス",
+  emoji: "⚠️",
+  desc: "店が遅い、商品が品切れ、住所が違う。先に一言入れられるかで評価が決まる。",
+  tips: [
+    "遅れは先回りで連絡: \"Just letting you know the restaurant is running about 10 minutes behind.\"",
+    "品切れは自分で判断せず客に確認: \"They've run out of ~. Would you like ~ instead, or a refund?\"",
+    "住所が違うときは自分で走り回らず、まず電話。それでもダメならアプリのサポートへ。",
+    "謝るときは \"Sorry about that\" で十分。自分のミスでなくても一言添えると角が立たない。"
+  ],
+  lines: [
+    { sp: "S", en: "Hi, it's your Uber Eats driver. Just letting you know the restaurant is running about ten minutes behind.", ja: "こんにちは、Uber Eatsの配達員です。お店が10分ほど遅れているのでお知らせしておきます。" },
+    { sp: "C", en: "Oh, okay. Thanks for telling me.", ja: "あ、そうなんですね。教えてくれてありがとう。" },
+    { sp: "S", en: "No worries. Also, they've run out of the mango smoothie. Would you like a different flavour, or should I ask them to refund it?", ja: "とんでもないです。それと、マンゴースムージーが品切れとのことです。別のフレーバーになさいますか?それとも返金を頼みましょうか?" },
+    { sp: "C", en: "Hmm, can I get a strawberry one instead?", ja: "うーん、代わりにストロベリーをもらえる?" },
+    { sp: "S", en: "Sure, I'll ask them now. Sorry about that.", ja: "承知しました、今聞いてみます。ご不便をおかけします。" },
+    { sp: "C", en: "No dramas, thanks for sorting it.", ja: "気にしないで、対応ありがとう。" },
+    { sp: "S", en: "I'm at 24 Beach Road now, but the number on the gate says 42. Am I at the right place?", ja: "今ビーチロード24番地にいるのですが、門の表示が42番になっています。場所は合っていますか?" },
+    { sp: "C", en: "Ah, it's 42 — I typed it wrong. Sorry!", ja: "あ、42です。入力を間違えました。ごめんなさい!" },
+    { sp: "S", en: "All good, it's just around the corner. I'll be there in two minutes.", ja: "大丈夫です、すぐそこですね。2分で伺います。" },
+    { sp: "C", en: "Thanks so much, you're a champion.", ja: "本当にありがとう、助かるよ。" }
+  ]
+}
+];
+
 const JOBS = [
+  { id: "uber", name: "Uber Eats", scenes: UBER_SCENES },
   { id: "steak", name: "ステーキ屋", scenes: STEAK_SCENES },
   { id: "cafe", name: "カフェ", scenes: CAFE_SCENES },
   { id: "thai", name: "タイ料理店", scenes: THAI_SCENES },
@@ -2391,6 +2489,7 @@ const JOB_SETTINGS = {
   hotel: "a hotel on the Gold Coast (the learner is a housekeeper / room attendant)",
   thai: "a Thai restaurant (the learner waits tables, takes phone orders, and helps as a kitchen hand)",
   kebab: "a kebab shop in Surfers Paradise (the learner takes orders and makes kebabs, including late-night shifts)",
+  uber: "Uber Eats delivery on the Gold Coast (the learner is the delivery rider/driver, picking up from restaurants and dropping off to customers, often at high-rise apartments in Surfers Paradise)",
   demipair: "an Australian host family's home on the Gold Coast (the learner is a demi pair — childcare and light housework in exchange for homestay, while studying at a language school)"
 };
 
@@ -2400,6 +2499,7 @@ const AI_ROLES = {
   GUEST: "hotel guest",
   CHEF: "head chef or kitchen coworker giving instructions",
   COWORKER: "coworker on the same shift",
+  RESTAURANT: "restaurant staff member handing over a delivery order at the pickup counter",
   PARENT: "host parent of the family (warm, appreciative, occasionally asking about the kids or setting house rules)",
   KID: "young child of the host family, about 4-7 years old — speak in very short, simple, playful sentences, sometimes whiny or easily distracted, like a real kid"
 };
@@ -2913,8 +3013,8 @@ function renderInstant() {
 }
 
 /* ===== 青春ギミック: ストリーク & 紙吹雪 ===== */
-const JOB_EMOJI = { steak: "🥩", cafe: "☕", thai: "🍛", kebab: "🌯", hotel: "🛏️", demipair: "🏡", gym: "💪", swim: "🏊", airport: "🛫", flightexp: "✈️", interview: "🤝" };
-const WHO_EMOJI = { CUSTOMER: "🙋", GUEST: "🧳", KID: "🧒", PARENT: "👩", CHEF: "👨‍🍳", SUPERVISOR: "📋", COWORKER: "🤜", MANAGER: "🤝" };
+const JOB_EMOJI = { uber: "🛵", steak: "🥩", cafe: "☕", thai: "🍛", kebab: "🌯", hotel: "🛏️", demipair: "🏡", gym: "💪", swim: "🏊", airport: "🛫", flightexp: "✈️", interview: "🤝" };
+const WHO_EMOJI = { RESTAURANT: "🏪", CUSTOMER: "🙋", GUEST: "🧳", KID: "🧒", PARENT: "👩", CHEF: "👨‍🍳", SUPERVISOR: "📋", COWORKER: "🤜", MANAGER: "🤝" };
 
 function markPracticed() {
   const t = srsDateStr(0);
