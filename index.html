@@ -874,6 +874,30 @@ const STEAK_SCENES = [
     { sp: "C", en: "Sweet as. It's my shout next time, promise!", ja: "最高。次は俺のおごりね、約束!(shout = おごり)" },
     { sp: "S", en: "Ha, no worries! Have a good one, guys!", ja: "はは、お気になさらず!良い一日を!" }
   ]
+},
+{
+  id: "steak-real",
+  title: "14. 🔥 崩れた注文を捌く",
+  emoji: "🔥",
+  desc: "言い直し、あいまいな指し方、途中で変わる注文。教科書通りに来ない実戦版。",
+  tips: [
+    "客は文の途中で言い直す。全部聞き取ろうとせず、最後に言った内容を復唱して確定させる。",
+    "\"the one with the mushroom stuff\"(あのキノコのやつ)みたいな曖昧な指し方は日常茶飯事。メニュー名に言い換えて確認する。",
+    "正直、最初のうちは半分も聞き取れない。それでも最後に \"So that's...\" で復唱できれば注文は通る。"
+  ],
+  lines: [
+    { sp: "C", en: "Yeah look, can I get the— hang on, what's the one with the mushroom stuff on it?", ja: "えーっと、その……待って、キノコのやつが乗ってるの何だっけ?" },
+    { sp: "S", en: "Sorry, do you mean the ribeye with mushroom sauce?", ja: "すみません、マッシュルームソースのリブアイのことでしょうか?" },
+    { sp: "C", en: "Nah nah, the other one. The one me missus had last time. Chicken? No, it was— ah, whatever, just do the ribeye.", ja: "いやいや、もう一つの方。前回うちの奥さんが食べたやつ。チキン?いや、あれは……ああもういいや、リブアイで。" },
+    { sp: "S", en: "No worries, one ribeye. How would you like it cooked?", ja: "かしこまりました、リブアイですね。焼き加減はいかがなさいますか?" },
+    { sp: "C", en: "Medium. Actually, medium rare. Yeah, medium rare.", ja: "ミディアム。いや、ミディアムレア。うん、ミディアムレアで。" },
+    { sp: "S", en: "Medium rare, got it.", ja: "ミディアムレアですね、承知しました。" },
+    { sp: "C", en: "And can we get chips instead of the salad, and, uh, is the pepper sauce extra?", ja: "あとサラダをチップスに変えられる?それと、ペッパーソースって別料金?" },
+    { sp: "S", en: "Chips instead of salad is fine. And the pepper sauce is three dollars extra.", ja: "サラダをチップスに変更、問題ありません。ペッパーソースは3ドル追加になります。" },
+    { sp: "C", en: "Yeah righto, chuck it on.", ja: "ああ、じゃあ付けて。" },
+    { sp: "S", en: "So that's a ribeye, medium rare, chips instead of salad, and pepper sauce. Anything else?", ja: "ではリブアイのミディアムレア、サラダをチップスに変更、ペッパーソース付きですね。他にご注文は?" },
+    { sp: "C", en: "That'll do.", ja: "それでいいや。" }
+  ]
 }
 ];
 
@@ -1085,6 +1109,30 @@ const CAFE_SCENES = [
     { sp: "S", en: "Just to let you know, the kitchen closes at 2:30, so if you'd like anything else to eat, last orders are in ten minutes.", ja: "お知らせですが、キッチンは2時半で閉まります。お食事の追加はあと10分でラストオーダーです。" },
     { sp: "C", en: "Good to know. We're all good, thanks!", ja: "教えてくれてありがとう。もう大丈夫です!" }
   ]
+},
+{
+  id: "cafe-rush",
+  title: "5. 🔥 朝ラッシュの怒涛の注文",
+  emoji: "🔥",
+  desc: "一気にまくし立てられ、途中で変更が入る。カフェで一番きつい15分。",
+  tips: [
+    "全部聞き取れなくていい。聞き逃した1つだけを狙って聞き返す(\"Sorry, was that oat milk?\")。",
+    "注文の途中で \"Actually...\" と変わるのが普通。最後に言った方が正しい。",
+    "名前が聞き取れないのは当たり前。\"Sorry, how do you spell that?\" は毎回使っていい。"
+  ],
+  lines: [
+    { sp: "C", en: "Morning — large flat white, extra shot, oat, and a small cap for her.", ja: "おはよう。ラージのフラットホワイト、ショット追加、オーツミルクで。あと彼女に small のカプチーノ。" },
+    { sp: "S", en: "Sorry, was that oat milk on the flat white?", ja: "すみません、オーツミルクはフラットホワイトの方でしたか?" },
+    { sp: "C", en: "Yeah, oat on the flat white, normal on the cap. And do you still do the bacon and egg roll?", ja: "そう、オーツはフラットホワイト、カプチーノは普通ので。あとベーコンエッグロールってまだやってる?" },
+    { sp: "S", en: "We do, yep.", ja: "はい、ございます。" },
+    { sp: "C", en: "One of those, no tomato. Actually two. And sorry, are you takeaway cups only, or...", ja: "それを1つ、トマト抜きで。いや2つ。あとごめん、カップって持ち帰り用だけ?それとも……" },
+    { sp: "S", en: "We've got both. Having here or takeaway?", ja: "どちらもございます。店内でお召し上がりですか、お持ち帰りですか?" },
+    { sp: "C", en: "Takeaway. We're running late.", ja: "持ち帰りで。遅刻しそうなんだ。" },
+    { sp: "S", en: "No worries. So a large flat white with oat and an extra shot, a small cappuccino, and two bacon and egg rolls, no tomato — all takeaway.", ja: "承知しました。ラージのフラットホワイト、オーツでショット追加、スモールのカプチーノ、ベーコンエッグロール2つトマト抜き、すべて持ち帰りですね。" },
+    { sp: "C", en: "Yep, that's it. How long?", ja: "うん、それで。どれくらいかかる?" },
+    { sp: "S", en: "About five minutes. Can I grab a name?", ja: "5分ほどです。お名前をいただけますか?" },
+    { sp: "C", en: "Just put Baz.", ja: "バズでいいよ。" }
+  ]
 }
 ];
 
@@ -1175,6 +1223,28 @@ const GYM_SCENES = [
     { sp: "C", en: "Thanks. Also, can I bring a friend sometime?", ja: "ありがとう。それと、友達を連れてきてもいいですか?" },
     { sp: "S", en: "Yep! Members get one free guest pass a month. Just have them fill in a waiver at the front desk when they come in.", ja: "はい!会員様は月1回無料のゲストパスが使えます。お友達がいらしたら、受付で免責同意書にご記入いただくだけです。" }
   ]
+},
+{
+  id: "gym-chatty",
+  title: "5. 🔥 話が止まらない常連",
+  emoji: "🔥",
+  desc: "延々と続く世間話。全部聞き取れなくていい。相槌でしのぎ、角を立てずに切り上げる。",
+  tips: [
+    "全部理解しようとしなくていい。\"Right.\" \"Oh no.\" \"Fair enough.\" の3つで大半は流せる。",
+    "医療の話には絶対に答えない。\"I can't give you medical advice.\" が自分を守る一言。",
+    "切り上げ方: \"Sorry mate, I've got to get back on the floor.\" これは失礼にならない。"
+  ],
+  lines: [
+    { sp: "C", en: "Mate, you wouldn't believe the day I've had. So me back's been playing up again — you know I did it years ago at work, yeah?", ja: "いやもう今日は最悪でさ。腰がまた痛み出して。前に仕事でやったって話したろ?" },
+    { sp: "S", en: "Oh no. Have you seen a physio about it?", ja: "それは大変ですね。理学療法士には診てもらいましたか?" },
+    { sp: "C", en: "Yeah, yeah, saw one Tuesday. Or was it Wednesday. Anyway he reckons it's the disc, but me GP said something different, so...", ja: "ああ、火曜に行ったよ。水曜だったかな。とにかく椎間板だって言われたんだけど、かかりつけ医は違うこと言っててさ……" },
+    { sp: "S", en: "Right.", ja: "なるほど。" },
+    { sp: "C", en: "So can I still do the leg press or what?", ja: "で、レッグプレスはやっていいのかな?" },
+    { sp: "S", en: "I'd check with your physio before you load it up, to be honest. I can't give you medical advice.", ja: "正直、重量を上げる前に理学療法士に確認された方がいいと思います。医療的な助言はできないので。" },
+    { sp: "C", en: "Fair enough. Anyway, did I tell you about me son's footy team?", ja: "まあそうだよな。ところで息子のフッティのチームの話したっけ?" },
+    { sp: "S", en: "You did, yeah! Sorry mate, I've got to get back on the floor — catch you later?", ja: "聞きましたよ!すみません、フロアに戻らないといけなくて。またあとで!" },
+    { sp: "C", en: "No worries, no worries. You're a good bloke.", ja: "いいよいいよ。君はいいやつだな。" }
+  ]
 }
 ];
 
@@ -1263,6 +1333,29 @@ const SWIM_SCENES = [
     { sp: "S", en: "Thanks for letting me know. I'd recommend ear plugs, and please check with your GP if it flares up.", ja: "教えていただきありがとうございます。耳栓をおすすめします。悪化したらかかりつけ医(GP)にご相談くださいね。" },
     { sp: "C", en: "We're away on holidays in two weeks. Do we lose that lesson?", ja: "2週間後に旅行で休むんですが、その回は無駄になりますか?" },
     { sp: "S", en: "Not at all — just let reception know before the day, and we'll credit the class to your account.", ja: "いいえ、大丈夫です。前日までに受付にお知らせいただければ、その回は振替クレジットになります。" }
+  ]
+},
+{
+  id: "swim-anxious",
+  title: "5. 🔥 不安でいっぱいの保護者",
+  emoji: "🔥",
+  otherLabel: "PARENT",
+  desc: "話を遮られ、質問が重なる。説明より「具体的な行動」で安心してもらう場面。",
+  tips: [
+    "情報を並べるより具体語が効く。\"within arm's reach\"(手の届く範囲)のような一言が安心を生む。",
+    "遮られても言い返さない。まず \"I understand.\" で受け止めてから答える。",
+    "\"I know I'm being that parent.\"(過保護でごめん)には、否定より共感を返す。"
+  ],
+  lines: [
+    { sp: "C", en: "Sorry, quick question — is she actually going to be safe? Because last week I saw one of the little ones go under and nobody...", ja: "すみません、ちょっといいですか。本当に安全なんでしょうか?先週、小さい子が沈んだのに誰も……" },
+    { sp: "S", en: "I understand. There's always an instructor in the water with them, and a lifeguard watching the pool.", ja: "ご心配はわかります。必ずインストラクターが一緒に水に入っていますし、ライフガードもプールを見ています。" },
+    { sp: "C", en: "Right, but she can't swim. Like, at all. And you've got four kids in there.", ja: "でもうちの子、全然泳げないんです。それなのに4人も見るんですよね。" },
+    { sp: "S", en: "That's right, four is our maximum. For beginners we stay within arm's reach the whole lesson.", ja: "はい、4人が上限です。初心者のお子さんにはレッスン中ずっと手の届く距離にいます。" },
+    { sp: "C", en: "Within arm's reach. Okay. And what if she panics?", ja: "手の届く距離。わかりました。もしパニックになったら?" },
+    { sp: "S", en: "I'll be holding her. If she gets upset, we stop and take a break at the wall — we never force it.", ja: "私が支えています。嫌がったら中断して壁で休憩します。無理にはさせません。" },
+    { sp: "C", en: "Sorry, I know I'm being that parent.", ja: "すみません、過保護な親ですよね。" },
+    { sp: "S", en: "Not at all. She's your daughter — of course you want to know. Come and watch from the viewing area today.", ja: "とんでもないです。お嬢さんのことですから、知りたいのは当然です。今日は見学エリアからご覧になってください。" },
+    { sp: "C", en: "Yeah. Yeah, I might do that. Thanks.", ja: "ええ。そうします。ありがとう。" }
   ]
 }
 ];
@@ -1354,6 +1447,29 @@ const AIRPORT_SCENES = [
     { sp: "C", en: "Thanks. What happens if the flight gets cancelled altogether?", ja: "ありがとう。もし欠航になったらどうなりますか?" },
     { sp: "S", en: "If it's cancelled, we'll rebook you on the next available flight at no cost, and if you're stuck overnight, we'll arrange accommodation for you.", ja: "欠航の場合は、次に空きのある便へ無料でお振替します。万一宿泊が必要になった場合は、宿泊先もこちらで手配いたします。" }
   ]
+},
+{
+  id: "airport-angry",
+  title: "5. 🔥 怒っている乗客",
+  emoji: "🔥",
+  desc: "早口でまくし立てられ、言葉を被せられる。説明を重ねず、短く謝ってすぐ手を動かす。",
+  tips: [
+    "怒っている相手に説明を重ねない。短く謝り、すぐ端末を操作する。手が動いていると相手は落ち着く。",
+    "\"Give me thirty seconds\" のように具体的な時間を言うと待ってもらえる。\"Please wait\" だけだと火に油。",
+    "相手の怒りは自分に向いていない。最後に謝られることも多い。真に受けて落ち込まないこと。"
+  ],
+  lines: [
+    { sp: "C", en: "This is ridiculous. I've been standing here for forty minutes and now you're telling me the flight's gone?", ja: "ふざけてる。40分も並んだのに、便がもう出たって言うのか?" },
+    { sp: "S", en: "I'm really sorry. Let me look at your booking now.", ja: "大変申し訳ありません。すぐにご予約を確認いたします。" },
+    { sp: "C", en: "I've got a connection in Sydney. My daughter's getting married tomorrow. Do you understand what you've done?", ja: "シドニーで乗り継ぎがあるんだ。明日は娘の結婚式なんだぞ。何をしたかわかってるのか?" },
+    { sp: "S", en: "I do, and I'm sorry. Give me thirty seconds and I'll see what we can get you on.", ja: "承知しております、申し訳ありません。30秒だけください。お乗せできる便を探します。" },
+    { sp: "C", en: "Thirty seconds. Right.", ja: "30秒ね。はいはい。" },
+    { sp: "S", en: "There's a flight at four twenty that still connects tonight. I can move you to that one now.", ja: "16時20分の便なら今夜の乗り継ぎに間に合います。今すぐお振替できます。" },
+    { sp: "C", en: "And my bag? It's already checked in.", ja: "荷物は?もう預けてあるんだが。" },
+    { sp: "S", en: "I'll have it pulled and reloaded onto the new flight. I'll confirm it before you board.", ja: "取り出して新しい便に積み替えます。ご搭乗前に確認してお伝えします。" },
+    { sp: "C", en: "Fine. Thank you. Sorry, I'm not angry at you.", ja: "わかった。ありがとう。すまない、君に怒ってるわけじゃないんだ。" },
+    { sp: "S", en: "That's alright. Let's get you to that wedding.", ja: "大丈夫ですよ。結婚式に間に合わせましょう。" }
+  ]
 }
 ];
 
@@ -1443,6 +1559,27 @@ const FLIGHTEXP_SCENES = [
     { sp: "S", en: "We do — they're really popular for birthdays and Father's Day.", ja: "ございますよ。お誕生日や父の日のプレゼントにとても人気です。" },
     { sp: "C", en: "I'll grab one for my dad, then. He's always wanted to fly.", ja: "じゃあ父に1枚買っていきます。ずっと飛行機を操縦してみたがってたので。" },
     { sp: "S", en: "He'll absolutely love it. And if you leave us a review, you'll get 10% off your next flight. See you in the skies again soon!", ja: "きっと大喜びされますよ。それから、レビューを書いていただくと次回フライトが10%オフになります。またの空でお会いしましょう!" }
+  ]
+},
+{
+  id: "flightexp-nerd",
+  title: "5. 🔥 航空マニアの専門用語",
+  emoji: "🔥",
+  desc: "専門用語と略語で一気に話される。英語力より知識で渡り合える、あなたの土俵。",
+  tips: [
+    "略語が飛んできても、わかる単語だけ拾えばいい。わからなければ最後の部分だけ聞き返す。",
+    "知ったかぶりはしない。知らないことは聞く。マニアは説明したがるので、むしろ喜ばれる。",
+    "パイロット経験があるなら最強の武器。ここは英語ではなく知識で勝てる数少ない場面。"
+  ],
+  lines: [
+    { sp: "C", en: "So is this the NG or the MAX? And have you got the FMC modelled properly, or is it just a canned sim?", ja: "これはNG?それともMAX?FMCはちゃんと再現されてる?それとも簡易シミュ?" },
+    { sp: "S", en: "It's the 737-800 NG, and yes, the FMC is fully functional.", ja: "737-800のNGです。FMCも完全に機能します。" },
+    { sp: "C", en: "Beautiful. Can I hand-fly a raw data ILS into Kai Tak? The checkerboard approach?", ja: "最高だ。啓徳空港へのローデータILSを手動で飛べる?あのチェッカーボード進入。" },
+    { sp: "S", en: "Sorry, could you say the last part again?", ja: "すみません、最後の部分をもう一度お願いできますか?" },
+    { sp: "C", en: "Kai Tak. Hong Kong. The old one with the checkerboard turn.", ja: "啓徳。香港の。チェッカーボード旋回がある昔の空港。" },
+    { sp: "S", en: "Ah, yes — we've got Kai Tak in the scenery. Our instructor can set that up for you.", ja: "ああ、はい。啓徳のシーナリーもあります。インストラクターが設定できますよ。" },
+    { sp: "C", en: "Mate. Sold. Do I need to bring me own headset?", ja: "決まりだ。ヘッドセットは持参する?" },
+    { sp: "S", en: "No need, we provide everything. Just turn up ten minutes early.", ja: "不要です、すべてこちらでご用意します。10分前にお越しください。" }
   ]
 }
 ];
@@ -1675,6 +1812,30 @@ const INTERVIEW_SCENES = [
     { sp: "C", en: "Start around twenty-five, more once you're up to speed. Sound alright?", ja: "最初は25時間くらいで、慣れたら増やせる。それでいい?" },
     { sp: "S", en: "That sounds great. Thanks again for the opportunity, Dave — see you Monday at five!", ja: "とても嬉しいです。機会をいただきありがとうございます、デイブさん。月曜5時に伺います!" }
   ]
+},
+{
+  id: "interview-curveball",
+  title: "11. 🔥 想定外の質問",
+  emoji: "🔥",
+  otherLabel: "MANAGER",
+  desc: "失礼にも聞こえる質問、意図の読めない質問。ムッとせず事実で返せるかを見られている。",
+  tips: [
+    "失礼に感じる質問も来る。感情的にならないこと自体が評価されている。事実で淡々と返す。",
+    "意図がわからない質問は聞き返していい。\"Sorry — do you mean...?\" は全く失礼じゃない。",
+    "「最初の1ヶ月は皿洗いだけど?」は本気度テスト。前向きに受けると一気に評価が上がる。"
+  ],
+  lines: [
+    { sp: "C", en: "Right — so why'd you leave the hotel?", ja: "で、なんでホテルを辞めたの?" },
+    { sp: "S", en: "I finished my contract and decided to come out here on a working holiday.", ja: "契約期間が終わったので、ワーキングホリデーでこちらに来ることにしました。" },
+    { sp: "C", en: "Fair enough. Look, I'll be honest — we've had a few Japanese workers who were great, but very quiet. You gonna speak up on my floor?", ja: "なるほどね。正直に言うと、日本人スタッフは優秀なんだけど、みんなすごく物静かでね。うちのフロアで声出せる?" },
+    { sp: "S", en: "That's a fair question. I'm quiet when I'm learning, but I ask when I don't know — I'd rather ask once than get it wrong twice.", ja: "もっともなご質問です。覚えている間は静かかもしれませんが、わからないことは必ず聞きます。二度間違えるより一度聞く方がいいので。" },
+    { sp: "C", en: "Hm. What if I told you the job's mostly dishes for the first month?", ja: "ふーん。最初の1ヶ月はほぼ皿洗いだって言ったら?" },
+    { sp: "S", en: "That's fine. Someone has to do it, and it's the fastest way to learn how the kitchen runs.", ja: "問題ありません。誰かがやる仕事ですし、厨房の動き方を覚えるには一番早い方法だと思います。" },
+    { sp: "C", en: "Good answer. You drink?", ja: "いい答えだ。酒は飲む?" },
+    { sp: "S", en: "Sorry — do you mean socially, or...?", ja: "すみません、付き合いで、という意味でしょうか?" },
+    { sp: "C", en: "Ha, socially. We do staff drinks on Sundays.", ja: "はは、付き合いでだよ。日曜にスタッフで飲むんだ。" },
+    { sp: "S", en: "Ah, I'm in. I'm not a big drinker, but I'll be there.", ja: "ぜひ参加します。お酒は強くありませんが、顔は出します。" }
+  ]
 }
 ];
 
@@ -1775,6 +1936,28 @@ const HOTEL_SCENES = [
     { sp: "S", en: "Good idea. I will photograph it now.", ja: "そうですね。今すぐ写真を撮ります。" },
     { sp: "C", en: "Perfect. You are doing great — keep it up!", ja: "完璧よ。いい仕事してるわ、その調子!" }
   ]
+},
+{
+  id: "hotel-fast",
+  title: "5. 🔥 早口の指示を聞き取る",
+  emoji: "🔥",
+  otherLabel: "SUPERVISOR",
+  desc: "部屋番号と指示が一息でまくし立てられる。一度で覚えられなくて当たり前。",
+  tips: [
+    "一度で覚えられない前提で聞く。「どこから聞き返すか」を指定する(\"from the departures\")と効率がいい。",
+    "番号は必ず復唱。復唱しない人は必ずどこかでミスする。",
+    "\"love\" \"darl\" は年配のオージー女性の呼びかけ。馴れ馴れしいのではなく親しみの表現。"
+  ],
+  lines: [
+    { sp: "C", en: "Righto — you're on eight today, 801 to 814, four departures, rest are stay-overs, 806's a late checkout, 812 wants extra pillows, and don't touch 809, it's DND.", ja: "はい、今日は8階、801から814。チェックアウトが4部屋、あとは連泊。806はレイトチェックアウト、812は枕の追加希望、809は触らないで、DNDだから。" },
+    { sp: "S", en: "Sorry, can I get that again from the departures?", ja: "すみません、チェックアウトのところからもう一度お願いできますか?" },
+    { sp: "C", en: "Four departures. 806 late checkout. 812 extra pillows. 809 do not disturb, skip it.", ja: "チェックアウト4部屋。806はレイトチェックアウト。812は枕追加。809はDNDだから飛ばして。" },
+    { sp: "S", en: "806 late, 812 pillows, 809 skip. Which four are the departures?", ja: "806がレイト、812が枕、809は飛ばす。チェックアウトの4部屋はどれですか?" },
+    { sp: "C", en: "It's on your sheet, love. 801, 803, 807, 814.", ja: "シートに書いてあるわよ。801、803、807、814。" },
+    { sp: "S", en: "801, 803, 807, 814. Got it, thanks. And if 809 takes the sign down later?", ja: "801、803、807、814ですね。ありがとうございます。もし809が後でサインを外したら?" },
+    { sp: "C", en: "Text me and I'll add it. Don't knock.", ja: "私にメッセージして。追加するから。ノックはしないで。" },
+    { sp: "S", en: "Understood. I'll start with the departures.", ja: "承知しました。チェックアウトの部屋から始めます。" }
+  ]
 }
 ];
 
@@ -1873,6 +2056,29 @@ const THAI_SCENES = [
     { sp: "S", en: "One-eighty, and watch the oil. Thanks chef!", ja: "180度、油に注意ですね。ありがとうございます、シェフ!" },
     { sp: "C", en: "You are picking this up fast. Keep this pace and I will put you on the wok section one day.", ja: "覚えが早いな。この調子なら、いつか中華鍋のセクションを任せるぞ。" },
     { sp: "S", en: "Ha! Looking forward to it, chef!", ja: "はは!楽しみにしています、シェフ!" }
+  ]
+},
+{
+  id: "thai-phone-hard",
+  title: "5. 🔥 電話が聞き取れない",
+  emoji: "🔥",
+  desc: "電波が悪く、注文が入り組んでいる。1つずつ切って確認するしかない。",
+  tips: [
+    "情報が交錯したら、1つに絞って聞く(\"Which one is for the kid?\")。まとめて確認しようとすると必ず崩れる。",
+    "名前は聞き取れなくて当然。\"Could you spell that for me?\" は毎回使っていい。",
+    "\"The line's a bit bad\"(電波が悪くて)は最強の言い訳。相手がゆっくり言い直してくれる。"
+  ],
+  lines: [
+    { sp: "C", en: "Yeah hi, I wanna order for pickup — two pad thai, one with no egg, and the, um, the beef one. Not the salad, the stir fry.", ja: "もしもし、持ち帰りで注文したいんだけど。パッタイ2つ、1つは卵抜きで、あと、えーと、ビーフのやつ。サラダじゃなくて炒め物の方。" },
+    { sp: "S", en: "Sorry, the line's a bit bad. Two pad thai, one without egg — and was the third one the beef stir fry?", ja: "すみません、電波が少し悪くて。パッタイ2つ、1つは卵抜き。3つ目はビーフの炒め物でよろしいですか?" },
+    { sp: "C", en: "Yeah. Beef. And can you make the pad thai not spicy for the kid?", ja: "そう、ビーフ。あとパッタイ、子ども用に辛くしないでもらえる?" },
+    { sp: "S", en: "Which one is for the kid, sorry — the one without egg?", ja: "すみません、どちらがお子様用ですか?卵抜きの方でしょうか?" },
+    { sp: "C", en: "Nah, the other one. The normal one, no chilli.", ja: "いや、もう一つの方。普通のやつ、唐辛子抜きで。" },
+    { sp: "S", en: "Got it. One pad thai no egg, one pad thai no chilli, one beef stir fry. Can I get a name?", ja: "承知しました。卵抜きパッタイ1つ、唐辛子抜きパッタイ1つ、ビーフ炒め1つですね。お名前をいただけますか?" },
+    { sp: "C", en: "Yeah, it's Aisling.", ja: "アシュリンです。" },
+    { sp: "S", en: "Sorry, could you spell that for me?", ja: "すみません、スペルを教えていただけますか?" },
+    { sp: "C", en: "A-I-S-L-I-N-G.", ja: "A-I-S-L-I-N-Gです。" },
+    { sp: "S", en: "Thanks. Aisling, about twenty minutes.", ja: "ありがとうございます。アシュリン様、20分ほどでご用意します。" }
   ]
 }
 ];
@@ -1973,6 +2179,29 @@ const KEBAB_SCENES = [
     { sp: "S", en: "Found them! Also, the drink fridge needs restocking.", ja: "ありました!それと、ドリンクの冷蔵庫も補充が必要です。" },
     { sp: "C", en: "Good on ya. Do the Cokes first, they go quickest. I will handle the register float.", ja: "ナイス。コーラから先にやって、一番売れるから。レジの釣り銭は私がやっておくよ。" },
     { sp: "S", en: "On it. We will be ready well before the lunch rush!", ja: "任せてください。ランチラッシュのだいぶ前に準備完了できますね!" }
+  ]
+},
+{
+  id: "kebab-drunk",
+  title: "5. 🔥 酔っ払いの注文",
+  emoji: "🔥",
+  desc: "同じことを繰り返し、途中で変わり、指し方が曖昧。金曜深夜の日常。",
+  tips: [
+    "酔っ払い相手は何度聞き返しても失礼にならない。確認しない方が後でもめる。",
+    "曖昧な指し方(\"the brown one\")には選択肢を出して当てにいく(\"BBQ?\")。",
+    "支払いでもめそうなら深追いしない。作る前に止めるのが正解。"
+  ],
+  lines: [
+    { sp: "C", en: "Mate. Mate. Best kebab in the Goldie, yeah? Yeah. Gimme the... the big one.", ja: "なあ、なあ。ゴールドコースト一のケバブだろ?だろ?でかいやつくれ。" },
+    { sp: "S", en: "Large kebab? Lamb, chicken or mixed?", ja: "ラージのケバブですね?お肉はラム、チキン、ミックスのどれにします?" },
+    { sp: "C", en: "Mixed. No — lamb. Lamb. Lotta lamb.", ja: "ミックス。いや、ラム。ラムだ。ラムたっぷりで。" },
+    { sp: "S", en: "Extra lamb on a large. Sauces?", ja: "ラージにラム増量ですね。ソースは?" },
+    { sp: "C", en: "Garlic. And chilli. And that other one. The brown one.", ja: "ガーリック。あとチリ。それともう一つのやつ。茶色いの。" },
+    { sp: "S", en: "BBQ?", ja: "BBQソースですか?" },
+    { sp: "C", en: "BBQ! Yeah. Where's me mate gone?", ja: "BBQ!それだ。あれ、連れはどこ行った?" },
+    { sp: "S", en: "That's nineteen fifty. Card or cash?", ja: "19ドル50セントです。カードですか、現金ですか?" },
+    { sp: "C", en: "Hang on... nah, he's got me wallet.", ja: "ちょっと待って……あ、財布あいつが持ってる。" },
+    { sp: "S", en: "All good, I'll hold the order. Grab him and come back.", ja: "大丈夫です、注文は取っておきます。連れてきてください。" }
   ]
 }
 ];
@@ -2075,6 +2304,29 @@ const DEMIPAIR_SCENES = [
     { sp: "C", en: "Perfect — you get how it works. Honestly, the kids adore you already.", ja: "完璧、よくわかってるわね。正直、子どもたちはもうあなたに夢中よ。" },
     { sp: "S", en: "That makes me so happy. Thank you for making me feel at home!", ja: "それはうれしいです。我が家のように迎えてくださってありがとうございます!" }
   ]
+},
+{
+  id: "demipair-tears",
+  title: "5. 🔥 子どもが泣き止まない",
+  emoji: "🔥",
+  otherLabel: "KID",
+  desc: "理屈が通じない相手。正しい英語より、短く優しい言葉と気そらしが効く。",
+  tips: [
+    "泣き止ませようとしない。感情を認める(\"You can be sad.\")のが結局いちばん早い。",
+    "説得より気そらし。おもちゃ、遊び、別の話題へ切り替える。",
+    "文法は気にしなくていい。短く、優しく、同じ言葉を繰り返す方が伝わる。"
+  ],
+  lines: [
+    { sp: "C", en: "I don't want to! I want Mummy!", ja: "やだ!ママがいい!(子ども)" },
+    { sp: "S", en: "I know, sweetheart. Mummy's coming back after dinner.", ja: "そうだよね。ママは夕ごはんのあとに帰ってくるからね。" },
+    { sp: "C", en: "No! You said... you said... I want Mummy now.", ja: "やだ!だって……だって……今ママがいいの。" },
+    { sp: "S", en: "That's okay. You can be sad. I'll sit here with you.", ja: "いいんだよ。悲しくてもいいの。ここに一緒に座ってるからね。" },
+    { sp: "S", en: "Do you want to hold Bunny while we wait?", ja: "待ってる間、うさぎさん抱っこする?" },
+    { sp: "C", en: "Okay.", ja: "……うん。" },
+    { sp: "S", en: "Good girl. Shall we go and find him? I think he's in your room.", ja: "えらいね。じゃあ探しに行こうか?お部屋にいると思うよ。" },
+    { sp: "C", en: "He's under the bed. He's hiding.", ja: "ベッドの下にいるよ。かくれんぼしてるの。" },
+    { sp: "S", en: "Is he? Let's go and rescue him then.", ja: "そうなの?じゃあ助けに行こう。" }
+  ]
 }
 ];
 
@@ -2171,6 +2423,27 @@ const UBER_SCENES = [
     { sp: "C", en: "Ah, it's 42 — I typed it wrong. Sorry!", ja: "あ、42です。入力を間違えました。ごめんなさい!" },
     { sp: "S", en: "All good, it's just around the corner. I'll be there in two minutes.", ja: "大丈夫です、すぐそこですね。2分で伺います。" },
     { sp: "C", en: "Thanks so much, you're a champion.", ja: "本当にありがとう、助かるよ。" }
+  ]
+},
+{
+  id: "uber-busy",
+  title: "5. 🔥 忙しい店での受け取り",
+  emoji: "🔥",
+  desc: "店員は説明してくれない。名前が通じず、注文番号を求められ、待たされる。",
+  tips: [
+    "名前でダメなら注文番号、それでもダメなら店内で待つ。手順を持っておくと焦らない。",
+    "\"Yeah nah\" は「いや」、\"Nah yeah\" は「うん」。慣れるまで必ず混乱する定番。",
+    "待つときは店の動線を塞がない場所へ。それだけで店員の態度が変わる。"
+  ],
+  lines: [
+    { sp: "S", en: "Hi, I'm here for an Uber pickup.", ja: "こんにちは、Uberの受け取りに来ました。" },
+    { sp: "C", en: "Yeah, which one? We've got like six sitting here. Name?", ja: "どれ?6件くらい溜まってるんだけど。名前は?" },
+    { sp: "S", en: "It's under Jessica.", ja: "ジェシカで入っています。" },
+    { sp: "C", en: "Jess... nah, nothing under Jessica. What's the last four of the order?", ja: "ジェス……いや、ジェシカのは無いな。注文番号の下4桁は?" },
+    { sp: "S", en: "Sorry, the last four digits? It's four-seven-two-nine.", ja: "すみません、下4桁ですか?4729です。" },
+    { sp: "C", en: "That's the... hang on. Yeah nah, that one's not up yet. Kitchen's backed up. Ten minutes.", ja: "それは……ちょっと待って。ああ、それまだできてないわ。キッチンが詰まってる。10分。" },
+    { sp: "S", en: "Ten minutes? No worries. I'll wait outside — could you call out when it's ready?", ja: "10分ですね、わかりました。外で待っています。できたら呼んでいただけますか?" },
+    { sp: "C", en: "Yeah, righto.", ja: "ああ、了解。" }
   ]
 }
 ];
@@ -2540,6 +2813,13 @@ Setting: ${JOB_SETTINGS[chat.jobId] || "a workplace"} on the Gold Coast, Austral
 Scene: ${chat.scene.title} — ${chat.scene.desc}
 Your role: you play the ${AI_ROLES[chat.otherLabel] || "customer (or whoever the staff member serves in this scene)"}. The learner plays the staff member and speaks first.
 
+ROLE LOCK (most important rule):
+- You are ALWAYS the ${AI_ROLES[chat.otherLabel] || "customer"}. The learner is ALWAYS the staff member. Never swap these roles, no matter what.
+- The learner speaks through voice recognition, so their messages are often fragments, cut off mid-sentence, misheard, or missing words. This is normal — do NOT treat a fragment as a role change.
+- If a message sounds like something YOUR character would say, or reads like the staff line you were expecting, it is still the learner talking. Stay in your role and respond as your character.
+- If a message is incomplete or makes no sense, do not guess wildly and do not narrate both sides. Reply in character with a short, natural clarification: "Sorry mate?", "Say that again?", "Hang on, what was that?"
+- Never write the learner's lines for them. Output only your own character's next line.
+
 Guidelines:
 - Speak natural, friendly Australian English (no worries, heaps, arvo, ta, mate...). Keep each reply to 1-2 short, spoken-style sentences.
 - Stay in character and within this scene. React naturally and move the situation forward; occasionally add a realistic twist such as a special request, a follow-up question, or a mild complaint.
@@ -2736,7 +3016,7 @@ function renderAIChat() {
       <button onclick="changeApiKey()">キーを変更</button>
     </div>`;
   if (!aiChat.messages.length && firstStaffLine) {
-    html += `<p class="ai-hint">まずはあなたから。例: "${esc(firstStaffLine.en)}"${hasSR ? "<br>🎤で話すと自動送信。「🎙️ 連続会話」をONにすると、ボタンに触らず声だけで会話が続きます。" : ""}</p>`;
+    html += `<p class="ai-hint">まずはあなたから。例: "${esc(firstStaffLine.en)}"${hasSR ? "<br>🎤を押して話し、言い終えて2〜3秒黙ると自動で送信されます(すぐ送るならもう一度🎤)。<br>「🎙️ 連続会話」をONにすると、ボタンに触らず声だけで会話が続きます。" : ""}</p>`;
   }
   aiChat.messages.forEach(m => {
     if (m.role === "user") {
@@ -2755,7 +3035,7 @@ function renderAIChat() {
   }
   html += `
     <div class="chat-input-row">
-      ${hasSR ? '<button id="mic-btn" onclick="toggleMic()" title="マイクで英語入力(話し終わると自動送信)">🎤</button>' : ""}
+      ${hasSR ? '<button id="mic-btn" onclick="toggleMic()" title="押して話す。話し終わって少し黙ると自動送信。すぐ送りたければもう一度押す">🎤</button>' : ""}
       <input id="chat-input" type="text" placeholder="英語で入力(日本語で助けを求めてもOK)" autocomplete="off"
         onkeydown="if(event.key==='Enter'){event.preventDefault();sendChat();}" ${aiChat.waiting ? "disabled" : ""}>
       <button onclick="sendChat()" ${aiChat.waiting ? "disabled" : ""}>送信</button>
@@ -2787,6 +3067,9 @@ const IS_STANDALONE = window.navigator.standalone === true ||
   (window.matchMedia && window.matchMedia("(display-mode: standalone)").matches);
 
 let micRec = null, micListening = false, micTranscript = "", micBase = "";
+let micSilenceTimer = null, micWantStop = false, micAccum = "", micMaxTimer = null;
+const MIC_SILENCE_MS = 2600;   // これだけ黙ったら「話し終わり」とみなす
+const MIC_MAX_MS = 60000;      // 保険: 60秒で強制終了
 
 function micSetBtn(on) {
   micListening = on;
@@ -2800,37 +3083,48 @@ function micError(msg) {
   renderAIChat();
 }
 
-function toggleMic(auto) {
+function micClearTimers() {
+  clearTimeout(micSilenceTimer); micSilenceTimer = null;
+  clearTimeout(micMaxTimer); micMaxTimer = null;
+}
+
+function micFinish() {
+  micClearTimers();
+  micSetBtn(false);
+  micRec = null;
+  if (micTranscript) sendChat();
+}
+
+function micBuildRec() {
   const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
-  if (!SR) return;
-  if (micListening && micRec) { try { micRec.stop(); } catch (e) {} return; }
+  const rec = new SR();
+  rec.lang = "en-AU";
+  rec.interimResults = true;   // iOSは中間結果しか返さないことがある
+  rec.continuous = true;       // 一息ついても切れないように
+  rec.maxAlternatives = 1;
 
-  // iOSは読み上げ中だと録音を開始できないので必ず止めてから
-  try { speechSynthesis.cancel(); } catch (e) {}
+  rec.onstart = () => micSetBtn(true);
 
-  micRec = new SR();
-  micRec.lang = "en-AU";
-  micRec.interimResults = true;  // iOSは中間結果しか返さないことがある
-  micRec.continuous = false;
-  micRec.maxAlternatives = 1;
-  micTranscript = "";
-  const input = document.getElementById("chat-input");
-  micBase = input ? input.value.trim() : "";
-
-  micRec.onstart = () => micSetBtn(true);
-
-  micRec.onresult = e => {
+  rec.onresult = e => {
     let t = "";
     for (let i = 0; i < e.results.length; i++) t += e.results[i][0].transcript;
-    micTranscript = t.trim();
+    micTranscript = (micAccum + " " + t).trim();
     const el = document.getElementById("chat-input");
     if (el) el.value = (micBase ? micBase + " " : "") + micTranscript; // 話しながら表示
+    // 話すたびにタイマーをリセット。黙って初めて送信される
+    clearTimeout(micSilenceTimer);
+    micSilenceTimer = setTimeout(() => {
+      micWantStop = true;
+      try { rec.stop(); } catch (err) { micFinish(); }
+    }, MIC_SILENCE_MS);
   };
 
-  micRec.onerror = e => {
-    micSetBtn(false);
+  rec.onerror = e => {
     const code = e && e.error;
-    if (code === "no-speech") return; // 無音は無視
+    if (code === "no-speech" || code === "aborted") return; // onendで処理
+    micWantStop = true;
+    micClearTimers();
+    micSetBtn(false);
     if (code === "not-allowed" || code === "service-not-allowed") {
       micError(IS_STANDALONE
         ? "マイクを使えません。ホーム画面のアプリではなく、Safariでこのページを開いてお試しください。"
@@ -2842,15 +3136,53 @@ function toggleMic(auto) {
     }
   };
 
-  micRec.onend = () => {
-    micSetBtn(false);
-    if (micTranscript) sendChat(); // 話し終わったら自動送信
+  rec.onend = () => {
+    // 自分で止めていない = ブラウザが勝手に切った(iOS等)→ 続きを聞き直す
+    if (!micWantStop && micListening) {
+      micAccum = micTranscript;
+      try {
+        micRec = micBuildRec();
+        micRec.start();
+        return;
+      } catch (err) { /* 再開できなければ確定へ */ }
+    }
+    micFinish();
   };
 
+  return rec;
+}
+
+function toggleMic(auto) {
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if (!SR) return;
+  // 聞き取り中にもう一度押したら「話し終わった」の合図
+  if (micListening && micRec) {
+    micWantStop = true;
+    micClearTimers();
+    try { micRec.stop(); } catch (e) { micFinish(); }
+    return;
+  }
+
+  // iOSは読み上げ中だと録音を開始できないので必ず止めてから
+  try { speechSynthesis.cancel(); } catch (e) {}
+
+  micTranscript = "";
+  micAccum = "";
+  micWantStop = false;
+  const input = document.getElementById("chat-input");
+  micBase = input ? input.value.trim() : "";
+
   try {
+    micRec = micBuildRec();
     micRec.start();
+    micListening = true;
+    micMaxTimer = setTimeout(() => {
+      micWantStop = true;
+      if (micRec) { try { micRec.stop(); } catch (e) { micFinish(); } }
+    }, MIC_MAX_MS);
   } catch (e) {
     micSetBtn(false);
+    micRec = null;
     if (!auto) micError("マイクを開始できませんでした。もう一度🎤を押してみてください。");
   }
 }
