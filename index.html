@@ -2448,10 +2448,265 @@ const UBER_SCENES = [
 }
 ];
 
+const BAR_SCENES = [
+{
+  id: "bar-beer",
+  title: "1. ビールとワインの注文",
+  emoji: "🍺",
+  desc: "バーの基本。サイズを聞き、味を一言で説明し、タブを開く。この3つが毎回くり返される。",
+  tips: [
+    "QLDのサイズ: pot(285ml)/ schooner(425ml)/ pint(570ml)/ jug(ピッチャー)。schooner が圧倒的に多い。",
+    "ビールの説明は3語で足りる。hazy(濁って果実味)/ crisp(すっきり)/ hoppy(苦味が強い)。",
+    "ワインは品種名で呼ぶ。sav blanc / pinot grigio / shiraz / chardonnay。味は crisp・dry・fruity・full-bodied で答える。",
+    "tab = ツケ。カードを預かって帰りにまとめて精算する豪州の定番。\"Start a tab or pay as you go?\" は必ず聞く。"
+  ],
+  lines: [
+    { sp: "C", en: "G'day, can I grab a schooner of the pale ale?", ja: "やあ、ペールエールをスクーナーでもらえる?" },
+    { sp: "S", en: "Sure thing. We've got two pale ales on tap — a hazy one and a crisp West Coast. Which are you after?", ja: "かしこまりました。ペールエールは2種類ございます。ヘイジーと、すっきりしたウエストコーストです。どちらになさいますか?" },
+    { sp: "C", en: "Ooh. What's the hazy like?", ja: "へえ。ヘイジーってどんな感じ?" },
+    { sp: "S", en: "It's fruitier and softer, less bitter. The West Coast is drier with more of a hop kick.", ja: "果実味があってまろやかで、苦味は控えめです。ウエストコーストは辛口でホップの効きが強めです。" },
+    { sp: "C", en: "I'll go the hazy. And a glass of white for my wife.", ja: "ヘイジーで。あと妻に白ワインをグラスで。" },
+    { sp: "S", en: "Any preference? We've got a sav blanc, a pinot grigio and a chardonnay by the glass.", ja: "ご希望はございますか?グラスでソーヴィニヨンブラン、ピノグリージョ、シャルドネがございます。" },
+    { sp: "C", en: "What's the sav blanc like?", ja: "ソーヴィニヨンブランはどんな感じ?" },
+    { sp: "S", en: "It's a Marlborough one — crisp and citrusy. It's our most popular white.", ja: "マールボロ産で、すっきりして柑橘系の香りがあります。白では一番人気です。" },
+    { sp: "C", en: "Perfect, we'll do that.", ja: "いいね、それで。" },
+    { sp: "S", en: "One hazy schooner and a sav blanc. Would you like to start a tab, or pay as you go?", ja: "ヘイジーのスクーナーとソーヴィニヨンブランですね。タブを開きますか?それとも都度お支払いになさいますか?" },
+    { sp: "C", en: "Start a tab, thanks.", ja: "タブで頼むよ。" },
+    { sp: "S", en: "No worries, I'll keep your card behind the bar.", ja: "承知しました。カードはバーの中でお預かりします。" }
+  ]
+},
+{
+  id: "bar-cocktails",
+  title: "2. カクテルとスピリッツ",
+  emoji: "🍸",
+  desc: "「どう飲むか」を必ず聞く。neat / on the rocks / with a mixer の3択を口に染み込ませる。",
+  tips: [
+    "スピリッツは出し方を必ず確認: neat(ストレート)/ on the rocks(氷)/ with a mixer(割り物)。",
+    "量は single(30ml)か double(60ml)。\"nip\" とも言う。聞かずに出すとトラブルの元。",
+    "エスプレッソマティーニは豪州で圧倒的人気。作れると重宝される。次点は Aperol spritz。",
+    "銘柄は house(店の標準)と top shelf(高い棚=高級品)で案内できる。"
+  ],
+  lines: [
+    { sp: "C", en: "What cocktails do you do?", ja: "カクテルは何がある?" },
+    { sp: "S", en: "We do the classics — espresso martini, Aperol spritz, negroni, margarita. The espresso martini's our biggest seller.", ja: "定番を揃えています。エスプレッソマティーニ、アペロールスプリッツ、ネグローニ、マルガリータ。エスプレッソマティーニが一番出ています。" },
+    { sp: "C", en: "Go on then, I'll have one of those. And a whisky for my mate.", ja: "じゃあそれをもらおう。あと連れにウイスキーを。" },
+    { sp: "S", en: "How does he take it — neat, on the rocks, or with a mixer?", ja: "飲み方はいかがなさいますか?ストレート、ロック、それとも割りますか?" },
+    { sp: "C", en: "On the rocks. What have you got?", ja: "ロックで。何がある?" },
+    { sp: "S", en: "Jameson, Johnnie Black, and a few single malts if he's after something nicer.", ja: "ジェムソン、ジョニーウォーカーブラック、それと良いものをお求めならシングルモルトも数種類ございます。" },
+    { sp: "C", en: "Jameson's fine.", ja: "ジェムソンでいいよ。" },
+    { sp: "S", en: "Single or double?", ja: "シングルとダブル、どちらになさいますか?" },
+    { sp: "C", en: "Make it a double.", ja: "ダブルで。" },
+    { sp: "S", en: "No worries. One espresso martini and a double Jameson on the rocks — that's twenty-nine fifty.", ja: "承知しました。エスプレッソマティーニ1杯とジェムソンのダブル・ロックで、29ドル50セントです。" }
+  ]
+},
+{
+  id: "bar-rsa",
+  title: "3. ID確認と提供拒否(RSA)",
+  emoji: "🪪",
+  desc: "法律で決まっている一番大事な仕事。断る英語を持っていないと自分の資格が危ない。",
+  tips: [
+    "RSA(Responsible Service of Alcohol)は酒を出す店で働くための必須資格。オンラインで数時間、30〜50ドルで取れる。渡航前でも可。",
+    "25歳未満に見えたらID確認が原則。\"We ID anyone who looks under 25.\" と言えば角が立たない。",
+    "断るときは謝りすぎない。責任を法律に預ける: \"It's the law\" \"It's my licence on the line.\" 個人攻撃されにくくなる。",
+    "断る英語は必ず代替案とセット。水・食事・タクシーを出すと、ただ断るより確実に収まる。"
+  ],
+  lines: [
+    { sp: "S", en: "Sorry, can I just see some ID?", ja: "すみません、身分証を拝見できますか?" },
+    { sp: "C", en: "Seriously? I'm twenty-six.", ja: "マジで?26だよ。" },
+    { sp: "S", en: "Sorry, we ID anyone who looks under twenty-five. It's the law here — I'd lose my job.", ja: "すみません、25歳未満に見える方は全員確認しています。こちらでは法律なので。仕事を失ってしまいます。" },
+    { sp: "C", en: "Fine. Here.", ja: "わかったよ。はい。" },
+    { sp: "S", en: "Thanks, that's all good. What can I get you?", ja: "ありがとうございます、確認できました。何になさいますか?" },
+    { sp: "C", en: "Mate, another round. Four more shots.", ja: "なあ、もう一回。ショット4つ。" },
+    { sp: "S", en: "Sorry mate, I can't serve you any more tonight.", ja: "すみません、今夜はこれ以上お出しできません。" },
+    { sp: "C", en: "What? Why not? I'm fine!", ja: "は?なんで?全然平気だって!" },
+    { sp: "S", en: "I know, but under RSA I have to cut you off. It's my licence on the line. I can get you some water, or call you a cab.", ja: "そう見えますが、RSAの規定でお止めしなければならないんです。私の資格がかかっています。お水をお出しするか、タクシーをお呼びできます。" },
+    { sp: "C", en: "This is rubbish.", ja: "ふざけてる。" },
+    { sp: "S", en: "I get it. But water or a taxi — which one?", ja: "お気持ちはわかります。ただ、お水かタクシーか、どちらになさいますか?" }
+  ]
+},
+{
+  id: "bar-regulars",
+  title: "4. 常連との会話・ラストオーダー",
+  emoji: "💬",
+  desc: "バーで働く一番の楽しみ。質問を1つ返すだけで、相手が勝手に話してくれる。",
+  tips: [
+    "常連の \"the usual\"(いつもの)を覚えるのが最強の接客。名前より先に飲み物を覚えると一気に距離が縮まる。",
+    "会話は質問で返す。\"Where else did you go?\" の一言で相手が勝手に喋ってくれる。話し上手になる必要はない。",
+    "日本出身は最強の話題。温泉・食べ物・東京の話はほぼ確実に盛り上がる。",
+    "ラストオーダーは \"Last drinks!\" が定型。10〜15分前に一声かけるのがマナー。"
+  ],
+  lines: [
+    { sp: "C", en: "Evening! Same as usual, thanks.", ja: "やあ!いつもので頼むよ。" },
+    { sp: "S", en: "Schooner of Great Northern? Coming up.", ja: "グレートノーザンのスクーナーですね?すぐお出しします。" },
+    { sp: "C", en: "You remembered. Good man. How long have you been over here?", ja: "覚えててくれたか。えらいね。こっちに来てどれくらい?" },
+    { sp: "S", en: "About three months. I'm from Japan — here on a working holiday.", ja: "3ヶ月くらいです。日本から来ました、ワーキングホリデーで。" },
+    { sp: "C", en: "Japan, eh? The missus and I did Tokyo a few years back. Best food we've ever had.", ja: "日本か。数年前に妻と東京に行ったよ。人生で一番うまい飯だった。" },
+    { sp: "S", en: "Where else did you go?", ja: "他にはどちらへ行かれたんですか?" },
+    { sp: "C", en: "Kyoto, and some little town up in the mountains. Can't remember the name.", ja: "京都と、山の中の小さい町。名前は忘れたけど。" },
+    { sp: "S", en: "Ha, that narrows it down! Was it snowy?", ja: "はは、それだと絞れませんね!雪は降っていましたか?" },
+    { sp: "C", en: "Freezing. Had a hot spring though — best thing I've ever done.", ja: "凍えるほどだった。でも温泉があってな、人生最高の体験だったよ。" },
+    { sp: "S", en: "Onsen! Yeah, I miss those. There's nothing like it here.", ja: "温泉ですね!恋しいです。こちらには無いですから。" },
+    { sp: "C", en: "You're alright, you know that?", ja: "君はいいやつだな。" },
+    { sp: "S", en: "Ha, cheers. Oh, just so you know — last drinks in ten minutes.", ja: "はは、ありがとうございます。あ、お知らせですが、ラストオーダーはあと10分です。" },
+    { sp: "C", en: "Righto, one more then.", ja: "了解、じゃあもう一杯。" }
+  ]
+},
+{
+  id: "bar-rush",
+  title: "5. 🔥 金曜の混雑したバー",
+  emoji: "🔥",
+  desc: "騒音、注文の数が合わない、途中で変わる。カウンターに3人並んで叫ばれる状態。",
+  tips: [
+    "人数と杯数が合わないのは日常。\"So that's two and two?\" と数だけ確認して確定させる。",
+    "騒音で聞こえないときは聞き返すよりタップを指差す。\"This one?\" が一番速い。",
+    "混雑時こそゆっくり喋る。焦って早口になると余計に通じず、結局やり直しになる。"
+  ],
+  lines: [
+    { sp: "C", en: "Two schooners of— sorry, what've you got on tap? Nah, just two of whatever's cold. And a vodka soda. Actually three.", ja: "スクーナー2つ、あの……ごめん、生は何がある?いや、冷えてるやつ2つでいい。あとウォッカソーダ。いや3つ。" },
+    { sp: "S", en: "Sorry, three vodka sodas?", ja: "すみません、ウォッカソーダ3つですか?" },
+    { sp: "C", en: "Nah, two schooners and three vodka sodas. No wait, my round's only four people.", ja: "違う、スクーナー2つとウォッカソーダ3つ。いや待って、俺のおごりは4人分だ。" },
+    { sp: "S", en: "So two schooners and two vodka sodas?", ja: "では、スクーナー2つとウォッカソーダ2つですね?" },
+    { sp: "C", en: "Yeah. Yeah, that's it.", ja: "そう。それだ。" },
+    { sp: "S", en: "Which beer, sorry? We've got six on tap.", ja: "すみません、ビールはどれにしますか?生は6種類あります。" },
+    { sp: "C", en: "Whatever's cheapest, mate.", ja: "一番安いやつでいいよ。" },
+    { sp: "S", en: "Two Great Northerns and two vodka sodas. Card or cash?", ja: "グレートノーザン2つとウォッカソーダ2つですね。カードですか、現金ですか?" },
+    { sp: "C", en: "Card. Can I put it on a tab?", ja: "カード。タブにできる?" },
+    { sp: "S", en: "Yep, I'll hold onto it. What's the name?", ja: "はい、お預かりします。お名前は?" }
+  ]
+},
+];
+
+const JAPANESE_SCENES = [
+{
+  id: "jp-welcome",
+  title: "1. 案内と日本食の説明",
+  emoji: "🏮",
+  desc: "「日本食は初めて」の客に、シェアスタイルと生・火入れの違いを説明する。毎日やる仕事。",
+  tips: [
+    "\"Is everything raw?\"(全部生なの?)は毎日聞かれる。\"Only the sashimi and some sushi.\" と即答できるように。",
+    "izakaya は tapas と説明すると豪州人に一発で伝わる。量の目安は \"three or four dishes each\"。",
+    "irasshaimase は使っていい。むしろ喜ばれる。ただし説明は全部英語で。",
+    "日本人であること自体が信用になる職場。堂々と \"I'm from Japan\" と言っていい。"
+  ],
+  lines: [
+    { sp: "S", en: "Irasshaimase — welcome! Table for two?", ja: "いらっしゃいませ!2名様ですか?" },
+    { sp: "C", en: "Yes, thanks. We've never had proper Japanese before, so we might need some help.", ja: "はい。本格的な日本食は初めてなので、いろいろ教えてもらえると助かります。" },
+    { sp: "S", en: "Of course! Our menu is izakaya style, so the dishes are small and made for sharing.", ja: "もちろんです!当店は居酒屋スタイルなので、料理は小皿でシェアしていただく形です。" },
+    { sp: "C", en: "Oh, like tapas?", ja: "ああ、タパスみたいな感じ?" },
+    { sp: "S", en: "Exactly like tapas. I'd suggest three or four dishes each, and we bring them out as they're ready.", ja: "まさにタパスと同じです。お一人3〜4品ほどがおすすめで、できたものから順にお持ちします。" },
+    { sp: "C", en: "That works. What should we definitely try?", ja: "いいね。絶対食べるべきものは?" },
+    { sp: "S", en: "The karaage — Japanese fried chicken — and the gyoza are always popular. If you like raw fish, the sashimi platter is beautiful today.", ja: "唐揚げ、日本の鶏の揚げ物ですが、それと餃子はいつも人気です。生魚がお好きなら、本日の刺身の盛り合わせは特にいいですよ。" },
+    { sp: "C", en: "What's the difference between sashimi and sushi, actually?", ja: "ところで刺身と寿司って何が違うの?" },
+    { sp: "S", en: "Sashimi is just the raw fish on its own. Sushi has vinegared rice with it.", ja: "刺身は生の魚そのものです。寿司は酢飯と一緒になっています。" },
+    { sp: "C", en: "Ah, that makes sense. And is everything raw?", ja: "なるほど。ちなみに全部生なの?" },
+    { sp: "S", en: "Not at all — most of our menu is cooked. Only the sashimi and some of the sushi are raw.", ja: "いいえ、ほとんどは火を通した料理です。生なのは刺身と一部の寿司だけです。" }
+  ]
+},
+{
+  id: "jp-sushi",
+  title: "2. 寿司・刺身の注文",
+  emoji: "🍣",
+  desc: "ネタの英語名と、わさび・ガリ・醤油の使い方。教えると必ず喜ばれる場面。",
+  tips: [
+    "ネタの英語: salmon / tuna(マグロ)/ kingfish(ヒラマサ)/ scallop(ホタテ)/ prawn(エビ)/ eel(ウナギ)/ octopus(タコ)。",
+    "わさび・ガリ・醤油の使い方は毎回説明していい。教わった客は必ず喜ぶし、チップにつながる。",
+    "\"sashimi-grade\"(刺身用)という言葉を知っていると安心感を与えられる。",
+    "「醤油はネタ側につける、シャリはつけない」— この一言で「詳しい店員」になれる。"
+  ],
+  lines: [
+    { sp: "C", en: "Can we get the sashimi platter? What's on it?", ja: "刺身の盛り合わせをもらえる?何が入ってるの?" },
+    { sp: "S", en: "Today it's salmon, tuna, kingfish and scallop — three pieces of each.", ja: "本日はサーモン、マグロ、ヒラマサ、ホタテです。それぞれ3切れずつ入っています。" },
+    { sp: "C", en: "Is it sushi-grade? Sorry, I know that's a weird question.", ja: "それって刺身用のグレード?変な質問でごめん。" },
+    { sp: "S", en: "Not weird at all. It's all sashimi-grade and it came in fresh this morning.", ja: "全く変ではありません。すべて刺身用で、今朝入荷したばかりです。" },
+    { sp: "C", en: "Great. And what's the green stuff?", ja: "よかった。あの緑のやつは何?" },
+    { sp: "S", en: "That's wasabi. It's quite hot, so start with a little. The pink ginger is to clean your palate between fish.", ja: "わさびです。かなり辛いので少しずつどうぞ。ピンクのガリは、魚と魚の間で口をさっぱりさせるためのものです。" },
+    { sp: "C", en: "Between the fish, not on top. Got it.", ja: "上に乗せるんじゃなくて、間に食べるのね。了解。" },
+    { sp: "S", en: "That's it. And with the soy sauce, dip the fish side, not the rice — the rice falls apart.", ja: "その通りです。醤油はネタの side につけてください。シャリ側だと崩れてしまうので。" },
+    { sp: "C", en: "You've saved me from embarrassing myself. Can we also get a salmon roll?", ja: "恥をかかずに済んだよ。あとサーモンロールももらえる?" },
+    { sp: "S", en: "Sure. Would you like the plain salmon avocado, or the spicy one?", ja: "かしこまりました。サーモンアボカドと辛いもの、どちらになさいますか?" },
+    { sp: "C", en: "Spicy, please.", ja: "辛い方で。" }
+  ]
+},
+{
+  id: "jp-ramen",
+  title: "3. ラーメン・居酒屋メニュー",
+  emoji: "🍜",
+  desc: "スープの違いを2語で説明し、辛さと替え玉を確認する。ラーメン店なら毎日この流れ。",
+  tips: [
+    "スープの説明は「ベース+食感」で足りる。tonkotsu = pork bone, rich and creamy / shoyu = soy sauce based, lighter。",
+    "kaedama(替え玉)は説明すると必ずウケる。豪州人はほぼ知らない。",
+    "麺の硬さを聞く店なら firm / regular / soft。",
+    "日本のビール名(Asahi / Sapporo / Kirin)は発音を直さなくていい。通じればOK。"
+  ],
+  lines: [
+    { sp: "C", en: "What's the difference between the tonkotsu and the shoyu?", ja: "とんこつと醤油って何が違うの?" },
+    { sp: "S", en: "Tonkotsu is a pork bone broth — rich and creamy. Shoyu is soy sauce based, so it's lighter and clearer.", ja: "とんこつは豚骨のスープで、濃厚でクリーミーです。醤油は醤油ベースなので、あっさりして澄んでいます。" },
+    { sp: "C", en: "I'll go the tonkotsu. Can I get it spicy?", ja: "とんこつにする。辛くできる?" },
+    { sp: "S", en: "Yes, we can add chilli oil. Mild, medium or hot?", ja: "はい、辛味オイルを追加できます。マイルド、ミディアム、ホットのどれになさいますか?" },
+    { sp: "C", en: "Medium. And extra noodles — is that a thing?", ja: "ミディアムで。あと麺の追加ってできる?" },
+    { sp: "S", en: "It is! It's called kaedama. You finish your noodles, keep the soup, and we bring you a second serve.", ja: "できます!替え玉といいます。麺を食べ終えたらスープを残しておいていただき、2玉目をお持ちします。" },
+    { sp: "C", en: "That's brilliant. Do I order it now?", ja: "それはいいね。今頼むの?" },
+    { sp: "S", en: "Just wave me over when you're ready — it's best fresh.", ja: "食べ終わる頃に呼んでください。茹でたてが一番おいしいので。" },
+    { sp: "C", en: "Perfect. And a beer — what Japanese beers have you got?", ja: "完璧。あとビール。日本のビールは何がある?" },
+    { sp: "S", en: "Asahi, Sapporo and Kirin — all on tap.", ja: "アサヒ、サッポロ、キリンがございます。すべて生です。" }
+  ]
+},
+{
+  id: "jp-allergy",
+  title: "4. アレルギー・ベジタリアン対応",
+  emoji: "🌱",
+  desc: "醤油に小麦、出汁に魚。日本食の二大落とし穴を知らないと事故になる。",
+  tips: [
+    "落とし穴①: 醤油には小麦が入っている。グルテンフリーには tamari を出す。",
+    "落とし穴②: 出汁は魚(かつお節)から取る。味噌汁はベジタリアン対応ではない。",
+    "coeliac(セリアック病)は小麦で本当に体調を崩す。\"I'll check with the kitchen\" を必ず挟む。",
+    "ベジタリアンには揚げ出し豆腐・野菜餃子・海藻サラダを提案できると強い。"
+  ],
+  lines: [
+    { sp: "C", en: "I'm coeliac — is the soy sauce gluten free?", ja: "セリアック病なんだけど、醤油はグルテンフリー?" },
+    { sp: "S", en: "Our regular soy sauce contains wheat, so no. But we have a gluten-free tamari — I can bring that instead.", ja: "通常の醤油には小麦が含まれるので、いいえ。ただグルテンフリーのたまり醤油がございますので、そちらをお持ちします。" },
+    { sp: "C", en: "Oh, I didn't know soy sauce had wheat in it.", ja: "え、醤油に小麦が入ってるなんて知らなかった。" },
+    { sp: "S", en: "Most people don't. Let me check with the kitchen which dishes we can do gluten free for you.", ja: "ご存じない方がほとんどです。グルテンフリーで対応できる料理を厨房に確認してまいります。" },
+    { sp: "C", en: "That would be amazing. My friend is vegetarian too.", ja: "助かる。あと友達がベジタリアンなんだ。" },
+    { sp: "S", en: "No problem. Just so you know, our miso soup and most of our broths use dashi, which is made from fish.", ja: "承知しました。念のためお伝えすると、味噌汁とスープのほとんどは出汁を使っていて、これは魚から取っています。" },
+    { sp: "C", en: "Ah, so the miso soup isn't vegetarian?", ja: "じゃあ味噌汁はベジタリアン向けじゃないんだ?" },
+    { sp: "S", en: "Not our standard one, no. But the agedashi tofu, the vegetable gyoza and the seaweed salad are all fine.", ja: "通常のものは違います。ただ、揚げ出し豆腐、野菜餃子、海藻サラダはすべて大丈夫です。" },
+    { sp: "C", en: "You really know your stuff. Thank you.", ja: "本当に詳しいね。ありがとう。" },
+    { sp: "S", en: "That's alright — I'll mark both on the order so the kitchen knows.", ja: "とんでもないです。厨房に伝わるよう、両方とも伝票に記載しておきます。" }
+  ]
+},
+{
+  id: "jp-names",
+  title: "5. 🔥 料理名が出てこない客",
+  emoji: "🔥",
+  desc: "「あのチキンのやつ」「動く魚が乗ったパンケーキ」。特徴だけで注文される日常。",
+  tips: [
+    "客は日本語の料理名を覚えていない。特徴から料理を逆算する耳を作る。",
+    "発音を直さない。正しい発音で復唱するだけで十分伝わるし、相手に恥をかかせない。",
+    "定番の言い換え: \"the chicken thing\"=唐揚げ / \"the pancake\"=お好み焼き / \"the moving fish\"=かつお節 / \"the sweet omelette\"=卵焼き。"
+  ],
+  lines: [
+    { sp: "C", en: "Yeah, we'll get the... sorry, the chicken thing. Kara— karaage? Is that how you say it?", ja: "えっと、あの……ごめん、チキンのやつ。カラ……唐揚げ?発音これで合ってる?" },
+    { sp: "S", en: "Karaage, yes! Perfect. One karaage.", ja: "唐揚げ、はい!完璧です。唐揚げを1つですね。" },
+    { sp: "C", en: "And the dumplings. Not the fried ones, the— no, actually the fried ones.", ja: "あと餃子。焼いてない方……いや、やっぱり焼いてある方で。" },
+    { sp: "S", en: "Fried gyoza. And anything else?", ja: "焼き餃子ですね。他にはいかがですか?" },
+    { sp: "C", en: "That thing on the wall, the special. And, um, do you do the... it's like a pancake? With the sauce and the fish flakes that move?", ja: "壁に貼ってある本日のおすすめ。あと、えっと……パンケーキみたいなやつある?ソースがかかってて、魚のフレークが動くやつ。" },
+    { sp: "S", en: "Okonomiyaki! Yes, we have it. And today's special is grilled miso eggplant.", ja: "お好み焼きですね!ございます。本日のおすすめは茄子の味噌田楽です。" },
+    { sp: "C", en: "That's the one! The moving fish freaked my kids out last time.", ja: "それだ!前回、動く魚に子どもたちがビビってたよ。" },
+    { sp: "S", en: "Ha, that's the bonito flakes — it's just the steam moving them.", ja: "はは、かつお節ですね。湯気で動いているだけなんです。" },
+    { sp: "C", en: "And can we get a couple of Asahis. Big ones.", ja: "あとアサヒを2つ。大きいので。" },
+    { sp: "S", en: "Two large Asahi. So that's karaage, fried gyoza, miso eggplant, okonomiyaki and two beers?", ja: "アサヒの大を2つ。では唐揚げ、焼き餃子、茄子の味噌田楽、お好み焼き、ビール2杯ですね?" },
+    { sp: "C", en: "Yep. Nailed it.", ja: "そう。完璧だ。" }
+  ]
+},
+];
+
 const JOBS = [
   { id: "uber", name: "Uber Eats", scenes: UBER_SCENES },
   { id: "steak", name: "ステーキ屋", scenes: STEAK_SCENES },
   { id: "cafe", name: "カフェ", scenes: CAFE_SCENES },
+  { id: "bar", name: "バー", scenes: BAR_SCENES },
+  { id: "japanese", name: "日本食レストラン", scenes: JAPANESE_SCENES },
   { id: "thai", name: "タイ料理店", scenes: THAI_SCENES },
   { id: "kebab", name: "ケバブ屋", scenes: KEBAB_SCENES },
   { id: "hotel", name: "ホテル清掃", scenes: HOTEL_SCENES, otherLabel: "GUEST" },
@@ -2763,6 +3018,8 @@ const JOB_SETTINGS = {
   thai: "a Thai restaurant (the learner waits tables, takes phone orders, and helps as a kitchen hand)",
   kebab: "a kebab shop in Surfers Paradise (the learner takes orders and makes kebabs, including late-night shifts)",
   uber: "Uber Eats delivery on the Gold Coast (the learner is the delivery rider/driver, picking up from restaurants and dropping off to customers, often at high-rise apartments in Surfers Paradise)",
+  bar: "a busy bar/pub on the Gold Coast (the learner is a bartender). Australian RSA rules apply: ID anyone who looks under 25, and refuse service to anyone who is intoxicated. Beer comes in pots, schooners, pints and jugs.",
+  japanese: "a Japanese restaurant on the Gold Coast (the learner is Japanese and waits tables, explaining Japanese food to Australian customers who are often unfamiliar with it)",
   demipair: "an Australian host family's home on the Gold Coast (the learner is a demi pair — childcare and light housework in exchange for homestay, while studying at a language school)"
 };
 
@@ -3376,7 +3633,7 @@ function renderInstant() {
 }
 
 /* ===== 青春ギミック: ストリーク & 紙吹雪 ===== */
-const JOB_EMOJI = { uber: "🛵", steak: "🥩", cafe: "☕", thai: "🍛", kebab: "🌯", hotel: "🛏️", demipair: "🏡", gym: "💪", swim: "🏊", airport: "🛫", flightexp: "✈️", interview: "🤝" };
+const JOB_EMOJI = { uber: "🛵", bar: "🍸", japanese: "🍣", steak: "🥩", cafe: "☕", thai: "🍛", kebab: "🌯", hotel: "🛏️", demipair: "🏡", gym: "💪", swim: "🏊", airport: "🛫", flightexp: "✈️", interview: "🤝" };
 const WHO_EMOJI = { RESTAURANT: "🏪", CUSTOMER: "🙋", GUEST: "🧳", KID: "🧒", PARENT: "👩", CHEF: "👨‍🍳", SUPERVISOR: "📋", COWORKER: "🤜", MANAGER: "🤝" };
 
 function markPracticed() {
