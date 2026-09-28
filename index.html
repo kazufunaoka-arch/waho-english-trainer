@@ -2710,8 +2710,8 @@ const SUSHI_SCENES = [
   tips: [
     "予約の確認は 名前+人数+時間 の3点: \"Two people at six, under Lee?\"",
     "最初に必ずアレルギーと苦手なものを聞く: \"Do you have any allergies, or anything you don't eat?\" コースの店ほどここが命。",
-    "店の軸を一言で: \"The chef goes to Toyosu market every morning.\" 毎朝豊洲で仕入れているのは本当の話なので、自信を持って言っていい。",
-    "アラカルトはない。\"It's omakase — the chef chooses the course for you.\""
+    "コースの全体像を一文で: おつまみ9品 → 握り8貫 → 巻物半分 → 玉子焼き → お椀 → デザート の全14品。",
+    "店の軸を一言で: \"The chef goes to Toyosu market every morning.\" 毎朝豊洲で仕入れているのは本当の話なので、自信を持って言っていい。"
   ],
   lines: [
     { sp: "S", en: "Good evening, welcome to Sushi Higuchi. Do you have a reservation?", ja: "いらっしゃいませ、鮨ひぐちへようこそ。ご予約のお客様でしょうか?" },
@@ -2720,7 +2720,7 @@ const SUSHI_SCENES = [
     { sp: "C", en: "Wow, it's so small. Just eight seats?", ja: "わあ、小さいね。8席だけ?" },
     { sp: "S", en: "Yes, just eight. The chef makes every piece right in front of you.", ja: "はい、8席だけです。大将が目の前で一貫ずつ握ります。" },
     { sp: "C", en: "Is there a menu, or...?", ja: "メニューはあるの?" },
-    { sp: "S", en: "Tonight it's omakase — the chef's choice. The course has fourteen dishes: small plates first, then nigiri, and dessert at the end.", ja: "本日はおまかせ、大将にお任せいただくコースです。全14品で、まずおつまみ、それから握り、最後にデザートです。" },
+    { sp: "S", en: "Tonight it's omakase — the chef's choice. Fourteen dishes: about nine small plates, then eight pieces of nigiri, a half roll, the omelette, a soup and dessert.", ja: "本日はおまかせのコースで、全14品です。おつまみが9品ほど、それから握り8貫、巻物半分、玉子焼き、お椀、デザートです。" },
     { sp: "C", en: "Where does the fish come from?", ja: "魚はどこから来てるの?" },
     { sp: "S", en: "The chef goes to Toyosu market every morning, so everything tonight came in today.", ja: "大将が毎朝豊洲市場で仕入れているので、今夜の魚はすべて今日入ったものです。" },
     { sp: "S", en: "Before we start — do you have any allergies, or anything you don't eat?", ja: "始める前に、アレルギーや苦手な食べ物はございますか?" },
@@ -2754,57 +2754,105 @@ const SUSHI_SCENES = [
 },
 {
   id: "sushi-starters",
-  title: "3. お椀とお造り",
-  emoji: "🐟",
-  desc: "コース前半。出すたびに「何か・どう仕立てたか・どう食べるか」を一言添える。",
+  title: "3. すり流しと蟹の酢の物",
+  emoji: "🥣",
+  desc: "コースの最初の2品。すり流しは日本語でも説明が難しい。「何を・どうして・どう味わうか」で言い切る。",
   tips: [
-    "出すときの型は3文: \"This is ~.\"(何か)→ \"It's ~.\"(仕立て)→ \"Please try it with ~.\"(食べ方)",
-    "鯵は horse mackerel だが、\"aji\" とそのまま言って説明を足す方が伝わる。",
-    "熟成は aged。\"a bit like dry-aged beef\" と熟成肉に例えると一発で伝わる。この店の鯵は熟成をかけている。",
-    "※献立は月替わり、仕立ては一般的なもの。当日の品と大将の説明に合わせて言い換えよう。"
+    "すり流し = \"a seasonal puréed soup\"。旬の素材をすりつぶしてお出汁でのばした汁物。\"like a potage, but lighter\" と言うと一発で伝わる。",
+    "中身は季節で変わる。毎日大将に「今日のすり流しは何ですか?」と聞く習慣をつけよう。分からない時は \"Let me check with the chef.\" でいい。",
+    "酢の物 = sunomono, \"dressed with a light vinegar\"。最初に酸味で食欲を開く役割: \"It wakes up your appetite.\"",
+    "蟹の英語: 毛蟹 = hairy crab / ズワイ蟹 = snow crab / タラバ蟹 = king crab。今日の蟹の種類は大将に確認。"
   ],
   lines: [
-    { sp: "S", en: "To start, this is our soup of the season. It's a clear dashi — a broth made from kelp and bonito flakes.", ja: "まずは季節のお椀です。昆布と鰹節で取った、澄んだお出汁です。" },
-    { sp: "C", en: "It smells amazing. Do I drink it straight from the bowl?", ja: "いい香り。お椀から直接飲むの?" },
-    { sp: "S", en: "Yes, please — lift the bowl and sip. That's the Japanese way.", ja: "はい、お椀を持ち上げてお飲みください。それが日本の飲み方です。" },
-    { sp: "S", en: "Next is aji — horse mackerel — as sashimi. The chef ages it, which brings out more flavour, a bit like dry-aged beef.", ja: "次はお造り、鯵です。大将が熟成をかけていて、旨味が増しています。熟成肉のようなイメージです。" },
-    { sp: "C", en: "Aged fish? I've never heard of that.", ja: "熟成した魚?聞いたことない。" },
-    { sp: "S", en: "It's quite common at sushi counters. Fresh isn't always the most flavourful — a little time makes it richer.", ja: "鮨屋ではよくあることなんです。獲れたてが一番旨いとは限らず、少し寝かせることで旨味が濃くなります。" },
-    { sp: "C", en: "Do I use soy sauce?", ja: "醤油はつける?" },
-    { sp: "S", en: "A little, yes — just touch the fish to it. The garnish on the side goes well with it too.", ja: "少しだけどうぞ。魚の端にちょんとつける程度で。横の薬味も一緒にどうぞ。" },
-    { sp: "C", en: "Wow. It's really rich.", ja: "わあ、すごく濃厚だ。" },
-    { sp: "S", en: "That's the aging — it's what makes it special.", ja: "それが熟成の力なんです。" }
+    { sp: "S", en: "To start, this is our seasonal surinagashi — a smooth soup. The chef purées a seasonal ingredient and thins it with dashi.", ja: "まずは季節のすり流しです。旬の素材をすりつぶして、お出汁でのばした汁物です。" },
+    { sp: "C", en: "Oh, like a potage?", ja: "へえ、ポタージュみたいな?" },
+    { sp: "S", en: "Very much like a potage, but lighter — there's no cream or butter, just the ingredient and dashi.", ja: "まさにポタージュのようなものですが、もっと軽いんです。クリームやバターは使わず、素材とお出汁だけです。" },
+    { sp: "C", en: "What's in it today?", ja: "今日は何が入ってるの?" },
+    { sp: "S", en: "It changes with the season — let me ask the chef exactly what's in today's.", ja: "季節で変わるので、今日の中身を大将に確認してまいります。" },
+    { sp: "S", en: "Next is crab sunomono — crab dressed with a light vinegar. It's refreshing, and it wakes up your appetite.", ja: "次は蟹の酢の物です。蟹を軽いお酢で和えたもので、さっぱりして食欲を開いてくれます。" },
+    { sp: "C", en: "Vinegar at the start of a meal? Interesting.", ja: "食事の最初にお酢?面白いね。" },
+    { sp: "S", en: "In a Japanese course the first dishes are light, and a little acidity gets you ready for the fish.", ja: "日本のコースは最初の品が軽めで、少しの酸味がお魚への準備になるんです。" },
+    { sp: "C", en: "It's so delicate. I like it.", ja: "繊細だね。気に入ったよ。" },
+    { sp: "S", en: "Courses in Japan usually start gentle and build up towards the nigiri — so there's plenty more to come.", ja: "日本のコースは、優しい味から始まって握りに向かって盛り上がっていくんです。まだまだこれからですよ。" }
+  ]
+},
+{
+  id: "sushi-tako",
+  title: "4. 地だこの煮物と藁で燻した鰹",
+  emoji: "🐙",
+  desc: "つまみの山場。地だこは「地元の海」、鰹は「藁の炎と煙」が話の芯。",
+  tips: [
+    "地だこ = \"local octopus\"。遠くの輸入物ではなく、近くの海で獲れた蛸という意味。どこの蛸かを大将に聞いておくと一段深い説明になる。",
+    "煮だこは \"simmered until tender\"。「蛸は硬い」と思っている外国人が一番驚くポイント。",
+    "藁で燻した鰹は \"smoked over burning straw\"。藁は一気に高温で燃えるので、外は香ばしく中は生のまま。土佐(高知)の伝統として話せる。",
+    "※煮汁の味付けと、鰹に添える薬味はお店のやり方を大将に確認しよう。"
+  ],
+  lines: [
+    { sp: "S", en: "This is jidako — local octopus — simmered until it's tender.", ja: "地だこの煮物です。地元の海で獲れた蛸を、柔らかく煮ています。" },
+    { sp: "C", en: "Octopus? I've always found it chewy.", ja: "蛸?いつも噛み切れない感じなんだけど。" },
+    { sp: "S", en: "Try this one. Slow simmering makes it soft — most people are surprised.", ja: "こちらを召し上がってみてください。じっくり煮ると柔らかくなるので、皆さん驚かれます。" },
+    { sp: "C", en: "Oh wow, it really is soft.", ja: "わあ、本当に柔らかい。" },
+    { sp: "S", en: "Next is katsuo — bonito — smoked over burning straw.", ja: "次は鰹です。藁で燻しています。" },
+    { sp: "C", en: "Straw? Like hay?", ja: "藁?干し草みたいな?" },
+    { sp: "S", en: "Yes, rice straw. It burns very hot and fast, so the outside gets a smoky aroma while the inside stays raw.", ja: "はい、稲わらです。一気に高温で燃えるので、外は香ばしい香りがついて、中は生のままなんです。" },
+    { sp: "C", en: "That smell is incredible.", ja: "この香りはすごい。" },
+    { sp: "S", en: "It's a tradition from Kochi, in the south of Japan. Bonito and straw fire go back a long way there.", ja: "南の高知の伝統なんです。鰹と藁の火は、あちらでは昔からの組み合わせです。" },
+    { sp: "C", en: "I'd never have guessed fish could taste like this.", ja: "魚がこんな味になるなんて思わなかった。" }
+  ]
+},
+{
+  id: "sushi-shimaaji",
+  title: "5. 縞鯵のお刺身と野菜の天ぷら",
+  emoji: "🐟",
+  desc: "高級魚の縞鯵は「なぜ特別か」で伝え、天ぷらは食べ方を一言添える。",
+  tips: [
+    "縞鯵 = \"striped jack (shima-aji)\"。鯵の仲間で最も高級とされる魚。\"firm, clean, with a gentle sweetness\" で特徴が伝わる。",
+    "普通の鯵(aji)との違いを聞かれたら: \"a bigger, rarer cousin of aji\"",
+    "天ぷらは \"light batter, fried crisp\"。熱いうちに: \"please have it while it's hot\"。塩か天つゆかは店のやり方に合わせる。",
+    "※天ぷらの野菜は季節で変わる。当日の野菜の英語名(lotus root = 蓮根 / sweet potato = さつまいも / shiso leaf = 大葉 など)を覚えておこう。"
+  ],
+  lines: [
+    { sp: "S", en: "This is shima-aji — striped jack — as sashimi. It's one of the most prized fish at sushi counters.", ja: "縞鯵のお刺身です。鮨屋でも特に珍重されるお魚です。" },
+    { sp: "C", en: "Is it the same as the aji I had before?", ja: "前に食べたアジと同じ?" },
+    { sp: "S", en: "It's a cousin — bigger and rarer. The flesh is firm and clean, with a gentle sweetness.", ja: "仲間ですが、もっと大きくて希少なんです。身が締まっていてすっきりしていて、ほのかな甘みがあります。" },
+    { sp: "C", en: "Mm, you're right. It's almost buttery at the end.", ja: "うん、確かに。最後にバターみたいなコクがある。" },
+    { sp: "S", en: "That's the fat — shima-aji has just enough of it without being heavy.", ja: "それが脂なんです。縞鯵は重くなりすぎない、ちょうどいい脂があります。" },
+    { sp: "S", en: "Next is seasonal vegetable tempura. Light batter, fried crisp — please have it while it's hot.", ja: "次は季節のお野菜の天ぷらです。薄い衣でからっと揚げていますので、熱いうちにどうぞ。" },
+    { sp: "C", en: "Do I dip it in something?", ja: "何かにつけるの?" },
+    { sp: "S", en: "Try a piece as it is first — you'll really taste the vegetable.", ja: "まずはそのまま一つどうぞ。お野菜の味がよく分かります。" },
+    { sp: "C", en: "So crispy. What's this one?", ja: "サクサクだ。これは何?" },
+    { sp: "S", en: "That's lotus root — renkon. Crunchy, with a slightly sweet taste.", ja: "蓮根です。シャキシャキしていて、ほんのり甘みがあります。" }
   ]
 },
 {
   id: "sushi-hot",
-  title: "4. 茶碗蒸しと焼物",
+  title: "6. 焼き物・茶わんむし・お漬物",
   emoji: "🥚",
-  desc: "温かい一品。茶碗蒸しは「甘くないプリン」の誤解を先に解いておくのがポイント。",
+  desc: "つまみの後半。茶わんむしは「甘くないプリン」の誤解を先に解き、お漬物で握りへつなぐ。",
   tips: [
-    "茶碗蒸しは見た目がプリンなので、必ず先に \"It's savoury, not sweet.\" と言う。言わないと驚かれる。",
+    "茶わんむしは見た目がプリンなので、必ず先に \"It's savoury, not sweet.\" と言う。言わないと驚かれる。",
     "調理法の4語: steamed(蒸す)/ grilled(焼く)/ simmered(煮る)/ deep-fried(揚げる)。これで大抵の一品は説明できる。",
-    "熱いものには \"Careful, it's hot.\" を必ず一言。",
-    "※仕立ては一般的なもの。当日の品と大将の説明に合わせて言い換えよう。"
+    "お漬物は握りの前の区切り: \"They reset your palate, ready for the sushi.\"",
+    "※焼き物の魚と仕立ては日替わり。当日の品と大将の説明に合わせて言い換えよう。"
   ],
   lines: [
-    { sp: "S", en: "This is chawanmushi — a steamed egg custard. Careful, it's hot.", ja: "茶碗蒸しです。卵を蒸した料理です。熱いのでお気をつけください。" },
-    { sp: "C", en: "Oh, it looks like a pudding.", ja: "あ、プリンみたい。" },
-    { sp: "S", en: "It does, but it's savoury, not sweet. The egg is mixed with dashi, so it's soft and full of flavour.", ja: "見た目はそうですが、甘くないんです。卵をお出汁でのばしているので、柔らかくて旨味たっぷりです。" },
-    { sp: "C", en: "Ha, good thing you told me. What's inside?", ja: "はは、言ってくれてよかった。中には何が?" },
-    { sp: "S", en: "There are a few surprises at the bottom — please dig in with the spoon.", ja: "底の方に具が入っていますので、スプーンで底からすくってお召し上がりください。" },
-    { sp: "S", en: "And this is the grilled dish. The fish is lightly salted and grilled over the flame.", ja: "こちらは焼物です。魚に軽く塩をして、火で焼き上げています。" },
+    { sp: "S", en: "This is the grilled dish. The fish is lightly salted and grilled over the flame.", ja: "焼き物です。魚に軽く塩をして、火で焼き上げています。" },
     { sp: "C", en: "Do I need soy sauce with this?", ja: "これに醤油は要る?" },
     { sp: "S", en: "No need — it's already seasoned, so please enjoy it as it is.", ja: "いいえ、味がついていますので、そのままお召し上がりください。" },
-    { sp: "C", en: "Perfect. Everything so far has been amazing.", ja: "完璧。ここまで全部最高だよ。" },
-    { sp: "S", en: "Thank you — I'll tell the chef. The nigiri starts next.", ja: "ありがとうございます、大将に伝えます。次から握りに入ります。" }
+    { sp: "S", en: "And this is chawanmushi — a steamed egg custard. Careful, it's hot.", ja: "こちらは茶わんむしです。卵を蒸した料理です。熱いのでお気をつけください。" },
+    { sp: "C", en: "Oh, it looks like a pudding.", ja: "あ、プリンみたい。" },
+    { sp: "S", en: "It does, but it's savoury, not sweet. The egg is mixed with dashi, so it's soft and full of flavour.", ja: "見た目はそうですが、甘くないんです。卵をお出汁でのばしているので、柔らかくて旨味たっぷりです。" },
+    { sp: "C", en: "Ha, good thing you told me.", ja: "はは、言ってくれてよかった。" },
+    { sp: "S", en: "And before the nigiri, some pickles — they reset your palate, ready for the sushi.", ja: "握りの前にお漬物です。お口をさっぱりさせて、お鮨に備えます。" },
+    { sp: "C", en: "Everything so far has been amazing.", ja: "ここまで全部最高だよ。" },
+    { sp: "S", en: "Thank you — I'll tell the chef. Eight pieces of nigiri are coming next.", ja: "ありがとうございます、大将に伝えます。次は握りを8貫お出しします。" }
   ]
 },
 {
   id: "sushi-nigiri",
-  title: "5. 握りの食べ方とシャリの話",
+  title: "7. 握りの食べ方とシャリの話",
   emoji: "🍣",
-  desc: "おまかせ握りの時間。食べ方の質問に答え、シャリの話ができると一気に「分かっている人」になる。",
+  desc: "おまかせ握り8貫の時間。食べ方の質問に答え、シャリの話ができると一気に「分かっている人」になる。",
   tips: [
     "握りは出されたらすぐ食べるのが一番: \"It's best eaten right away, while the rice is still warm.\"",
     "手でも箸でもいい: \"Hands or chopsticks, either is fine.\" と言うと安心される。",
@@ -2813,7 +2861,7 @@ const SUSHI_SCENES = [
     "※醤油をつけるか・煮切りを塗っているかは、大将のやり方を確認しておこう。"
   ],
   lines: [
-    { sp: "S", en: "Here's your first piece of nigiri. It's best eaten right away, while the rice is still warm.", ja: "最初の握りです。シャリが温かいうちに、すぐに召し上がるのが一番です。" },
+    { sp: "S", en: "Here's the first of your eight pieces of nigiri. It's best eaten right away, while the rice is still warm.", ja: "握り8貫の一貫目です。シャリが温かいうちに、すぐに召し上がるのが一番です。" },
     { sp: "C", en: "Warm rice? I thought sushi rice was cold.", ja: "温かいシャリ?寿司のご飯って冷たいと思ってた。" },
     { sp: "S", en: "At a counter like this it's served close to body temperature. Our rice is seasoned with a little red vinegar, so it's mellow and a bit deeper in flavour.", ja: "こういうカウンターでは人肌くらいの温度でお出しします。当店のシャリは赤酢を少し使っているので、まろやかでコクがあります。" },
     { sp: "C", en: "Can I eat it with my hands?", ja: "手で食べてもいい?" },
@@ -2827,8 +2875,34 @@ const SUSHI_SCENES = [
   ]
 },
 {
+  id: "sushi-finish",
+  title: "8. 巻物・玉子・お椀・デザートとお見送り",
+  emoji: "🍵",
+  desc: "握りのあとの締め4品と、お会計・お見送り。最後の一言で店の印象が決まる。",
+  tips: [
+    "巻物半分 = \"a half roll\"。握りのあとの締めの一口。",
+    "鮨屋の玉子焼きは店の腕が出る、とよく言われる: \"Many say you can judge a sushi shop by its tamago.\"",
+    "お椀 = \"a soup to finish\"。中身は日によって違うので確認しておこう。",
+    "サービス料・席料はかからない店。\"There's no service charge.\" と言えると安心される。",
+    "見送りは \"Thank you for coming — please come again.\" 旅行客には \"Enjoy the rest of your trip!\" を添える。"
+  ],
+  lines: [
+    { sp: "S", en: "After the nigiri, here's a half roll.", ja: "握りのあとは、巻物を半分お出しします。" },
+    { sp: "C", en: "Just half? Ha.", ja: "半分だけ?はは。" },
+    { sp: "S", en: "Just a little bite to round off the sushi — by now most people are nicely full.", ja: "お鮨の締めの一口です。この頃にはだいたい皆さんお腹いっぱいなので。" },
+    { sp: "S", en: "And this is tamagoyaki, our Japanese omelette. Many people say you can judge a sushi shop by its tamago.", ja: "玉子焼きです。鮨屋の玉子焼きは店の腕が分かる、とよく言われるんです。" },
+    { sp: "C", en: "It's like a cake. So soft.", ja: "ケーキみたい。すごく柔らかい。" },
+    { sp: "S", en: "Next is a soup to finish, and then dessert. Would you like some green tea with it?", ja: "続いて締めのお椀、そのあとデザートをお持ちします。お茶はいかがですか?" },
+    { sp: "C", en: "Yes, please. And could we get the bill?", ja: "お願い。あとお会計を。" },
+    { sp: "S", en: "Of course. We take all major cards, and there's no service charge.", ja: "かしこまりました。主要なカードはすべてお使いいただけます。サービス料はかかりません。" },
+    { sp: "C", en: "Thank you. That was one of the best meals of our trip.", ja: "ありがとう。旅行で一番の食事の一つだったよ。" },
+    { sp: "S", en: "Thank you so much. I'll pass that on to the chef.", ja: "ありがとうございます。大将に伝えます。" },
+    { sp: "S", en: "Thank you for coming — please come again, and enjoy the rest of your trip!", ja: "ご来店ありがとうございました。またお越しください。残りのご旅行もお楽しみください!" }
+  ]
+},
+{
   id: "sushi-nanban",
-  title: "6. アジの南蛮漬けを説明する",
+  title: "9. 季節の一品:アジの南蛮漬け",
   emoji: "🌶️",
   desc: "悔しかったあの一品。料理説明の型「素材→調理法→味→一言」で、30秒で言い切れるようにする。",
   tips: [
@@ -2853,40 +2927,16 @@ const SUSHI_SCENES = [
   ]
 },
 {
-  id: "sushi-finish",
-  title: "7. 締めとお見送り",
-  emoji: "🍵",
-  desc: "玉子・お椀・甘味で締めて、お会計とお見送り。最後の一言で店の印象が決まる。",
-  tips: [
-    "玉子焼きは \"Japanese omelette\"。この店の玉子は甘さ控えめ: \"only lightly sweet\"",
-    "アラから取った出汁は「捨てずに使い切る」鮨屋の文化として話せる: \"made from the fish bones — nothing goes to waste\"",
-    "サービス料・席料はかからない店。\"There's no service charge.\" と言えると安心される。",
-    "見送りは \"Thank you for coming — please come again.\" 旅行客には \"Enjoy the rest of your trip!\" を添える。",
-    "※締めの品の仕立ては一般的なもの。当日の品に合わせて言い換えよう。"
-  ],
-  lines: [
-    { sp: "S", en: "To finish, this is tamagoyaki — our Japanese omelette. It's only lightly sweet.", ja: "締めは玉子焼きです。甘さは控えめにしています。" },
-    { sp: "C", en: "It's like a cake. So soft.", ja: "ケーキみたい。すごく柔らかい。" },
-    { sp: "S", en: "And this is miso soup. The broth is made from the fish bones left over from today — nothing goes to waste.", ja: "こちらはお味噌汁です。今日の魚のアラから出汁を取っていて、無駄なく使い切っているんです。" },
-    { sp: "C", en: "That's a lovely idea.", ja: "素敵な考え方だね。" },
-    { sp: "S", en: "Dessert is on its way. Would you like some green tea with it?", ja: "デザートをお持ちします。お茶はいかがですか?" },
-    { sp: "C", en: "Yes, please. And could we get the bill?", ja: "お願い。あとお会計を。" },
-    { sp: "S", en: "Of course. We take all major cards, and there's no service charge.", ja: "かしこまりました。主要なカードはすべてお使いいただけます。サービス料はかかりません。" },
-    { sp: "C", en: "Thank you. That was one of the best meals of our trip.", ja: "ありがとう。旅行で一番の食事の一つだったよ。" },
-    { sp: "S", en: "Thank you so much. I'll pass that on to the chef.", ja: "ありがとうございます。大将に伝えます。" },
-    { sp: "S", en: "Thank you for coming — please come again, and enjoy the rest of your trip!", ja: "ご来店ありがとうございました。またお越しください。残りのご旅行もお楽しみください!" }
-  ]
-},
-{
   id: "sushi-lunch",
-  title: "8. ランチの海鮮丼",
+  title: "10. ランチの海鮮丼とお通し",
   emoji: "🍱",
-  desc: "昼は大将がほぼ一人で回す忙しい時間。丼のネタを英語で一気に言えると大将が助かる。",
+  desc: "海鮮丼にお通しが付くランチ。頼んでいない小皿に戸惑う外国人に、お通しの説明から入る。",
   tips: [
-    "海鮮丼のネタ(紹介記事の例): white fish / salmon with salmon roe / lean tuna / medium-fatty tuna / sea bream / bonito / aged horse mackerel",
+    "お通し = \"a small starter that comes with your meal\"。頼んでいないのに出てくるので、出すときに一言添えると戸惑われない。",
+    "きんぴらは「切り方 → 炒める → 味」の順で: \"cut into thin strips, stir-fried in sesame oil, seasoned with soy sauce and a little sugar\"",
+    "名前の由来は昔話の力持ち「坂田金平」。歯ごたえと唐辛子のピリッとした強さから、と言われる。雑談のネタに。",
     "マグロの部位: 赤身 = lean tuna / 中トロ = medium-fatty tuna / 大トロ = fatty tuna",
-    "付け合わせも一言で: miso soup / pickles / tamagoyaki / a small side dish",
-    "※ネタと小鉢は日替わり。当日の丼を見て言い換えよう。"
+    "※お通しとネタは日替わり。きんぴらに唐辛子を入れているか等、お店の味付けは大将に確認しよう。"
   ],
   lines: [
     { sp: "C", en: "Hi — can we get lunch? What do you have?", ja: "こんにちは、ランチできる?何がある?" },
@@ -2896,16 +2946,20 @@ const SUSHI_SCENES = [
     { sp: "C", en: "What's on the seafood bowl today?", ja: "今日の海鮮丼には何がのってる?" },
     { sp: "S", en: "Today there's white fish, salmon with salmon roe, lean tuna, medium-fatty tuna, sea bream, bonito, and aged horse mackerel.", ja: "本日は白身、サーモンとイクラ、赤身、中トロ、鯛、鰹、それと熟成させた鯵です。" },
     { sp: "C", en: "That's a lot! I'll have that.", ja: "たくさんだね!それにする。" },
-    { sp: "S", en: "Great choice. It comes with miso soup, pickles, tamagoyaki and a small side dish.", ja: "かしこまりました。お味噌汁、お漬物、玉子焼き、小鉢が付きます。" },
-    { sp: "C", en: "What's the side dish?", ja: "小鉢は何?" },
-    { sp: "S", en: "Today it's nasu miso — eggplant with sweet miso.", ja: "本日は茄子味噌です。" },
+    { sp: "S", en: "Great choice. It comes with a small starter — today it's daikon kinpira and pickles.", ja: "かしこまりました。お通しが付きます。本日は大根のきんぴらとお漬物です。" },
+    { sp: "C", en: "Oh, I didn't order a starter.", ja: "え、前菜は頼んでないよ。" },
+    { sp: "S", en: "No worries — it comes with your lunch. It's called otoshi, a little dish to start with.", ja: "大丈夫です、ランチに付いてくるものです。お通しといって、最初につまむ小さな一品です。" },
+    { sp: "C", en: "Nice. What's kinpira?", ja: "いいね。きんぴらって何?" },
+    { sp: "S", en: "It's daikon radish cut into thin strips, stir-fried in sesame oil and seasoned with soy sauce and a little sugar. Sweet, salty and a bit crunchy.", ja: "大根を細切りにして、ごま油で炒め、醤油と少しの砂糖で味をつけたものです。甘辛くて、少しシャキッとしています。" },
+    { sp: "C", en: "And the pickles?", ja: "お漬物は?" },
+    { sp: "S", en: "Japanese pickled vegetables. They clean your palate between bites of fish.", ja: "日本のお漬物です。お魚の合間に口をさっぱりさせてくれます。" },
     { sp: "C", en: "Sounds good. Can I pay by card?", ja: "いいね。カードで払える?" },
     { sp: "S", en: "Yes, no problem. It'll be about ten minutes.", ja: "はい、大丈夫です。10分ほどお待ちください。" }
   ]
 },
 {
   id: "sushi-real",
-  title: "9. 🔥 質問攻めのカウンター",
+  title: "11. 🔥 質問攻めのカウンター",
   emoji: "🔥",
   desc: "4人組から質問が次々と飛んでくる。生魚NGの人、英語名のない魚、醤油とわさび。一人ずつ捌く。",
   tips: [
