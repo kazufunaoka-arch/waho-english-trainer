@@ -2984,7 +2984,422 @@ const SUSHI_SCENES = [
 }
 ];
 
+const HOSTEL_SCENES = [
+{
+  id: "hostel-arrive",
+  title: "1. 早朝に着いて荷物を預ける",
+  emoji: "🛎️",
+  otherLabel: "RECEPTION",
+  desc: "夜行便明けの朝9時。チェックインは14時。まずここを突破しないと、初日が待ち時間で終わる。",
+  tips: [
+    "チェックイン前に着いたら \"I know I'm early, but...\" と先に認めてから頼む。これだけで通りやすさが変わる。",
+    "荷物預けは \"Can I leave my bags here until check-in?\" 。ほぼ無料で預かってくれる。",
+    "早めに入れるかは \"Is early check-in possible?\" 。空室次第なので、断られても粘らない。",
+    "空港からの移動で疲れているときほど、笑顔と \"No worries\" が効く。受付は一日中これを聞いている。"
+  ],
+  lines: [
+    { sp: "S", en: "Morning! I've got a booking for tonight, but I know I'm way too early.", ja: "おはようございます!今夜の予約があるんですが、かなり早く着いてしまって。" },
+    { sp: "C", en: "No dramas. Check-in's at two, but I can take your details now.", ja: "問題ないよ。チェックインは2時だけど、今のうちに情報だけもらっとくね。(受付)" },
+    { sp: "S", en: "That'd be great. Can I leave my bags here until then?", ja: "助かります。それまで荷物をここに置かせてもらえますか?" },
+    { sp: "C", en: "Yeah, luggage room's just behind you. It's free.", ja: "うん、荷物部屋はすぐ後ろだよ。無料。" },
+    { sp: "S", en: "Perfect. Is early check-in possible at all, or is the room still occupied?", ja: "完璧です。早めのチェックインは可能ですか?それともまだ部屋は使用中ですか?" },
+    { sp: "C", en: "Let me have a look... Actually, we've had a cancellation. I can get you in by eleven.", ja: "ちょっと見てみるね…お、キャンセルが出てる。11時には入れるよ。" },
+    { sp: "S", en: "Oh, that's a lifesaver. I came off an overnight flight.", ja: "わあ、助かります。夜行便で来たので。" },
+    { sp: "C", en: "Yeah, you look it, mate. Grab a coffee, the kitchen's open.", ja: "だろうね、顔に出てるよ。コーヒーでも飲んで、キッチン開いてるから。" },
+    { sp: "S", en: "Cheers. Is there anywhere I can get a SIM card nearby?", ja: "ありがとうございます。近くでSIMカードを買える場所はありますか?" },
+    { sp: "C", en: "Coles up the road does them. Five minutes that way.", ja: "通りの先のColesで売ってるよ。そっちに5分。" },
+    { sp: "S", en: "Beautiful. Thanks heaps.", ja: "完璧です。本当にありがとうございます。" }
+  ]
+},
+{
+  id: "hostel-checkin",
+  title: "2. チェックインする",
+  emoji: "🛎️",
+  otherLabel: "RECEPTION",
+  desc: "パスポート、キーデポジット、Wi-Fi、リネン、門限。聞き逃すと後で困るものを一度に受け取る。",
+  tips: [
+    "\"key deposit\"(鍵の保証金)は退室時に返ってくる。いくらか、現金かカードかを必ず確認。",
+    "\"Are linen and towels included?\"(シーツとタオルは込みですか?)。タオルは別料金の宿が多い。",
+    "\"What time is checkout?\" は初日に聞いておく。延泊の判断が変わる。",
+    "部屋番号とベッド番号は復唱する。\"Room twelve, bed C — got it.\" 聞き返すより速い。"
+  ],
+  lines: [
+    { sp: "S", en: "Hi, I'd like to check in. The booking's under Kazuki.", ja: "こんにちは、チェックインをお願いします。カズキで予約しています。" },
+    { sp: "C", en: "Got it. Passport, thanks. Seven nights in a six-bed dorm, yeah?", ja: "はい。パスポートお願い。6人部屋で7泊だね?(受付)" },
+    { sp: "S", en: "That's right. Is there a key deposit?", ja: "そうです。鍵の保証金はありますか?" },
+    { sp: "C", en: "Twenty dollars, cash or card. You get it back when you hand the key in.", ja: "20ドル、現金かカードで。鍵を返すときに戻ってくるよ。" },
+    { sp: "S", en: "No worries. Are linen and towels included?", ja: "了解です。シーツとタオルは込みですか?" },
+    { sp: "C", en: "Linen yes, towel's five bucks to hire. Or bring your own.", ja: "シーツは込み、タオルはレンタルで5ドル。自分のを使ってもいいよ。" },
+    { sp: "S", en: "I've got my own, thanks. What's the Wi-Fi password?", ja: "自分のがあります、ありがとうございます。Wi-Fiのパスワードは?" },
+    { sp: "C", en: "It's on the card. Room twelve, bed C — top bunk, sorry.", ja: "カードに書いてある。部屋12、ベッドC、上段だ、ごめんね。" },
+    { sp: "S", en: "Room twelve, bed C. And what time is checkout?", ja: "部屋12のベッドCですね。チェックアウトは何時ですか?" },
+    { sp: "C", en: "Ten. If you want to stay longer, just let us know the day before.", ja: "10時。延泊したいなら前日までに言ってね。" },
+    { sp: "S", en: "Will do. One more thing — is there a job board here?", ja: "そうします。もう一つだけ、求人の掲示板はありますか?" },
+    { sp: "C", en: "Yeah, next to the kitchen. Gets updated most days.", ja: "うん、キッチンの横。ほぼ毎日更新されてるよ。" },
+    { sp: "S", en: "Brilliant. Thanks a lot.", ja: "最高です。ありがとうございました。" }
+  ]
+},
+{
+  id: "hostel-dorm",
+  title: "3. ドミトリーで同室の人に話しかける",
+  emoji: "🎒",
+  otherLabel: "TRAVELLER",
+  desc: "最初の一言が全部を決める。ここで話しかけられるかどうかで、最初の1ヶ月がまるごと変わる。",
+  tips: [
+    "第一声は \"Hey, how's it going?\" で十分。名前より先に空気を作る。",
+    "\"Where are you from?\" は鉄板だが、その次が勝負。\"How long are you here for?\" で話が続く。",
+    "\"Are you on a working holiday too?\" は最強。同じ立場だとわかった瞬間に距離が縮まる。",
+    "英語が不安なら先に言ってしまう。\"Sorry, my English is still rough.\" と言うと、相手は必ずゆっくり話してくれる。隠すほうが伝わらない。"
+  ],
+  lines: [
+    { sp: "S", en: "Hey, how's it going? I'm Kazuki — I just moved into the bunk above you.", ja: "やあ、調子どう?カズキです。君の上のベッドに入りました。" },
+    { sp: "C", en: "Oh hey! I'm Lena. Sorry about the mess, I've been here a while.", ja: "あ、どうも!レナです。散らかっててごめん、けっこう長くいるから。(旅行者)" },
+    { sp: "S", en: "No worries at all. Where are you from?", ja: "全然大丈夫です。どちらから来たんですか?" },
+    { sp: "C", en: "Germany. You?", ja: "ドイツ。あなたは?" },
+    { sp: "S", en: "Japan. I landed this morning, actually. Sorry, my English is still rough.", ja: "日本です。実は今朝着いたばかりで。すみません、英語がまだ拙くて。" },
+    { sp: "C", en: "Mate, you're doing fine. My first week I said nothing for three days.", ja: "全然いけてるよ。私なんて最初の週、3日間しゃべらなかったから。" },
+    { sp: "S", en: "That's reassuring. How long are you here for?", ja: "それは心強いです。どのくらい滞在してるんですか?" },
+    { sp: "C", en: "Two months in Surfers now. Working at a cafe down the road.", ja: "サーファーズに2ヶ月。通りの先のカフェで働いてる。" },
+    { sp: "S", en: "Oh, are you on a working holiday too?", ja: "え、ワーキングホリデーなんですか?" },
+    { sp: "C", en: "Yeah! Second year. Did my farm work up north.", ja: "そう!2年目。北でファームやってきた。" },
+    { sp: "S", en: "I'm looking for hospitality work. Any tips on where to start?", ja: "僕は飲食の仕事を探しています。どこから始めるのがいいか、何かアドバイスありますか?" },
+    { sp: "C", en: "Just walk in with a resume. Mornings, before the lunch rush. That's how I got mine.", ja: "履歴書持って直接行くのが一番。朝、ランチ前の時間帯ね。私もそれで決まった。" },
+    { sp: "S", en: "That's really helpful. Thanks, Lena.", ja: "すごく参考になります。ありがとう、レナ。" },
+    { sp: "C", en: "No stress. We're going to the beach at four if you wanna come.", ja: "気にしないで。4時にビーチ行くけど、来る?" },
+    { sp: "S", en: "Yeah, I'd love to. Count me in.", ja: "はい、ぜひ行きたいです。混ぜてください。" }
+  ]
+},
+{
+  id: "hostel-kitchen",
+  title: "4. 共用キッチンで雑談する",
+  emoji: "🎒",
+  otherLabel: "TRAVELLER",
+  desc: "ホステルで一番人が集まる場所。料理しながらの雑談が、一番自然に友達が増える場面。",
+  tips: [
+    "\"Are you using this?\" で場所と道具の確保。共用キッチンの基本の一言。",
+    "食べ物の話は世界共通で盛り上がる。\"What are you making?\" から入れば会話が勝手に続く。",
+    "作りすぎたら \"Do you want some?\" 。一皿分けるだけで、次の日から名前で呼ばれる。",
+    "使った鍋をすぐ洗うだけで評判が決まる。ホステルの人間関係はここで8割決まると言っていい。"
+  ],
+  lines: [
+    { sp: "S", en: "Hey, are you using this pan?", ja: "すみません、このフライパン使ってますか?" },
+    { sp: "C", en: "Nah, all yours. Just washed it.", ja: "いや、どうぞ。今洗ったところ。(旅行者)" },
+    { sp: "S", en: "Cheers. What are you making? Smells amazing.", ja: "ありがとう。何を作ってるんですか?いい匂いですね。" },
+    { sp: "C", en: "Just pasta again. It's all I can afford this week.", ja: "またパスタ。今週はこれしか買えなくて。" },
+    { sp: "S", en: "Ha, I know that feeling. I'm doing Japanese curry.", ja: "はは、わかります。僕は日本のカレーを作ってます。" },
+    { sp: "C", en: "Oh, that's the sweet one, yeah? I had it in Tokyo.", ja: "あの甘いやつだよね?東京で食べたことある。" },
+    { sp: "S", en: "That's the one. I'm making too much — do you want some?", ja: "それです。作りすぎたので、少し食べます?" },
+    { sp: "C", en: "Seriously? Yes please. I'll give you some of my garlic bread.", ja: "え、本当?ぜひ。じゃあ私のガーリックブレッド分けるね。" },
+    { sp: "S", en: "Deal. Where do you do your shopping around here?", ja: "決まりですね。この辺りではどこで買い物してるんですか?" },
+    { sp: "C", en: "Coles is closest, but Woolies does better specials on Wednesdays.", ja: "Colesが一番近いけど、水曜はWoolworthsの特売がいいよ。" },
+    { sp: "S", en: "Good to know. I still have no idea what things should cost.", ja: "いいこと聞きました。まだ物価の感覚が全然なくて。" },
+    { sp: "C", en: "You'll get there. Just don't buy meat at the IGA, it's a ripoff.", ja: "すぐ慣れるよ。ただIGAで肉は買わないで、ぼったくりだから。" },
+    { sp: "S", en: "Noted. Right, curry's up. Grab a bowl.", ja: "覚えておきます。よし、カレーできました。お皿どうぞ。" }
+  ]
+},
+{
+  id: "hostel-plans",
+  title: "5. 週末の予定に混ぜてもらう",
+  emoji: "🎒",
+  otherLabel: "TRAVELLER",
+  desc: "誘われるのを待たない。自分から \"Can I come?\" と言えるかどうか。ここが分かれ道。",
+  tips: [
+    "\"Can I tag along?\"(ついて行っていい?)はホステルで最も便利な一文。図々しくない。",
+    "\"I'm keen.\"(乗り気です)はオーストラリアで毎日使う。\"Yes\" より自然で前向き。",
+    "自分から誘うときは \"Anyone keen for...?\" 。一人を指名しないので断られてもダメージがない。",
+    "行けないときは \"I'm knackered, next time for sure.\"(疲れてるから今回はパス、次は絶対)。断り方を持っておくと、誘われ続ける。"
+  ],
+  lines: [
+    { sp: "C", en: "We're heading down to Burleigh on Saturday. Few of us are going.", ja: "土曜にバーリーに行くんだ。何人かで。(旅行者)" },
+    { sp: "S", en: "Oh nice. Can I tag along? I haven't been that far south yet.", ja: "いいですね。僕もついて行っていいですか?まだそこまで南に行ったことなくて。" },
+    { sp: "C", en: "Course you can. We're getting the tram at nine.", ja: "もちろん。9時のトラムに乗るよ。" },
+    { sp: "S", en: "I'm keen. What should I bring?", ja: "行きたいです。何を持っていけばいいですか?" },
+    { sp: "C", en: "Towel, sunscreen, and money for lunch. Burleigh's got good cafes.", ja: "タオル、日焼け止め、昼食代。バーリーはカフェがいいんだ。" },
+    { sp: "S", en: "Sounds perfect. Is anyone going to Bleach Festival? It's on this week.", ja: "完璧です。Bleachフェスに行く人はいますか?今週やってるんですよね。" },
+    { sp: "C", en: "Oh yeah, I forgot that was on. What's the go with it?", ja: "あ、そうだ、やってるの忘れてた。どんなやつ?" },
+    { sp: "S", en: "Music and art, all around the coast. Mostly free, I think.", ja: "音楽とアートで、コースト中でやってるみたいです。ほとんど無料らしくて。" },
+    { sp: "C", en: "I'm in. Let's do Burleigh Saturday, Bleach Sunday.", ja: "行く。土曜バーリー、日曜Bleachにしよう。" },
+    { sp: "S", en: "Deal. Should I ask the guys in room ten as well?", ja: "決まりですね。10号室の人たちも誘ってみましょうか?" },
+    { sp: "C", en: "Yeah, do it. The more the better.", ja: "うん、誘って。多いほうが楽しい。" },
+    { sp: "S", en: "Onto it. I'll put it on the whiteboard.", ja: "やっておきます。ホワイトボードに書いておきますね。" }
+  ]
+},
+{
+  id: "hostel-extend",
+  title: "6. 延泊と週割を交渉する",
+  emoji: "🛎️",
+  otherLabel: "RECEPTION",
+  desc: "週割はサイトに出ない。受付で直接聞いた人だけが安くなる。黙っていると定価のまま。",
+  tips: [
+    "\"Do you have a weekly rate?\" — これを聞くだけで1泊あたり2〜5ドル下がることがある。聞かないと絶対に出てこない。",
+    "長く泊まると伝えるのが交渉材料。\"I'm planning to stay at least a month.\" が効く。",
+    "\"Is that with or without the key deposit?\" のように、総額を必ず確認する。",
+    "働き始めたら \"Do you do a work-for-accommodation deal?\"(住み込みで働く制度はありますか?)も聞く価値がある。掃除2時間で1泊無料の宿は多い。"
+  ],
+  lines: [
+    { sp: "S", en: "Hi, my booking finishes tomorrow. I'd like to extend.", ja: "こんにちは、予約が明日で終わるんですが、延長したいです。" },
+    { sp: "C", en: "Sure. How many more nights?", ja: "いいよ。あと何泊?(受付)" },
+    { sp: "S", en: "Another week for now. Do you have a weekly rate?", ja: "とりあえずもう1週間です。週割はありますか?" },
+    { sp: "C", en: "We do. It works out about four dollars a night cheaper.", ja: "あるよ。1泊あたり4ドルくらい安くなる。" },
+    { sp: "S", en: "That'd be great. I'm planning to stay at least a month, actually.", ja: "助かります。実は最低1ヶ月は滞在するつもりなんです。" },
+    { sp: "C", en: "Oh, in that case I can do the monthly. That's better again.", ja: "そうなの?なら月割にできるよ。もっと安い。" },
+    { sp: "S", en: "Perfect. What's the total for the month?", ja: "完璧です。1ヶ月の合計はいくらになりますか?" },
+    { sp: "C", en: "Eight ninety. Paid upfront, or fortnightly if you'd rather.", ja: "890ドル。前払いか、2週間ごとでもいいよ。" },
+    { sp: "S", en: "Fortnightly suits me better. Is that with or without the key deposit?", ja: "2週間ごとのほうが助かります。それは鍵の保証金込みですか、別ですか?" },
+    { sp: "C", en: "Without — you've already paid that.", ja: "別。それはもう払ってもらってるから。" },
+    { sp: "S", en: "Got it. One thing — do you do a work-for-accommodation deal here?", ja: "了解です。一つだけ、こちらは住み込みで働く制度はありますか?" },
+    { sp: "C", en: "We do, but there's a waitlist. Put your name down and I'll let you know.", ja: "あるけど、順番待ちだね。名前書いといて、空いたら連絡するよ。" },
+    { sp: "S", en: "I'll do that. Thanks for sorting the rate.", ja: "そうします。料金の件、ありがとうございました。" }
+  ]
+},
+{
+  id: "hostel-real",
+  title: "7. 🔥 リアル:合わない同室者",
+  emoji: "🎒",
+  otherLabel: "TRAVELLER",
+  desc: "毎晩3時に電気をつける、いびき、荷物が侵食してくる。ドミトリーの本当の難所はここ。揉めずに言う練習。",
+  tips: [
+    "責めない言い方が全て。\"You're too loud\" ではなく \"I'm struggling to sleep\" 。主語を自分にする。",
+    "\"Would you mind...?\" は英語で一番角が立たない依頼の形。命令形は絶対に使わない。",
+    "盗難は本当に起きる。貴重品はロッカーへ。\"I'll just chuck it in my locker\" と自然に言えるようにしておく。",
+    "どうしても無理なら受付へ。\"Is there any chance I could move rooms?\" 。我慢し続けるのが一番損。"
+  ],
+  lines: [
+    { sp: "S", en: "Hey, have you got a sec?", ja: "ねえ、ちょっといいですか?" },
+    { sp: "C", en: "Yeah, what's up?", ja: "うん、どうした?(同室者)" },
+    { sp: "S", en: "It's not a big deal, but I'm struggling to sleep when the light goes on late.", ja: "大したことじゃないんですが、夜遅くに電気がつくと眠れなくて。" },
+    { sp: "C", en: "Oh. I finish work at two, I have to see what I'm doing.", ja: "ああ。2時に仕事終わるから、見えないと困るんだよ。" },
+    { sp: "S", en: "Yeah, I get that. Would you mind using your phone torch instead?", ja: "それはわかります。代わりにスマホのライトを使ってもらえませんか?" },
+    { sp: "C", en: "...Fair enough. I didn't realise it was waking people up.", ja: "…まあそうだな。人を起こしてるとは思ってなかった。" },
+    { sp: "S", en: "No stress, I should've said something earlier. I start at six, that's all.", ja: "気にしないでください、もっと早く言うべきでした。僕は6時始まりなので。" },
+    { sp: "C", en: "Six? Brutal. Yeah, I'll keep it down.", ja: "6時?きついな。うん、静かにするよ。" },
+    { sp: "S", en: "Appreciate it. Also — is that your bag on my bed?", ja: "助かります。あと、僕のベッドにあるのは君のカバンですか?" },
+    { sp: "C", en: "Oh shit, sorry. There's no room under mine.", ja: "うわ、ごめん。自分のベッドの下に入りきらなくて。" },
+    { sp: "S", en: "All good. Reception said there are spare lockers downstairs.", ja: "大丈夫です。受付が、下に空いてるロッカーがあるって言ってましたよ。" },
+    { sp: "C", en: "Didn't know that. Cheers, I'll grab one.", ja: "知らなかった。ありがとう、借りるわ。" },
+    { sp: "S", en: "Sweet. Anyway, no hard feelings — see you at the kitchen later?", ja: "よかったです。とにかく、悪く思わないでくださいね。あとでキッチンで?" },
+    { sp: "C", en: "Yeah mate. I owe you a beer.", ja: "ああ。ビール一杯おごるわ。" }
+  ]
+},
+];
+
+const SHARE_SCENES = [
+{
+  id: "share-enquire",
+  title: "1. 物件に問い合わせる",
+  emoji: "🔑",
+  otherLabel: "LANDLORD",
+  desc: "FacebookやGumtreeで見つけた部屋に連絡する。ここで聞くべきことを聞けないと、無駄足になる。",
+  tips: [
+    "第一声は \"I'm calling about the room you've advertised.\" 。何の件かを最初に言う。",
+    "\"Is it still available?\"(まだ空いていますか?)から必ず入る。掲載が残っていても埋まっていることが多い。",
+    "\"When can I come and see it?\" を必ず言う。内見を断る相手は詐欺の可能性が高い。",
+    "家賃は週単位。\"Is that per week?\" で確認する。月額だと思い込むと4倍ズレる。"
+  ],
+  lines: [
+    { sp: "S", en: "Hi, I'm calling about the room you've advertised in Southport.", ja: "もしもし、サウスポートで出されている部屋の件でお電話しました。" },
+    { sp: "C", en: "Oh yeah, the own room. It's still going.", ja: "ああ、個室のやつね。まだ空いてるよ。(オーナー)" },
+    { sp: "S", en: "Great. Can I check a few things? Is that two-forty per week?", ja: "よかったです。いくつか確認してもいいですか?週240ドルで合っていますか?" },
+    { sp: "C", en: "Yep, two-forty a week, bills included.", ja: "そう、週240ドル、光熱費込み。" },
+    { sp: "S", en: "And how many people are living there at the moment?", ja: "今は何人住んでいますか?" },
+    { sp: "C", en: "Four. Two Aussies, a Korean girl and a Brazilian guy.", ja: "4人。オーストラリア人2人、韓国人の女の子、ブラジル人の男の子。" },
+    { sp: "S", en: "Is there a minimum stay?", ja: "最低契約期間はありますか?" },
+    { sp: "C", en: "Three months. After that it's two weeks' notice either way.", ja: "3ヶ月。そのあとはお互い2週間前通知でいいよ。" },
+    { sp: "S", en: "That works for me. How far is it from the tram?", ja: "それなら大丈夫です。トラムからどのくらいですか?" },
+    { sp: "C", en: "Eight minutes walk to Southport station.", ja: "サウスポート駅まで歩いて8分。" },
+    { sp: "S", en: "Perfect. When can I come and see it?", ja: "完璧です。いつ見に行けますか?" },
+    { sp: "C", en: "I'm around tomorrow arvo. Say four?", ja: "明日の午後ならいるよ。4時とか?" },
+    { sp: "S", en: "Four works. Could you text me the address?", ja: "4時で大丈夫です。住所をメッセージで送ってもらえますか?" },
+    { sp: "C", en: "Will do. What's your name?", ja: "送るよ。名前は?" },
+    { sp: "S", en: "Kazuki. See you tomorrow — thanks!", ja: "カズキです。明日よろしくお願いします、ありがとうございます!" }
+  ]
+},
+{
+  id: "share-inspect",
+  title: "2. 内見に行く",
+  emoji: "🔑",
+  otherLabel: "LANDLORD",
+  desc: "写真ではわからないものを見る。日当たり、におい、シャワーの水圧、キッチンの汚れ、住人の顔。",
+  tips: [
+    "遠慮して黙っていると、住んでから後悔する。見たいものは \"Can I have a look at...?\" で全部見る。",
+    "\"Is the room furnished?\"(家具付きですか?)は必須。ベッドがないと初日から詰む。",
+    "洗濯機とWi-Fiは生活の質を決める。\"Is there a washing machine?\" \"How's the internet?\" を必ず。",
+    "その場で即決しない。\"Can I let you know tonight?\" と持ち帰る余地を残す。急かす相手ほど危ない。"
+  ],
+  lines: [
+    { sp: "S", en: "Hi, I'm Kazuki — I rang about the room yesterday.", ja: "こんにちは、カズキです。昨日お部屋の件で電話した者です。" },
+    { sp: "C", en: "Come on in. Shoes can stay on, don't worry.", ja: "入って。靴はそのままでいいよ。(オーナー)" },
+    { sp: "S", en: "Thanks. Oh, it's brighter than I expected.", ja: "ありがとうございます。あ、思ったより明るいですね。" },
+    { sp: "C", en: "Yeah, faces north. Gets the sun all morning.", ja: "北向きだからね。午前中ずっと日が入る。" },
+    { sp: "S", en: "Is the room furnished?", ja: "家具は付いていますか?" },
+    { sp: "C", en: "Bed, desk and a wardrobe. You'd need your own bedding.", ja: "ベッド、机、クローゼット。寝具は自分で用意してね。" },
+    { sp: "S", en: "No worries. Can I have a look at the bathroom?", ja: "大丈夫です。バスルームを見せてもらえますか?" },
+    { sp: "C", en: "Yeah, through here. Two bathrooms for five people.", ja: "うん、こっち。5人で2つのバスルームね。" },
+    { sp: "S", en: "That's better than I expected. Is there a washing machine?", ja: "思ったより良いですね。洗濯機はありますか?" },
+    { sp: "C", en: "Out the back, and a line. No dryer, sorry.", ja: "裏にあるよ、物干しも。乾燥機はないけど。" },
+    { sp: "S", en: "That's fine. How's the internet? I'll need it for job hunting.", ja: "問題ないです。インターネットはどうですか?仕事探しで使うので。" },
+    { sp: "C", en: "NBN, unlimited. No one's complained.", ja: "NBNで無制限。誰も文句言ってないよ。" },
+    { sp: "S", en: "Sounds good. Is it usually pretty quiet here at night?", ja: "良さそうですね。夜はだいたい静かですか?" },
+    { sp: "C", en: "Weeknights, yeah. Fridays they'll have a few beers out the back.", ja: "平日はね。金曜は裏でビール飲んでることはある。" },
+    { sp: "S", en: "That's fair enough. I really like it — can I let you know tonight?", ja: "それは全然大丈夫です。すごく気に入りました。今夜お返事してもいいですか?" },
+    { sp: "C", en: "Yeah, no rush. I've got one other person looking, but take your time.", ja: "うん、急がないよ。もう一人見に来る人がいるけど、ゆっくり考えて。" }
+  ]
+},
+{
+  id: "share-terms",
+  title: "3. 条件を詰める(ボンド・光熱費・契約)",
+  emoji: "🔑",
+  otherLabel: "LANDLORD",
+  desc: "お金の話。曖昧にしたまま入居すると、出るときに必ず揉める。ここは遠慮せずに全部聞く。",
+  tips: [
+    "ボンド(敷金)はシェアハウスで通常2週間分。\"How much is the bond?\" と \"When do I get it back?\" は必ずセットで聞く。",
+    "\"Are bills included?\" の bills は電気・水道・ガス・ネット。込みか別かで週20〜40ドル変わる。",
+    "支払い方法と頻度。\"Do you want it weekly or fortnightly?\" 。豪州は2週間ごとが多い。",
+    "口約束で終わらせない。\"Could you send me that in a message?\" とメッセージに残す。これが後で自分を守る。"
+  ],
+  lines: [
+    { sp: "S", en: "Hi, I'd like to take the room. Can we go through the details?", ja: "こんにちは、あの部屋をお願いしたいです。詳細を確認させてください。" },
+    { sp: "C", en: "Good stuff. So two-forty a week, bills included.", ja: "いいね。週240ドル、光熱費込みね。(オーナー)" },
+    { sp: "S", en: "Does that cover electricity, water and internet?", ja: "電気、水道、インターネットも含まれますか?" },
+    { sp: "C", en: "All of it. Only thing extra is if you want a car spot.", ja: "全部込み。追加は駐車場が欲しい場合だけ。" },
+    { sp: "S", en: "I won't need one. How much is the bond?", ja: "駐車場は要りません。ボンドはいくらですか?" },
+    { sp: "C", en: "Two weeks — four-eighty. Plus the first two weeks rent upfront.", ja: "2週間分で480ドル。それと家賃2週間分を前払い。" },
+    { sp: "S", en: "So nine-sixty to move in. And when do I get the bond back?", ja: "では入居時に960ドルですね。ボンドはいつ返ってきますか?" },
+    { sp: "C", en: "Within a week of you moving out, as long as the room's clean.", ja: "退去して1週間以内、部屋がきれいならね。" },
+    { sp: "S", en: "Understood. Do you want the rent weekly or fortnightly?", ja: "わかりました。家賃は週払いと2週間払い、どちらがいいですか?" },
+    { sp: "C", en: "Fortnightly's easier. Bank transfer on Thursdays.", ja: "2週間ごとが楽だね。木曜に銀行振込で。" },
+    { sp: "S", en: "That's fine. And the notice period is two weeks, is that right?", ja: "大丈夫です。退去通知は2週間前でしたよね?" },
+    { sp: "C", en: "Yep, after the first three months.", ja: "そう、最初の3ヶ月が終わったあとね。" },
+    { sp: "S", en: "Great. Could you send me all that in a message, just so we're both clear?", ja: "ありがとうございます。今の内容をメッセージで送ってもらえますか?お互い確認できるように。" },
+    { sp: "C", en: "No worries, I'll text it through tonight.", ja: "いいよ、今夜送っておく。" },
+    { sp: "S", en: "Perfect. I can move in Saturday if that suits.", ja: "完璧です。土曜に入居できますが、大丈夫ですか?" },
+    { sp: "C", en: "Saturday's good. I'll be home from ten.", ja: "土曜でいいよ。10時から家にいる。" }
+  ]
+},
+{
+  id: "share-movein",
+  title: "4. 入居初日、ハウスメイトに挨拶",
+  emoji: "🏠",
+  otherLabel: "HOUSEMATE",
+  desc: "最初の10分が、この家での半年を決める。名前を覚えて、自分から動く。",
+  tips: [
+    "自己紹介は短く。\"I'm Kazuki, I've just taken the back room.\" これで十分。",
+    "相手の名前は必ず復唱する。\"Sophie — got it.\" 一度で覚えると印象が全然違う。",
+    "\"Is there anything I should know?\"(何か知っておくべきことはありますか?)。一言でルールが全部出てくる。",
+    "初日に自分から皿を洗う。英語が下手でも、これで評価は決まる。"
+  ],
+  lines: [
+    { sp: "S", en: "Hi! I'm Kazuki — I've just taken the back room.", ja: "こんにちは!カズキです。奥の部屋に入りました。" },
+    { sp: "C", en: "Oh hey! I'm Sophie. Welcome to the madhouse.", ja: "あ、どうも!ソフィーです。狂った家へようこそ。(ハウスメイト)" },
+    { sp: "S", en: "Sophie — got it. Nice to meet you. How long have you been here?", ja: "ソフィーさんですね、覚えました。よろしくお願いします。どのくらい住んでるんですか?" },
+    { sp: "C", en: "Nearly a year. It's a good house, everyone's pretty easy.", ja: "もうすぐ1年。いい家だよ、みんなゆるいし。" },
+    { sp: "S", en: "That's good to hear. Is there anything I should know?", ja: "それは安心です。何か知っておくべきことはありますか?" },
+    { sp: "C", en: "Bins go out Tuesday night. And don't leave dishes — that's the only rule people care about.", ja: "ゴミは火曜の夜に出す。あと皿は放置しないこと。みんなが気にするのはそれだけ。" },
+    { sp: "S", en: "Noted. Bins Tuesday, dishes straight away.", ja: "了解です。ゴミは火曜、皿はすぐに。" },
+    { sp: "C", en: "You'll be right. Shelf on the left in the fridge is free.", ja: "大丈夫だよ。冷蔵庫の左の棚が空いてる。" },
+    { sp: "S", en: "Thanks. Is there a group chat or anything?", ja: "ありがとうございます。グループチャットとかはありますか?" },
+    { sp: "C", en: "Yeah, WhatsApp. Give me your number and I'll add you.", ja: "うん、WhatsApp。番号教えて、追加するよ。" },
+    { sp: "S", en: "Here you go. Oh, and is the hot water okay in the mornings?", ja: "これです。あと、朝のお湯は大丈夫ですか?" },
+    { sp: "C", en: "If four people shower back to back, no. Get in early.", ja: "4人連続でシャワー浴びたら無理。早めに入りな。" },
+    { sp: "S", en: "Ha, good tip. I start work at six anyway.", ja: "はは、いい情報です。どうせ6時から仕事なので。" },
+    { sp: "C", en: "Then you'll never have a problem. We're having a barbie Sunday, you should come.", ja: "なら一生困らないね。日曜にバーベキューやるから、来なよ。" },
+    { sp: "S", en: "I'd love to. What should I bring?", ja: "ぜひ行きたいです。何を持っていけばいいですか?" },
+    { sp: "C", en: "Just yourself and something to throw on the grill.", ja: "自分と、焼くもの何か持ってくればいいよ。" }
+  ]
+},
+{
+  id: "share-rules",
+  title: "5. 家のルールを確認する",
+  emoji: "🏠",
+  otherLabel: "HOUSEMATE",
+  desc: "掃除当番、来客、洗濯、共有の食材。曖昧なまま暮らすと必ずどこかでぶつかる。",
+  tips: [
+    "\"How do you guys do...?\"(みなさんはどうやって…?)が最強の聞き方。ルールを押しつけられている感じにならない。",
+    "来客は一番揉める。\"Is it okay if a friend stays over?\" は入居後すぐに聞く。",
+    "共有か個人かをはっきりさせる。\"Is that shared, or is it someone's?\" 。勝手に使うのが一番嫌われる。",
+    "自分の生活時間を先に伝えておく。\"I start at five, so I'm up early.\" これで夜の物音の説明が要らなくなる。"
+  ],
+  lines: [
+    { sp: "S", en: "Hey, can I ask how you guys do the cleaning?", ja: "ちょっといいですか、掃除ってみなさんどうしてるんですか?" },
+    { sp: "C", en: "There's a roster on the fridge. One common area each, every week.", ja: "冷蔵庫にローテ表がある。毎週、共有スペースを一人一箇所。(ハウスメイト)" },
+    { sp: "S", en: "Got it, I'll put my name on it. What about the bathroom?", ja: "了解です、名前を書いておきます。バスルームは?" },
+    { sp: "C", en: "That's on the roster too. Everyone hates it, so we rotate.", ja: "それもローテに入ってる。みんな嫌いだから回してる。" },
+    { sp: "S", en: "Fair enough. Is the stuff in the pantry shared, or is it someone's?", ja: "なるほど。パントリーの物は共有ですか、それとも誰かのですか?" },
+    { sp: "C", en: "Oil, salt and rice are shared. Anything with a name on it isn't.", ja: "油と塩と米は共有。名前が書いてあるのは違う。" },
+    { sp: "S", en: "Makes sense. Is it okay if a friend stays over sometimes?", ja: "わかりました。たまに友達が泊まるのは大丈夫ですか?" },
+    { sp: "C", en: "A night or two is fine. Just give us a heads up in the chat.", ja: "1、2泊なら平気。チャットで一言入れてくれれば。" },
+    { sp: "S", en: "Will do. And when's the best time to use the washing machine?", ja: "そうします。洗濯機はいつ使うのがいいですか?" },
+    { sp: "C", en: "Not after ten, the wall's thin. Otherwise whenever.", ja: "10時以降はやめて、壁が薄いから。それ以外はいつでも。" },
+    { sp: "S", en: "Noted. Just so you know, I start work at five, so I'm up really early.", ja: "了解です。一応お伝えしておくと、5時から仕事なのでかなり早起きします。" },
+    { sp: "C", en: "Oh good, you can put the bins out then.", ja: "お、じゃあゴミ出しよろしく。" },
+    { sp: "S", en: "Ha, deal. Anything else I should watch out for?", ja: "はは、いいですよ。他に気をつけることはありますか?" },
+    { sp: "C", en: "Don't park in the neighbour's spot. She's not shy about it.", ja: "隣の人のスペースに停めないこと。あの人、遠慮なく言ってくるから。" },
+    { sp: "S", en: "I don't have a car, so I'm safe. Cheers for the rundown.", ja: "車がないので大丈夫です。説明ありがとうございました。" }
+  ]
+},
+{
+  id: "share-problem",
+  title: "6. 困りごとを伝える",
+  emoji: "🏠",
+  otherLabel: "HOUSEMATE",
+  desc: "Wi-Fiが遅い、シャワーが壊れた、誰かの皿が3日放置。言わないと直らないし、我慢しても評価は上がらない。",
+  tips: [
+    "\"Hey, small thing, but...\" で入る。深刻な話にしないのがコツ。",
+    "壊れたものは事実だけ言う。\"The shower's been running cold since Tuesday.\" 誰のせいかは言わない。",
+    "人の行動を指摘するときは疑問形。\"Any chance you could...?\" が一番角が立たない。",
+    "英語で言い切れないときは \"Sorry, how do I say this...\" と正直に詰まっていい。黙って溜め込むほうが必ず悪化する。"
+  ],
+  lines: [
+    { sp: "S", en: "Hey, small thing, but has anyone else had trouble with the hot water?", ja: "ちょっといいですか、小さいことなんですが、お湯の調子が悪いの、他の人も感じてますか?" },
+    { sp: "C", en: "Yeah, it's been dodgy. Why, is yours cold?", ja: "うん、最近おかしい。なんで、冷たかった?(ハウスメイト)" },
+    { sp: "S", en: "It's been running cold since Tuesday, even early in the morning.", ja: "火曜から冷たいままなんです。朝早くてもです。" },
+    { sp: "C", en: "That's not normal. I'll message the landlord.", ja: "それは普通じゃないね。大家にメッセージしとく。" },
+    { sp: "S", en: "Thanks. Should I say something too, or is it better coming from you?", ja: "ありがとうございます。僕からも言ったほうがいいですか?それとも君からのほうがいいですか?" },
+    { sp: "C", en: "I'll do it, he knows me. He's usually pretty quick.", ja: "私がやるよ、面識あるし。だいたい対応早いから。" },
+    { sp: "S", en: "Appreciate it. Um — sorry, how do I say this...", ja: "助かります。あの、すみません、なんて言えばいいか…" },
+    { sp: "C", en: "Just say it, mate.", ja: "そのまま言っていいよ。" },
+    { sp: "S", en: "There's been a pile of dishes in the sink for a few days. Is that someone's?", ja: "シンクに数日ずっと皿が溜まっていて。あれは誰かのですか?" },
+    { sp: "C", en: "Ugh, that's Jake. He does this every time he's got exams.", ja: "うわ、ジェイクだ。試験期間になると毎回これ。" },
+    { sp: "S", en: "Right. Any chance someone could have a word? I didn't want to start off by nagging.", ja: "そうなんですね。誰かから言ってもらえますか?入ったばかりで小言から始めたくなくて。" },
+    { sp: "C", en: "Nah, you're right to say something. I'll put it in the chat.", ja: "いや、言って正解だよ。チャットに書いとく。" },
+    { sp: "S", en: "Thanks. I'll do the bins tonight as well, so it's not all complaints.", ja: "ありがとうございます。今夜ゴミ出しもやっておきます、文句だけじゃないように。" },
+    { sp: "C", en: "Ha! You'll fit in fine here.", ja: "はは!君はこの家でうまくやれるよ。" }
+  ]
+},
+{
+  id: "share-real",
+  title: "7. 🔥 リアル:詐欺物件と、断る勇気",
+  emoji: "🔑",
+  otherLabel: "LANDLORD",
+  desc: "内見前に振込を要求される。相場より安すぎる。急かされる。ワーホリが一番お金を失うのがここ。断れるかどうか。",
+  tips: [
+    "内見せずにボンドを送金しない。これだけは例外なし。相手が誰でも、理由が何でも。",
+    "\"I'd rather see the place first.\"(先に部屋を見たいです)。これを言って怒る相手は、その時点で答えが出ている。",
+    "急かしは詐欺の定番。\"Someone else will take it today\" と言われたら、むしろ引く。",
+    "断り文句を先に用意しておく。\"I'm going to keep looking, but thanks for your time.\" 迷ったら断る。部屋は他にもある。"
+  ],
+  lines: [
+    { sp: "C", en: "Hi mate, the room's yours if you want it. Just need the bond today.", ja: "やあ、部屋は君のものにできるよ。今日ボンドだけ払ってくれれば。(オーナー)" },
+    { sp: "S", en: "Thanks. When can I come and see it?", ja: "ありがとうございます。いつ見に行けますか?" },
+    { sp: "C", en: "That's the thing — I'm in Sydney for work. My cousin has the keys but he's away too.", ja: "それがね、仕事でシドニーにいるんだ。従兄弟が鍵を持ってるけど、彼も出かけてて。" },
+    { sp: "S", en: "So there's no way to see the room before I pay?", ja: "では、払う前に部屋を見る方法はないということですか?" },
+    { sp: "C", en: "You've seen the photos. It's a great place, and it's two hundred under market.", ja: "写真は見ただろ。いい物件だよ、相場より200ドル安い。" },
+    { sp: "S", en: "It does look good. But I'd rather see the place first.", ja: "確かに良さそうです。ですが、先に部屋を見たいです。" },
+    { sp: "C", en: "I've got three other people asking. Someone else will take it today.", ja: "他に3人問い合わせが来てる。今日中に誰かに決まるよ。" },
+    { sp: "S", en: "I understand. I'm still not comfortable transferring money sight unseen.", ja: "わかります。それでも、部屋を見ずに送金するのは安心できません。" },
+    { sp: "C", en: "Look, everyone does it here. You Japanese are too careful.", ja: "あのね、こっちじゃみんなやってるんだよ。日本人は慎重すぎる。" },
+    { sp: "S", en: "Maybe. But it's my rule, and I'm going to stick to it.", ja: "そうかもしれません。でもこれは僕のルールなので、守ります。" },
+    { sp: "C", en: "Your loss. Offer's gone in an hour.", ja: "損するのは君だよ。1時間で話は流れる。" },
+    { sp: "S", en: "That's fine. I'm going to keep looking, but thanks for your time.", ja: "大丈夫です。引き続き探しますが、お時間ありがとうございました。" },
+    { sp: "C", en: "Whatever, mate.", ja: "好きにしろよ。" },
+    { sp: "S", en: "All the best.", ja: "ご健闘をお祈りします。" }
+  ]
+},
+];
+
 const JOBS = [
+  { id: "hostel", name: "ホステル", scenes: HOSTEL_SCENES, otherLabel: "TRAVELLER" },
+  { id: "sharehouse", name: "シェアハウス", scenes: SHARE_SCENES, otherLabel: "HOUSEMATE" },
   { id: "uber", name: "Uber Eats", scenes: UBER_SCENES },
   { id: "steak", name: "ステーキ屋", scenes: STEAK_SCENES },
   { id: "cafe", name: "カフェ", scenes: CAFE_SCENES },
@@ -3291,6 +3706,8 @@ function renderAussie() {
 const CHAT_MODEL = "claude-haiku-4-5";      // 会話ターン: 軽量・低コスト
 const FEEDBACK_MODEL = "claude-opus-4-8";   // 総評: 高精度モデルで丁寧に
 const JOB_SETTINGS = {
+  hostel: "a backpacker hostel in Surfers Paradise, Gold Coast (the learner has just arrived in Australia on a working holiday and is staying in a dorm). Depending on the scene you are either the hostel reception staff or another backpacker staying there. Backpackers are casual, friendly and often not native English speakers themselves.",
+  sharehouse: "share house hunting and share house life on the Gold Coast (the learner is looking for, or has just moved into, a room in a share house). Rent is quoted per week, bond is usually two weeks rent, and bills means electricity, water, gas and internet. Depending on the scene you are either the landlord/head tenant showing the room, or a housemate already living there.",
   steak: "a casual steakhouse restaurant",
   cafe: "a busy specialty cafe",
   gym: "a 24/7 gym (the learner works at the front desk and on the gym floor)",
@@ -3309,6 +3726,10 @@ const JOB_SETTINGS = {
 };
 
 const AI_ROLES = {
+  RECEPTION: "hostel reception staff — relaxed, has answered these questions a thousand times, helpful but busy",
+  TRAVELLER: "another backpacker staying in the same hostel — friendly, curious, on a working holiday too, happy to share tips and invite the learner along to things",
+  LANDLORD: "the landlord or head tenant showing a room in a share house — practical, direct about money and house rules",
+  HOUSEMATE: "a housemate already living in the share house — casual and welcoming, explains how the house runs",
   MANAGER: "hiring manager or senior colleague",
   SUPERVISOR: "housekeeping supervisor who gives instructions and receives reports",
   GUEST: "hotel guest",
@@ -3918,8 +4339,8 @@ function renderInstant() {
 }
 
 /* ===== 青春ギミック: ストリーク & 紙吹雪 ===== */
-const JOB_EMOJI = { uber: "🛵", bar: "🍸", japanese: "🍣", sushi: "🐟", steak: "🥩", cafe: "☕", thai: "🍛", kebab: "🌯", hotel: "🛏️", demipair: "🏡", gym: "💪", swim: "🏊", airport: "🛫", flightexp: "✈️", interview: "🤝" };
-const WHO_EMOJI = { RESTAURANT: "🏪", CUSTOMER: "🙋", GUEST: "🧳", KID: "🧒", PARENT: "👩", CHEF: "👨‍🍳", SUPERVISOR: "📋", COWORKER: "🤜", MANAGER: "🤝" };
+const JOB_EMOJI = { hostel: "🎒", sharehouse: "🏠", uber: "🛵", bar: "🍸", japanese: "🍣", sushi: "🐟", steak: "🥩", cafe: "☕", thai: "🍛", kebab: "🌯", hotel: "🛏️", demipair: "🏡", gym: "💪", swim: "🏊", airport: "🛫", flightexp: "✈️", interview: "🤝" };
+const WHO_EMOJI = { RECEPTION: "🛎️", TRAVELLER: "🎒", LANDLORD: "🔑", HOUSEMATE: "🏠", RESTAURANT: "🏪", CUSTOMER: "🙋", GUEST: "🧳", KID: "🧒", PARENT: "👩", CHEF: "👨‍🍳", SUPERVISOR: "📋", COWORKER: "🤜", MANAGER: "🤝" };
 
 function markPracticed() {
   const t = srsDateStr(0);
