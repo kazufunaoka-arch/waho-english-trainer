@@ -4008,7 +4008,8 @@ function toast(msg, kind) {
   el.className = "toast" + (kind ? " " + kind : "");
   el.textContent = msg;
   wrap.appendChild(el);
-  requestAnimationFrame(() => el.classList.add("in"));
+  void el.offsetWidth;            // リフローを強制（rAFは非表示タブで止まる）
+  el.classList.add("in");
   setTimeout(() => {
     el.classList.remove("in");
     setTimeout(() => el.remove(), 260);
@@ -4053,7 +4054,9 @@ function openSheet(title, bodyHtml) {
      <div class="sheet-head"><h3>${esc(title)}</h3><button onclick="closeSheet()">閉じる</button></div>
      <div class="sheet-body">${bodyHtml}</div>`;
   sheetOpen = true;
-  requestAnimationFrame(() => { scrim.classList.add("in"); sheet.classList.add("in"); });
+  void sheet.offsetWidth;
+  scrim.classList.add("in");
+  sheet.classList.add("in");
 }
 function closeSheet() {
   const scrim = document.getElementById("sheet-scrim");
