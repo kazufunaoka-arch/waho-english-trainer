@@ -527,6 +527,67 @@
     .controls select { max-width: 44%; }
     main { padding: 8px 14px calc(70px + env(safe-area-inset-bottom)); }
   }
+/* ===== モバイルUX: トースト / ボトムシート / スケルトン / 引っ張って更新 ===== */
+#toast-wrap{position:fixed;left:0;right:0;bottom:calc(16px + env(safe-area-inset-bottom));
+  display:flex;flex-direction:column;align-items:center;gap:8px;z-index:9999;pointer-events:none}
+.toast{background:#1c2b33;color:#fff;padding:11px 18px;border-radius:999px;
+  font-size:14px;font-weight:600;box-shadow:0 6px 24px rgba(0,0,0,.28);
+  display:flex;align-items:center;gap:8px;max-width:88vw;
+  opacity:0;transform:translateY(14px) scale(.96);
+  transition:opacity .22s ease,transform .22s cubic-bezier(.2,.9,.3,1)}
+.toast.in{opacity:1;transform:translateY(0) scale(1)}
+.toast.ok{background:#0E7C86}
+.toast.warn{background:#C2410C}
+
+#sheet-scrim{position:fixed;inset:0;background:rgba(14,22,28,.45);backdrop-filter:blur(2px);
+  opacity:0;pointer-events:none;transition:opacity .25s ease;z-index:9998}
+#sheet-scrim.in{opacity:1;pointer-events:auto}
+#sheet{position:fixed;left:0;right:0;bottom:0;z-index:9999;
+  background:var(--paper,#fffdf8);border-radius:20px 20px 0 0;
+  box-shadow:0 -8px 40px rgba(0,0,0,.22);
+  transform:translateY(100%);transition:transform .3s cubic-bezier(.2,.9,.3,1);
+  max-height:82vh;display:flex;flex-direction:column;
+  padding-bottom:env(safe-area-inset-bottom)}
+#sheet.in{transform:translateY(0)}
+.sheet-grip{width:40px;height:4px;border-radius:999px;background:#d8d2c6;
+  margin:10px auto 2px;flex:none}
+.sheet-head{display:flex;align-items:center;justify-content:space-between;
+  padding:6px 18px 10px;flex:none}
+.sheet-head h3{font-size:17px;margin:0}
+.sheet-head button{background:none;border:none;font-size:15px;color:#777;padding:6px 2px;cursor:pointer}
+.sheet-body{overflow-y:auto;-webkit-overflow-scrolling:touch;padding:0 14px 18px}
+.sheet-item{display:flex;align-items:center;gap:12px;width:100%;text-align:left;
+  background:none;border:none;border-radius:14px;padding:13px 14px;cursor:pointer;
+  font-size:16px;font-family:inherit;color:inherit}
+.sheet-item:active{background:rgba(0,0,0,.05)}
+.sheet-item.on{background:rgba(14,124,134,.1);font-weight:700}
+.sheet-item .si-emoji{font-size:21px;flex:none;width:28px;text-align:center}
+.sheet-item .si-sub{font-size:12px;color:#8a8275;margin-top:2px}
+.sheet-item .si-tick{margin-left:auto;color:#0E7C86;font-weight:700}
+
+.sk{background:linear-gradient(90deg,#e9e4da 25%,#f5f1e9 37%,#e9e4da 63%);
+  background-size:400% 100%;animation:skw 1.3s ease-in-out infinite;border-radius:7px}
+@keyframes skw{0%{background-position:100% 50%}100%{background-position:0 50%}}
+.sk-line{height:12px;margin:7px 0}
+.sk-dots{display:inline-flex;gap:5px;align-items:center;padding:3px 0}
+.sk-dots i{width:7px;height:7px;border-radius:50%;background:#9bb3b8;display:block;
+  animation:skd 1.1s ease-in-out infinite}
+.sk-dots i:nth-child(2){animation-delay:.16s}
+.sk-dots i:nth-child(3){animation-delay:.32s}
+@keyframes skd{0%,80%,100%{opacity:.3;transform:translateY(0)}40%{opacity:1;transform:translateY(-4px)}}
+
+#ptr{position:fixed;left:0;right:0;top:0;height:0;display:flex;align-items:flex-end;
+  justify-content:center;overflow:hidden;z-index:900;pointer-events:none}
+#ptr .ptr-in{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:700;
+  color:#0E7C86;padding-bottom:9px;white-space:nowrap}
+#ptr .ptr-ico{display:inline-block;transition:transform .2s ease}
+#ptr.ready .ptr-ico{transform:rotate(180deg)}
+#ptr.spin .ptr-ico{animation:ptrspin .7s linear infinite}
+@keyframes ptrspin{to{transform:rotate(360deg)}}
+@media (prefers-reduced-motion:reduce){
+  .toast,#sheet,#sheet-scrim{transition:none}
+  .sk,.sk-dots i,#ptr .ptr-ico{animation:none}
+}
 </style>
 </head>
 <body class="hide-ja-no">
@@ -3397,7 +3458,371 @@ const SHARE_SCENES = [
 },
 ];
 
+const FISHCHIPS_SCENES = [
+{
+  id: "fish-order",
+  title: "1. カウンターで注文を取る",
+  emoji: "🙋",
+  desc: "フィッシュ&チップス屋の基本。魚の種類とチップスのサイズ、この2つが決まれば8割終わる。",
+  tips: [
+    "第一声は \"What can I get you?\" か \"What'll it be?\" 。豪州のテイクアウェイはこれで始まる。",
+    "必ず聞くのが \"Eat in or takeaway?\"(店内かお持ち帰りか)。包み方が変わる。",
+    "魚は \"battered\"(衣揚げ) か \"grilled\"(焼き) か \"crumbed\"(パン粉) を聞く。何も言われなければ battered。",
+    "チップスは \"small or large?\" 。\"A serve of chips\" は1人前のこと。"
+  ],
+  lines: [
+    { sp: "S", en: "G'day, what can I get you?", ja: "こんにちは、何にしましょうか?" },
+    { sp: "C", en: "Can I get a flake and chips, thanks.", ja: "フレークとチップスをお願い。(客)" },
+    { sp: "S", en: "No worries. Battered or grilled?", ja: "かしこまりました。衣揚げですか、焼きですか?" },
+    { sp: "C", en: "Battered, please.", ja: "衣揚げで。" },
+    { sp: "S", en: "And chips — small or large?", ja: "チップスは小と大、どちらにしますか?" },
+    { sp: "C", en: "Large. Can you put chicken salt on them?", ja: "大で。チキンソルトかけてもらえる?" },
+    { sp: "S", en: "Yep, chicken salt. Anything else with that?", ja: "はい、チキンソルトですね。他に何かお付けしますか?" },
+    { sp: "C", en: "Yeah, chuck in two potato scallops.", ja: "うん、ポテトスキャロップを2つ入れて。" },
+    { sp: "S", en: "Two scallops. Eat in or takeaway?", ja: "スキャロップ2つですね。店内ですか、お持ち帰りですか?" },
+    { sp: "C", en: "Takeaway.", ja: "持ち帰りで。" },
+    { sp: "S", en: "That's eighteen fifty. It'll be about ten minutes.", ja: "18ドル50になります。10分ほどお待ちください。" },
+    { sp: "C", en: "Sweet, I'll wait here.", ja: "了解、ここで待ってる。" },
+    { sp: "S", en: "No worries. I'll call out when it's ready.", ja: "承知しました。できたらお呼びします。" }
+  ]
+},
+{
+  id: "fish-types",
+  title: "2. 魚の種類を説明する",
+  emoji: "🙋",
+  desc: "「どれがおすすめ?」は毎日聞かれる。豪州の魚の名前と特徴を、ひとことで言えるようにする。",
+  tips: [
+    "**Flake** はサメ(gummy shark)。豪州のフィッシュ&チップスの定番で、骨がなくクセが少ない。",
+    "**Barramundi** は高級寄り。身が厚くてしっかりしている。**Flathead** は柔らかく上品。",
+    "**Whiting** は小ぶりで繊細。**Snapper** は身が締まっている。**Hoki / Basa** は安い白身。",
+    "値段を聞かれたら \"Flake's the cheapest, barra's the dearest.\" のように差を言うと親切。"
+  ],
+  lines: [
+    { sp: "C", en: "What's good today?", ja: "今日は何がおすすめ?(客)" },
+    { sp: "S", en: "The flathead came in fresh this morning. It's really nice.", ja: "フラットヘッドが今朝入ったばかりです。とてもいいですよ。" },
+    { sp: "C", en: "What's flathead like? I've never had it.", ja: "フラットヘッドってどんな感じ?食べたことなくて。" },
+    { sp: "S", en: "It's soft and a bit sweet — not fishy at all. Most people like it.", ja: "柔らかくて少し甘みがあります。魚臭さは全然ないです。だいたいの方が気に入ります。" },
+    { sp: "C", en: "And what's flake? I always see it but I don't know what it is.", ja: "フレークって何?いつも見かけるけど、何なのか知らなくて。" },
+    { sp: "S", en: "It's shark — gummy shark. No bones, very mild. It's the classic one here.", ja: "サメです、ガミーシャークという。骨がなくてクセがありません。こちらでは定番の魚です。" },
+    { sp: "C", en: "Shark! Right. Is barramundi better?", ja: "サメか!なるほど。バラマンディのほうがいい?" },
+    { sp: "S", en: "It's a thicker, firmer fillet. It's our dearest one, but it's very popular.", ja: "身が厚くてしっかりしています。一番高いですが、とても人気です。" },
+    { sp: "C", en: "I'll go the flathead then.", ja: "じゃあフラットヘッドにするわ。" },
+    { sp: "S", en: "Good choice. Battered or grilled?", ja: "いい選択です。衣揚げですか、焼きですか?" },
+    { sp: "C", en: "Grilled, I'm trying to be good.", ja: "焼きで。健康に気をつけてるから。" },
+    { sp: "S", en: "Grilled flathead. Won't be long.", ja: "焼きのフラットヘッドですね。すぐにお持ちします。" }
+  ]
+},
+{
+  id: "fish-phone",
+  title: "3. 電話注文を受ける",
+  emoji: "🏪",
+  otherLabel: "RESTAURANT",
+  desc: "揚げ物の音で聞こえにくい。名前と受け取り時刻、この2つだけ確実に取る。",
+  tips: [
+    "聞き取れなければ必ず聞き返す。\"Sorry, could you repeat that?\" を言える人が強い。",
+    "名前は必ず綴りを確認。\"Can I grab a name?\" → \"How do you spell that?\"",
+    "注文は最後に全部復唱する。\"So that's two flake, one large chips...\" これで事故が消える。",
+    "受け取り時刻を必ず伝える。\"It'll be ready in about fifteen.\" (15分ほどで)"
+  ],
+  lines: [
+    { sp: "S", en: "Good evening, Ocean Fish and Chips.", ja: "こんばんは、オーシャン・フィッシュ&チップスです。" },
+    { sp: "C", en: "Hi, I'd like to order for pickup.", ja: "どうも、受け取りで注文したいんですが。(電話の客)" },
+    { sp: "S", en: "Sure, go ahead.", ja: "はい、どうぞ。" },
+    { sp: "C", en: "Two flake, one large chips and a couple of dim sims.", ja: "フレーク2つ、チップス大1つ、それとディムシム2つ。" },
+    { sp: "S", en: "Sorry, could you repeat the last part?", ja: "すみません、最後の部分をもう一度お願いできますか?" },
+    { sp: "C", en: "Two dim sims.", ja: "ディムシム2つ。" },
+    { sp: "S", en: "Got it. So that's two flake, one large chips and two dim sims. Battered on the flake?", ja: "承知しました。フレーク2つ、チップス大1つ、ディムシム2つですね。フレークは衣揚げでよろしいですか?" },
+    { sp: "C", en: "Yes, battered.", ja: "はい、衣揚げで。" },
+    { sp: "S", en: "Can I grab a name?", ja: "お名前をいただけますか?" },
+    { sp: "C", en: "Siobhan.", ja: "シヴォーン。" },
+    { sp: "S", en: "Sorry — how do you spell that?", ja: "すみません、綴りを教えていただけますか?" },
+    { sp: "C", en: "S-I-O-B-H-A-N.", ja: "S-I-O-B-H-A-N。" },
+    { sp: "S", en: "Thanks. It'll be ready in about fifteen minutes.", ja: "ありがとうございます。15分ほどでご用意できます。" },
+    { sp: "C", en: "Beautiful, see you then.", ja: "助かる、じゃあまた。" }
+  ]
+},
+{
+  id: "fish-sides",
+  title: "4. サイドとソースをすすめる",
+  emoji: "🙋",
+  desc: "客単価が上がる場面。ひとこと足すだけで売上が変わるので、店長に評価される。",
+  tips: [
+    "**Potato scallop** は薄切りじゃがいもの衣揚げ。州によって **potato cake** と呼ぶ(メルボルン)。QLDはscallop。",
+    "**Dim sim** は豪州版シュウマイ。揚げか蒸しかを聞く。\"Fried or steamed?\"",
+    "ソースは **tartare**(魚用)、**tomato sauce**(ケチャップ)、**vinegar**(チップスにかける)。有料の店が多い。",
+    "すすめ方は押しつけない。\"Would you like any sauce with that?\" で十分。"
+  ],
+  lines: [
+    { sp: "S", en: "Would you like any sauce with that?", ja: "ソースはお付けしますか?" },
+    { sp: "C", en: "What have you got?", ja: "何があるの?(客)" },
+    { sp: "S", en: "Tartare, tomato sauce, or vinegar for the chips. Sauces are fifty cents.", ja: "タルタル、トマトソース、チップス用のビネガーがあります。ソースは50セントです。" },
+    { sp: "C", en: "I'll grab a tartare.", ja: "タルタルをもらうわ。" },
+    { sp: "S", en: "No worries. We've also got calamari rings and prawn cutlets if you're after a bit more.", ja: "承知しました。もう少し何かでしたら、カラマリリングとプローンカツレツもあります。" },
+    { sp: "C", en: "Ooh, how many in a serve of calamari?", ja: "お、カラマリは1人前で何個?" },
+    { sp: "S", en: "Six rings. They go pretty well with the chips.", ja: "6個です。チップスとよく合いますよ。" },
+    { sp: "C", en: "Go on then, add a serve.", ja: "じゃあ1人前追加して。" },
+    { sp: "S", en: "Easy. Anything to drink?", ja: "承知しました。お飲み物はいかがですか?" },
+    { sp: "C", en: "Just a water, thanks.", ja: "水だけで、ありがとう。" },
+    { sp: "S", en: "That's twenty-six eighty altogether.", ja: "合計26ドル80になります。" }
+  ]
+},
+{
+  id: "fish-handover",
+  title: "5. できた商品を渡す",
+  emoji: "🙋",
+  desc: "揚げ物は熱い。中身を確認して、注意をひとこと添えて渡す。30秒の仕事だが、ここで印象が決まる。",
+  tips: [
+    "名前か番号で呼ぶ。\"Order for Siobhan!\" / \"Number forty-two!\"",
+    "渡す前に中身を確認。\"Two flake, large chips, two dim sims — that's you?\"",
+    "熱いことを伝える。\"Careful, it's hot.\" これを言うだけでクレームが減る。",
+    "最後は \"Enjoy!\" か \"Have a good one!\" 。豪州の店はこれで締める。"
+  ],
+  lines: [
+    { sp: "S", en: "Order for Siobhan!", ja: "シヴォーン様のご注文!" },
+    { sp: "C", en: "That's me.", ja: "私です。(客)" },
+    { sp: "S", en: "Two flake, one large chips and two dim sims — is that right?", ja: "フレーク2つ、チップス大1つ、ディムシム2つ。お間違いないですか?" },
+    { sp: "C", en: "Yep, that's the one.", ja: "うん、それ。" },
+    { sp: "S", en: "Careful, it's pretty hot.", ja: "お気をつけください、かなり熱いです。" },
+    { sp: "C", en: "Thanks. Did you put the tartare in?", ja: "ありがとう。タルタルは入れてくれた?" },
+    { sp: "S", en: "Yep, it's in the bag. Two of them.", ja: "はい、袋に入っています。2つ入れました。" },
+    { sp: "C", en: "You're a legend.", ja: "ありがとう、助かるわ。" },
+    { sp: "S", en: "No worries. Enjoy!", ja: "とんでもないです。おいしく召し上がってください!" }
+  ]
+},
+{
+  id: "fish-wait",
+  title: "6. 待ち時間と品切れを伝える",
+  emoji: "🙋",
+  desc: "金曜の夜は20分待ちになる。先に言えば問題にならず、後から言うと怒られる。",
+  tips: [
+    "待ち時間は**多めに言う**。15分と言って20分かかるより、20分と言って15分で出すほうがいい。",
+    "品切れは代案とセットで。\"We're out of barra, but the snapper's really good today.\"",
+    "謝りすぎない。\"Sorry about that\" を一度言えば十分。言いすぎると不安にさせる。",
+    "待つか決めてもらう。\"Is that alright, or would you rather something quicker?\""
+  ],
+  lines: [
+    { sp: "C", en: "How long's the wait?", ja: "どれくらい待つ?(客)" },
+    { sp: "S", en: "About twenty minutes at the moment — it's pretty busy.", ja: "今は20分ほどです。かなり混んでいまして。" },
+    { sp: "C", en: "Twenty? Hmm.", ja: "20分か…うーん。" },
+    { sp: "S", en: "If you're in a hurry, the chips are quicker — about five.", ja: "お急ぎでしたら、チップスなら5分ほどで出せます。" },
+    { sp: "C", en: "Nah, I'll wait. Can I get the barramundi?", ja: "いや、待つよ。バラマンディをもらえる?" },
+    { sp: "S", en: "Sorry, we're out of barra tonight. The snapper's really good though.", ja: "申し訳ありません、今夜はバラマンディが切れてしまって。ただスナッパーがとてもいいですよ。" },
+    { sp: "C", en: "Is it similar?", ja: "似てる?" },
+    { sp: "S", en: "Bit firmer, but same idea. A lot of people prefer it, honestly.", ja: "もう少し身が締まっていますが、方向性は同じです。正直、こちらのほうが好きという方も多いです。" },
+    { sp: "C", en: "Alright, snapper then.", ja: "じゃあスナッパーで。" },
+    { sp: "S", en: "Good one. I'll put it through now.", ja: "ありがとうございます。すぐ通します。" }
+  ]
+},
+{
+  id: "fish-real",
+  title: "7. 🔥 リアル:金曜の夜、3組同時",
+  emoji: "🙋",
+  desc: "フライヤーの音、子どもの声、早口の注文が重なる。全部は聞き取れない。それを前提にどう捌くか。",
+  tips: [
+    "全部聞き取ろうとしない。**魚の種類とチップスのサイズ**だけ確実に取れば、残りは聞き直せる。",
+    "待たせている人に一言。\"I'll be right with you.\"(すぐ伺います)。無視されるのが一番腹が立つ。",
+    "順番を間違えそうなときは素直に聞く。\"Sorry, who was next?\"",
+    "最初のうちは半分も聞き取れません。それで普通です。3週間で耳が慣れます。"
+  ],
+  lines: [
+    { sp: "C", en: "Yeah can I get uh two flake two potato cakes and a minimum chips thanks", ja: "えーと、フレーク2つとポテトケーキ2つ、あとチップス最小で(早口・客)" },
+    { sp: "S", en: "Sorry mate, can you slow down a touch? Two flake...", ja: "すみません、もう少しゆっくりお願いできますか?フレーク2つ…" },
+    { sp: "C", en: "Two flake, two potato cakes, minimum chips.", ja: "フレーク2つ、ポテトケーキ2つ、チップス最小。" },
+    { sp: "S", en: "Potato cakes — you mean the scallops?", ja: "ポテトケーキというのは、スキャロップのことですか?" },
+    { sp: "C", en: "Yeah yeah, same thing. I'm from Melbourne.", ja: "そうそう、同じもの。メルボルン出身なんだ。" },
+    { sp: "S", en: "Ah, right. Two flake, two scallops, minimum chips. Battered on the flake?", ja: "ああ、なるほど。フレーク2つ、スキャロップ2つ、チップス最小ですね。フレークは衣揚げで?" },
+    { sp: "C", en: "Yeah.", ja: "うん。" },
+    { sp: "S", en: "Won't be long. — Sorry, I'll be right with you!", ja: "すぐにご用意します。——すみません、すぐ伺います!" },
+    { sp: "C", en: "No rush, mate.", ja: "急がなくていいよ。" },
+    { sp: "S", en: "Thanks. Sorry, who was next?", ja: "ありがとうございます。すみません、次はどなたでしたか?" }
+  ]
+},
+];
+
+const TAVERN_SCENES = [
+{
+  id: "tav-counter",
+  title: "1. カウンターで食事の注文を取る",
+  emoji: "🙋",
+  desc: "豪州のパブは「カウンターで注文→テーブル番号を取る→料理が運ばれる」が基本。これを回せれば初日は乗り切れる。",
+  tips: [
+    "豪州のパブは **counter meals**。席に座ってから客がカウンターに来て注文する。",
+    "必ず **テーブル番号** を聞く。\"What's your table number?\" これが無いと料理が届かない。",
+    "ステーキは焼き加減を聞く。rare / medium rare / medium / medium well / well done。",
+    "番号札(table marker)を渡す。\"Here's your number — just pop it on the table.\""
+  ],
+  lines: [
+    { sp: "C", en: "Hi, can I order some food?", ja: "どうも、料理を注文できる?(客)" },
+    { sp: "S", en: "Of course. What's your table number?", ja: "もちろんです。テーブル番号をお願いします。" },
+    { sp: "C", en: "Twenty-three.", ja: "23番。" },
+    { sp: "S", en: "Table twenty-three. What can I get you?", ja: "23番ですね。ご注文をどうぞ。" },
+    { sp: "C", en: "The chicken parmi and the rump steak.", ja: "チキンパルミと、ランプステーキを。" },
+    { sp: "S", en: "How would you like the steak cooked?", ja: "ステーキの焼き加減はいかがいたしますか?" },
+    { sp: "C", en: "Medium rare.", ja: "ミディアムレアで。" },
+    { sp: "S", en: "Medium rare. Chips and salad with both, or would you like veg?", ja: "ミディアムレアですね。どちらもチップスとサラダでよろしいですか?野菜にもできます。" },
+    { sp: "C", en: "Chips with both, thanks.", ja: "どっちもチップスで。" },
+    { sp: "S", en: "Any sauce on the steak? We've got gravy, mushroom or pepper.", ja: "ステーキにソースはいかがですか?グレービー、マッシュルーム、ペッパーがあります。" },
+    { sp: "C", en: "Pepper, please.", ja: "ペッパーで。" },
+    { sp: "S", en: "Lovely. That's forty-six fifty. Here's your table marker — just pop it on the table.", ja: "かしこまりました。46ドル50です。番号札をどうぞ、テーブルに置いておいてください。" }
+  ]
+},
+{
+  id: "tav-drinks",
+  title: "2. ドリンクを出す",
+  emoji: "🙋",
+  desc: "QLDのビールのサイズと、よく出る銘柄。ここが即答できないと行列が止まる。",
+  tips: [
+    "QLDのサイズ: **pot** 285ml / **schooner** 425ml(一番出る) / **pint** 570ml / **jug** 1140ml。",
+    "銘柄で言われることが多い。**XXXX Gold**(フォーエックス)、**Great Northern**、**Carlton Draught**、**VB**。",
+    "スピリッツは必ず計量する。目分量(free pour)は違法。\"Sorry, we have to measure spirits.\"",
+    "分からない銘柄は素直に聞く。\"Sorry, which one is that?\" 棚を指してもらえば済む。"
+  ],
+  lines: [
+    { sp: "C", en: "Two schooners of XXXX Gold and a glass of the house white.", ja: "XXXXゴールドのスクーナー2つと、ハウスワインの白を1杯。(客)" },
+    { sp: "S", en: "No worries. Two schooners of Gold, one white.", ja: "承知しました。ゴールドのスクーナー2つ、白ワイン1杯ですね。" },
+    { sp: "C", en: "And a Bundy and Coke for my mate.", ja: "それと、友達にバンディとコーラを。" },
+    { sp: "S", en: "Single or double?", ja: "シングルですか、ダブルですか?" },
+    { sp: "C", en: "Make it a double.", ja: "ダブルで。" },
+    { sp: "S", en: "Righto. Is that all on the one tab?", ja: "承知しました。すべて同じお会計でよろしいですか?" },
+    { sp: "C", en: "Yeah, all together.", ja: "うん、まとめて。" },
+    { sp: "S", en: "That's thirty-eight twenty.", ja: "38ドル20になります。" },
+    { sp: "C", en: "Card.", ja: "カードで。" },
+    { sp: "S", en: "Tap when you're ready. — I'll bring these over to you.", ja: "準備ができましたらタッチしてください。——お席までお持ちします。" }
+  ]
+},
+{
+  id: "tav-running",
+  title: "3. 料理を運ぶ・下げる",
+  emoji: "🙋",
+  desc: "F&Bアテンダントの時間の大半はこれ。テーブル番号と料理名を声に出して確認する癖をつける。",
+  tips: [
+    "運ぶときは料理名を言う。\"Chicken parmi?\" と声をかけてから置く。",
+    "下げる前に必ず聞く。\"Are you finished with this?\" 勝手に下げると揉める。",
+    "空いたグラスは通りがけに回収する。**手ぶらで歩かない**のが基本。",
+    "何か要るか一声かける。\"Can I get you anything else?\" これを言う人が評価される。"
+  ],
+  lines: [
+    { sp: "S", en: "Chicken parmi?", ja: "チキンパルミのお客様?" },
+    { sp: "C", en: "That's me, thanks.", ja: "私です、ありがとう。(客)" },
+    { sp: "S", en: "And the rump, medium rare. Careful, the plate's hot.", ja: "こちらはランプのミディアムレアです。お皿が熱いのでお気をつけください。" },
+    { sp: "C", en: "Lovely, thank you.", ja: "ありがとう。" },
+    { sp: "S", en: "Can I get you any sauces or condiments?", ja: "ソースや調味料はいかがですか?" },
+    { sp: "C", en: "Could we get some tomato sauce?", ja: "トマトソースをもらえる?" },
+    { sp: "S", en: "Course. I'll bring that straight over.", ja: "もちろんです。すぐにお持ちします。" },
+    { sp: "C", en: "Cheers.", ja: "ありがとう。" },
+    { sp: "S", en: "Are you finished with these, or still working on them?", ja: "こちらお下げしてよろしいですか?それともまだ召し上がりますか?" },
+    { sp: "C", en: "Yeah, you can take them.", ja: "うん、下げていいよ。" },
+    { sp: "S", en: "Thanks. Can I get you anything else?", ja: "ありがとうございます。他に何かお持ちしましょうか?" },
+    { sp: "C", en: "We're good, thanks.", ja: "大丈夫、ありがとう。" }
+  ]
+},
+{
+  id: "tav-id",
+  title: "4. ID確認と提供拒否（RSA実務）",
+  emoji: "🙋",
+  desc: "QLDでは25歳未満に見える人全員にID確認。酩酊者には提供しない。資格で習ったことを実際に言う場面。",
+  tips: [
+    "決まり文句は \"Could I see some ID?\" 。個人を疑う形にせず、\"We check everyone who looks under 25.\" と足す。",
+    "有効なIDは**パスポート／豪州の運転免許証／Proof of Age Card**のみ。学生証や社員証は不可。",
+    "断るときは**法律と店のルールのせい**にする。自分の判断にしない。相手を責めない。",
+    "断ったら必ずマネージャーと他のスタッフに共有する。一人で抱えない。"
+  ],
+  lines: [
+    { sp: "S", en: "Could I see some ID? We check everyone who looks under twenty-five.", ja: "IDを拝見できますか?25歳未満に見える方には全員確認しています。" },
+    { sp: "C", en: "Yeah, sure. Here you go.", ja: "いいよ、はい。(客)" },
+    { sp: "S", en: "Thanks. — That's all good, thank you.", ja: "ありがとうございます。——問題ありません、ありがとうございました。" },
+    { sp: "C", en: "Can I get another round for the table?", ja: "テーブルにもう一巡もらえる?" },
+    { sp: "S", en: "Can I just check — is that for everyone at table twelve?", ja: "一点確認させてください。12番テーブルの皆さんの分ということでよろしいですか?" },
+    { sp: "C", en: "Yeah, six beers.", ja: "うん、ビール6つ。" },
+    { sp: "S", en: "Sorry, I'm not able to serve your friend in the blue shirt — he's had enough for tonight.", ja: "申し訳ありません、青いシャツのご友人にはお出しできません。今夜はもう十分召し上がっています。" },
+    { sp: "C", en: "He's fine, mate.", ja: "あいつは平気だって。" },
+    { sp: "S", en: "I understand, but it's our house policy and it's the law here. I can't change it.", ja: "わかります。ですが店の方針で、法律でもあるんです。私には変えられません。" },
+    { sp: "C", en: "Fair enough. Five then.", ja: "まあいいか。じゃあ5つで。" },
+    { sp: "S", en: "Thanks for understanding. Can I get him some water and something to eat?", ja: "ご理解ありがとうございます。あの方にお水と何か軽食をお持ちしましょうか?" },
+    { sp: "C", en: "Yeah, good idea.", ja: "ああ、それがいい。" }
+  ]
+},
+{
+  id: "tav-gaming",
+  title: "5. ポーキーズエリアの対応",
+  emoji: "🙋",
+  desc: "豪州のタバーンにはほぼゲーミングルームがある。RSGで習った内容が、ここで必要になる。",
+  tips: [
+    "ゲーミングエリアは**18歳未満立入禁止**。子ども連れが入りかけたら止める。",
+    "ゲーミング中の客にも**酩酊の判断は同じ**。長時間座っている人ほど見落としやすい。",
+    "負けが込んでいる人に深入りしない。**マネージャーに上げる**のが正しい対応。",
+    "セルフ除外(self-exclusion)を申し出る人がいたら、必ずマネージャーへ。自分で処理しない。"
+  ],
+  lines: [
+    { sp: "S", en: "Can I get you anything from the bar?", ja: "バーから何かお持ちしましょうか?" },
+    { sp: "C", en: "Yeah, another beer. And can you break a fifty?", ja: "ビールをもう1杯。あと50ドル崩せる?(客)" },
+    { sp: "S", en: "I can get you change at the bar. How long have you been here tonight?", ja: "バーで両替できます。今夜はどのくらいいらっしゃいますか?" },
+    { sp: "C", en: "A couple of hours I reckon. Maybe three.", ja: "2時間くらいかな。3時間かも。" },
+    { sp: "S", en: "Can I bring you some water as well? And there's food on if you'd like something.", ja: "お水もお持ちしましょうか?よろしければお食事もご用意できます。" },
+    { sp: "C", en: "Nah, I'm right.", ja: "いや、大丈夫。" },
+    { sp: "S", en: "No worries. I'll leave a water here anyway.", ja: "承知しました。念のためお水だけ置いておきますね。" },
+    { sp: "C", en: "Sorry mate — are kids allowed in here? My son's outside.", ja: "ちょっと、ここって子ども入れる?息子が外にいるんだけど。" },
+    { sp: "S", en: "Sorry, no — under eighteens can't come into the gaming room. He's welcome in the bistro though.", ja: "申し訳ありません、18歳未満はゲーミングルームに入れません。ビストロのほうでしたら大丈夫です。" },
+    { sp: "C", en: "Fair enough.", ja: "そうか、わかった。" },
+    { sp: "S", en: "I'll let my manager know you're here, just in case you need anything.", ja: "何かあればと思いますので、マネージャーにお伝えしておきますね。" }
+  ]
+},
+{
+  id: "tav-close",
+  title: "6. ラストオーダーと閉店",
+  emoji: "🙋",
+  desc: "閉店作業が一番体力を使う。言い回しは決まっているので、覚えてしまえば楽になる。",
+  tips: [
+    "ラストオーダーは \"Last drinks!\" と声を出す。個別に回るのではなく全体に告げる。",
+    "退店をお願いするときは理由を言う。\"We're closing up now.\" 早めに、何度も、優しく。",
+    "グラス回収は \"Finished with this?\" と聞きながら。黙って取らない。",
+    "House Policyで**出入りする客の騒音も店の責任**。帰り際に \"Mind the neighbours on the way out.\" と一声。"
+  ],
+  lines: [
+    { sp: "S", en: "Last drinks, everyone! Bar's closing in ten minutes.", ja: "ラストオーダーです!バーは10分で閉まります。" },
+    { sp: "C", en: "Can we squeeze in two more schooners?", ja: "もう2杯だけいける?(客)" },
+    { sp: "S", en: "Yep, if you're up now I can do it.", ja: "はい、今カウンターに来ていただければお出しできます。" },
+    { sp: "C", en: "Beauty.", ja: "助かる。" },
+    { sp: "S", en: "There you go. Just letting you know we're closing at twelve.", ja: "どうぞ。念のため、12時に閉店となります。" },
+    { sp: "C", en: "No worries.", ja: "了解。" },
+    { sp: "S", en: "Finished with these?", ja: "こちらお下げしてよろしいですか?" },
+    { sp: "C", en: "Yeah, all yours.", ja: "うん、どうぞ。" },
+    { sp: "S", en: "Thanks. We're closing up now — whenever you're ready.", ja: "ありがとうございます。そろそろ閉店ですので、お支度ができましたら。" },
+    { sp: "C", en: "Righto, we're off. Thanks mate.", ja: "わかった、帰るよ。ありがとう。" },
+    { sp: "S", en: "Thanks for coming in. Mind the neighbours on the way out!", ja: "ご来店ありがとうございました。お帰りの際はご近所にお気遣いください!" }
+  ]
+},
+{
+  id: "tav-real",
+  title: "7. 🔥 リアル:Schooliesの金曜",
+  emoji: "🙋",
+  desc: "11月下旬、18歳になったばかりの若者が押し寄せる。IDと酩酊の判断が一気に難しくなる週。",
+  tips: [
+    "Schooliesは**18歳になったばかりの人が多い**。誕生日が今日より前か後かを必ず見る。",
+    "グループで来て、一人が全員分を買おうとする。**secondary supply** を警戒する。",
+    "偽造IDが本当に出る。現物なら没収、提供と入店を拒否、マネージャーへ、インシデントレポート。",
+    "判断に迷ったら出さない。\"I'd rather be safe — let me get my manager.\" で逃げていい。"
+  ],
+  lines: [
+    { sp: "C", en: "Six schooners thanks mate", ja: "スクーナー6つちょうだい(客)" },
+    { sp: "S", en: "Sure — are they all with you? I'll need to see ID from everyone.", ja: "はい、皆さんご一緒ですか?全員のIDを確認させてください。" },
+    { sp: "C", en: "Come on, we're all eighteen.", ja: "いいじゃん、全員18歳だって。" },
+    { sp: "S", en: "No dramas, I just have to check. We do it for everyone this week.", ja: "問題ありません、確認するだけです。今週は全員にお願いしています。" },
+    { sp: "C", en: "Here. He's getting his out.", ja: "はい。あいつも今出してる。" },
+    { sp: "S", en: "Thanks. — Sorry, this one's not something I can accept. Have you got a passport or a licence?", ja: "ありがとうございます。——すみません、これは受け付けられないIDです。パスポートか運転免許証はお持ちですか?" },
+    { sp: "C", en: "That's all I've got.", ja: "それしかない。" },
+    { sp: "S", en: "Then I can't serve you tonight, sorry. And I can't let your mates buy for you either.", ja: "でしたら今夜はお出しできません、申し訳ありません。ご友人が代わりに買うこともできません。" },
+    { sp: "C", en: "Seriously? That's rubbish.", ja: "マジで?ありえないんだけど。" },
+    { sp: "S", en: "I know it's annoying. It's the law here and I'd lose my job. Let me get my manager for you.", ja: "ご不満はわかります。こちらの法律ですし、私も仕事を失います。マネージャーを呼んできますね。" },
+    { sp: "C", en: "Whatever.", ja: "もういいわ。" },
+    { sp: "S", en: "Five schooners for the rest of you — I'll bring them over.", ja: "他の皆さんの分、スクーナー5つはお持ちします。" }
+  ]
+},
+];
+
 const JOBS = [
+  { id: "fishchips", name: "Fish & Chips", scenes: FISHCHIPS_SCENES },
+  { id: "tavern", name: "タバーン", scenes: TAVERN_SCENES },
   { id: "hostel", name: "ホステル", scenes: HOSTEL_SCENES, otherLabel: "TRAVELLER" },
   { id: "sharehouse", name: "シェアハウス", scenes: SHARE_SCENES, otherLabel: "HOUSEMATE" },
   { id: "uber", name: "Uber Eats", scenes: UBER_SCENES },
@@ -3484,6 +3909,7 @@ function renderVoiceSelect() {
 function changeVoice(name) {
   savedVoiceName = name;
   localStorage.setItem("voiceName", name);
+  toast("音声を変更しました", "ok");
   speak("G'day! How are you going today?", false);
 }
 
@@ -3548,6 +3974,7 @@ function toggleComplete(id) {
   progress[id] = !progress[id];
   if (progress[id]) celebrate();
   localStorage.setItem("steakProgress", JSON.stringify(progress));
+  toast(progress[id] ? "完了にしました" : "未完了に戻しました", progress[id] ? "ok" : "");
   renderJobNav();
   renderNav();
   renderScene();
@@ -3569,14 +3996,162 @@ function renderNav() {
   nav.innerHTML = html;
 }
 
+/* ========== トースト ========== */
+function toast(msg, kind) {
+  let wrap = document.getElementById("toast-wrap");
+  if (!wrap) {
+    wrap = document.createElement("div");
+    wrap.id = "toast-wrap";
+    document.body.appendChild(wrap);
+  }
+  const el = document.createElement("div");
+  el.className = "toast" + (kind ? " " + kind : "");
+  el.textContent = msg;
+  wrap.appendChild(el);
+  requestAnimationFrame(() => el.classList.add("in"));
+  setTimeout(() => {
+    el.classList.remove("in");
+    setTimeout(() => el.remove(), 260);
+  }, 2000);
+}
+
+/* ========== ボトムシート ========== */
+let sheetOpen = false;
+function openSheet(title, bodyHtml) {
+  let scrim = document.getElementById("sheet-scrim");
+  let sheet = document.getElementById("sheet");
+  if (!scrim) {
+    scrim = document.createElement("div");
+    scrim.id = "sheet-scrim";
+    scrim.addEventListener("click", closeSheet);
+    document.body.appendChild(scrim);
+    sheet = document.createElement("div");
+    sheet.id = "sheet";
+    sheet.setAttribute("role", "dialog");
+    sheet.setAttribute("aria-modal", "true");
+    document.body.appendChild(sheet);
+    // 下スワイプで閉じる
+    let y0 = null;
+    sheet.addEventListener("touchstart", e => {
+      if (sheet.querySelector(".sheet-body").scrollTop <= 0) y0 = e.touches[0].clientY;
+    }, { passive: true });
+    sheet.addEventListener("touchmove", e => {
+      if (y0 === null) return;
+      const d = e.touches[0].clientY - y0;
+      if (d > 0) sheet.style.transform = `translateY(${d}px)`;
+    }, { passive: true });
+    sheet.addEventListener("touchend", e => {
+      if (y0 === null) return;
+      const d = (e.changedTouches[0].clientY - y0);
+      sheet.style.transform = "";
+      if (d > 90) closeSheet();
+      y0 = null;
+    });
+  }
+  sheet.innerHTML =
+    `<div class="sheet-grip"></div>
+     <div class="sheet-head"><h3>${esc(title)}</h3><button onclick="closeSheet()">閉じる</button></div>
+     <div class="sheet-body">${bodyHtml}</div>`;
+  sheetOpen = true;
+  requestAnimationFrame(() => { scrim.classList.add("in"); sheet.classList.add("in"); });
+}
+function closeSheet() {
+  const scrim = document.getElementById("sheet-scrim");
+  const sheet = document.getElementById("sheet");
+  if (!scrim || !sheet) return;
+  sheetOpen = false;
+  scrim.classList.remove("in");
+  sheet.classList.remove("in");
+}
+document.addEventListener("keydown", e => { if (e.key === "Escape" && sheetOpen) closeSheet(); });
+
+function openJobSheet() {
+  const html = JOBS.map((j, i) => {
+    const done = j.scenes.filter(s => progress[s.id]).length;
+    const sub = done === j.scenes.length ? "すべて完了" : `${done} / ${j.scenes.length} 完了`;
+    return `<button class="sheet-item ${i === currentJob ? "on" : ""}" onclick="pickJob(${i})">
+      <span class="si-emoji">${JOB_EMOJI[j.id] || "🧩"}</span>
+      <span><span>${esc(j.name)}</span><span class="si-sub">${sub}</span></span>
+      ${i === currentJob ? '<span class="si-tick">✓</span>' : ""}
+    </button>`;
+  }).join("");
+  openSheet("ジャンルを選ぶ", html);
+}
+function pickJob(i) { closeSheet(); goJob(i); toast(`${JOB_EMOJI[JOBS[i].id] || ""} ${JOBS[i].name}`); }
+
 function renderJobNav() {
   const nav = document.getElementById("job-nav");
-  nav.innerHTML = JOBS.map((j, i) => {
-    const doneCount = j.scenes.filter(s => progress[s.id]).length;
-    const badge = doneCount > 0 ? ` (${doneCount}/${j.scenes.length})` : "";
-    return `<button class="${i === currentJob ? "active" : ""}" onclick="goJob(${i})">${JOB_EMOJI[j.id] || ""} ${j.name}${badge}</button>`;
-  }).join("");
+  const j = JOBS[currentJob];
+  const done = j.scenes.filter(s => progress[s.id]).length;
+  nav.innerHTML =
+    `<button class="active" onclick="openJobSheet()" style="font-weight:700">
+       ${JOB_EMOJI[j.id] || ""} ${esc(j.name)} (${done}/${j.scenes.length}) ▾
+     </button>` +
+    JOBS.map((jj, i) => i === currentJob ? "" :
+      `<button onclick="goJob(${i})">${JOB_EMOJI[jj.id] || ""} ${esc(jj.name)}</button>`).join("");
 }
+
+/* ========== 引っ張って更新（瞬間英作文のセッション引き直し） ========== */
+(function initPullToRefresh() {
+  let startY = 0, pulling = false, dist = 0, busy = false;
+  const MAX = 86, TRIG = 62;
+  function el() {
+    let p = document.getElementById("ptr");
+    if (!p) {
+      p = document.createElement("div");
+      p.id = "ptr";
+      p.innerHTML = '<div class="ptr-in"><span class="ptr-ico">↓</span><span class="ptr-txt">引っ張って更新</span></div>';
+      document.body.appendChild(p);
+    }
+    return p;
+  }
+  // 引っ張って意味がある画面か（瞬間英作文のセッション中 or ジャンル一覧）
+  function canPull() {
+    if (busy || sheetOpen) return false;
+    if (window.scrollY > 0) return false;
+    return mode === "instant" || mode === "study";
+  }
+  document.addEventListener("touchstart", e => {
+    if (!canPull()) return;
+    startY = e.touches[0].clientY; pulling = true; dist = 0;
+  }, { passive: true });
+  document.addEventListener("touchmove", e => {
+    if (!pulling) return;
+    dist = Math.max(0, e.touches[0].clientY - startY);
+    if (dist <= 0) return;
+    const d = Math.min(MAX, dist * 0.55);
+    const p = el();
+    p.style.height = d + "px";
+    p.classList.toggle("ready", d >= TRIG);
+    p.querySelector(".ptr-txt").textContent = d >= TRIG ? "離して更新" : "引っ張って更新";
+  }, { passive: true });
+  document.addEventListener("touchend", () => {
+    if (!pulling) return;
+    pulling = false;
+    const p = el();
+    const fire = parseFloat(p.style.height || 0) >= TRIG;
+    if (!fire) { p.style.height = "0px"; p.classList.remove("ready"); return; }
+    busy = true;
+    p.classList.add("spin");
+    p.querySelector(".ptr-ico").textContent = "↻";
+    p.querySelector(".ptr-txt").textContent = "更新中…";
+    setTimeout(() => {
+      try {
+        if (mode === "instant" && typeof startInstantSession === "function") {
+          startInstantSession(0);
+          toast("新しいセッションを引き直しました", "ok");
+        } else {
+          renderJobNav(); renderNav(); renderScene();
+          toast("最新の状態にしました", "ok");
+        }
+      } catch (err) { toast("更新できませんでした", "warn"); }
+      p.style.height = "0px";
+      p.classList.remove("ready", "spin");
+      p.querySelector(".ptr-ico").textContent = "↓";
+      busy = false;
+    }, 420);
+  });
+})();
 
 function goJob(i) {
   stopAll();
@@ -3706,6 +4281,8 @@ function renderAussie() {
 const CHAT_MODEL = "claude-haiku-4-5";      // 会話ターン: 軽量・低コスト
 const FEEDBACK_MODEL = "claude-opus-4-8";   // 総評: 高精度モデルで丁寧に
 const JOB_SETTINGS = {
+  fishchips: "a busy Australian fish and chip takeaway shop on the Gold Coast (the learner takes orders at the counter, answers the phone and hands over orders). Fish on the board: flake (gummy shark), flathead, barramundi, snapper, whiting, hoki. Battered, grilled or crumbed. Sides: chips (small/large/minimum), potato scallops (called potato cakes in Victoria), dim sims, calamari rings, prawn cutlets. Sauces: tartare, tomato sauce, vinegar, chicken salt. Customers are locals and tourists, often in a hurry, and the fryers are loud.",
+  tavern: "a large Australian pub/tavern on the Gold Coast run by a hotel group (the learner is a Food and Beverage Attendant working the bistro floor and the bar). Food is ordered at the counter with a table number and runners bring it out. Classic counter meals: chicken parmi, rump steak, fish and chips, schnitzel. Beer comes in pots, schooners, pints and jugs; XXXX Gold, Great Northern, Carlton Draught and VB are the common taps. There is a gaming room (pokies) that under-18s cannot enter. QLD RSA rules apply: ID anyone who looks under 25, refuse service to anyone unduly intoxicated, and spirits must be measured.",
   hostel: "a backpacker hostel in Surfers Paradise, Gold Coast (the learner has just arrived in Australia on a working holiday and is staying in a dorm). Depending on the scene you are either the hostel reception staff or another backpacker staying there. Backpackers are casual, friendly and often not native English speakers themselves.",
   sharehouse: "share house hunting and share house life on the Gold Coast (the learner is looking for, or has just moved into, a room in a share house). Rent is quoted per week, bond is usually two weeks rent, and bills means electricity, water, gas and internet. Depending on the scene you are either the landlord/head tenant showing the room, or a housemate already living there.",
   steak: "a casual steakhouse restaurant",
@@ -3921,6 +4498,7 @@ function saveApiKey() {
   }
   apiKey = key;
   localStorage.setItem("anthropicApiKey", key);
+  toast("APIキーを保存しました", "ok");
   renderAIChat();
 }
 
@@ -3989,7 +4567,7 @@ function renderAIChat() {
     }
   });
   if (aiChat.waiting) {
-    html += `<div class="line customer"><div class="who">${WHO_EMOJI[aiChat.otherLabel] || "🙋"} ${esc(aiChat.otherLabel)}(AI)</div><div class="bubble"><span class="en">…</span></div></div>`;
+    html += `<div class="line customer"><div class="who">${WHO_EMOJI[aiChat.otherLabel] || "🙋"} ${esc(aiChat.otherLabel)}(AI)</div><div class="bubble"><span class="sk-dots"><i></i><i></i><i></i></span><div class="sk sk-line" style="width:72%"></div><div class="sk sk-line" style="width:48%"></div></div></div>`;
   }
   if (aiChat.error) html += `<p class="ai-error">${esc(aiChat.error)}</p>`;
   if (aiChat.feedback) {
@@ -4178,6 +4756,7 @@ function srsDateStr(offsetDays) {
   return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0");
 }
 function srsSave() { localStorage.setItem("srsData", JSON.stringify(srs)); }
+function srsSaveToast() { srsSave(); toast("進捗を保存しました", "ok"); }
 
 // カード素材 = 全職種のスタッフ側セリフ + キーフレーズ集
 function srsPool() {
@@ -4339,7 +4918,7 @@ function renderInstant() {
 }
 
 /* ===== 青春ギミック: ストリーク & 紙吹雪 ===== */
-const JOB_EMOJI = { hostel: "🎒", sharehouse: "🏠", uber: "🛵", bar: "🍸", japanese: "🍣", sushi: "🐟", steak: "🥩", cafe: "☕", thai: "🍛", kebab: "🌯", hotel: "🛏️", demipair: "🏡", gym: "💪", swim: "🏊", airport: "🛫", flightexp: "✈️", interview: "🤝" };
+const JOB_EMOJI = { fishchips: "🍟", tavern: "🍺", hostel: "🎒", sharehouse: "🏠", uber: "🛵", bar: "🍸", japanese: "🍣", sushi: "🐟", steak: "🥩", cafe: "☕", thai: "🍛", kebab: "🌯", hotel: "🛏️", demipair: "🏡", gym: "💪", swim: "🏊", airport: "🛫", flightexp: "✈️", interview: "🤝" };
 const WHO_EMOJI = { RECEPTION: "🛎️", TRAVELLER: "🎒", LANDLORD: "🔑", HOUSEMATE: "🏠", RESTAURANT: "🏪", CUSTOMER: "🙋", GUEST: "🧳", KID: "🧒", PARENT: "👩", CHEF: "👨‍🍳", SUPERVISOR: "📋", COWORKER: "🤜", MANAGER: "🤝" };
 
 function markPracticed() {
