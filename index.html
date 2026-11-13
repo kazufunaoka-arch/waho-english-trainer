@@ -7,7 +7,7 @@
 <link rel="icon" type="image/svg+xml" href="icon.svg">
 <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
-<meta name="theme-color" content="#FF8B54">
+<meta name="theme-color" content="#0F6E74">
 <meta name="apple-mobile-web-app-title" content="ワーホリ英会話">
 <meta name="description" content="オーストラリアのワーホリで働くための英語を、職場の場面ごとに練習。11職種59シーン、ネイティブ音声とAIロールプレイ付き。完全無料・登録不要。">
 <meta property="og:type" content="website">
@@ -19,23 +19,23 @@
 <meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@500;700;900&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;500;700&family=Lora:ital,wght@0,500;0,600;1,500&display=swap" rel="stylesheet">
 <style>
   :root {
-    --paper: #FFF6EA;        /* 夜明けの空気 */
+    --paper: #F5F2EB;        /* 落ち着いた生成り */
     --card: #FFFFFF;
-    --ink: #3D3428;
-    --muted: #A08D77;
-    --accent: #0E7C86;       /* 海のティール */
-    --accent-deep: #0A5C64;
-    --accent-soft: #E1F3F1;
-    --line: #F2DFC4;
-    --done: #17A398;
-    --sun1: #FF6B4A;         /* 朝日のコーラル */
-    --sun2: #FFA62B;         /* マンゴーゴールド */
-    --gold: #FFC145;
-    --sand: #FFEEDC;
-    --shadow: 0 6px 20px rgba(255, 128, 60, 0.10);
+    --ink: #272320;
+    --muted: #837B6E;
+    --accent: #0F6E74;       /* 深い海のティール */
+    --accent-deep: #0B5257;
+    --accent-soft: #E8EFED;
+    --line: #E4DDD0;
+    --done: #3F7A5E;
+    --sun1: #0F6E74;         /* 旧コーラル→アクセントに統合 */
+    --sun2: #0B5257;
+    --gold: #9A6B16;
+    --sand: #EFEBE1;
+    --shadow: 0 1px 2px rgba(39,35,32,0.05), 0 1px 3px rgba(39,35,32,0.04);
   }
   * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
   button { touch-action: manipulation; font-family: inherit; }
@@ -44,20 +44,22 @@
     outline-offset: 2px;
   }
   body {
-    font-family: "Zen Maru Gothic", "Hiragino Maru Gothic ProN", "Yu Gothic UI", sans-serif;
+    font-family: "Zen Kaku Gothic New", "Hiragino Kaku Gothic ProN", "Yu Gothic UI", sans-serif;
     background: var(--paper);
     color: var(--ink);
-    line-height: 1.75;
+    line-height: 1.7;
   }
 
   /* ===== ヒーロー: ゴールドコーストの夜明け ===== */
   header {
     position: relative;
-    background: linear-gradient(180deg, #FF8B54 0%, #FFB65C 48%, #FFD98E 100%);
-    padding: 38px 20px 66px;
+    background: var(--card);
+    border-bottom: 1px solid var(--line);
+    padding: 40px 20px 28px;
     text-align: center;
     overflow: hidden;
   }
+  .hero-sun, .hero-waves { display: none; }
   .hero-sun {
     position: absolute;
     left: 50%;
@@ -71,11 +73,11 @@
   }
   .hero-inner { position: relative; z-index: 2; }
   .hero-eyebrow {
-    font-family: "Quicksand", sans-serif;
-    font-weight: 700;
+    font-weight: 500;
     font-size: 0.68rem;
-    letter-spacing: 0.28em;
-    color: rgba(255, 255, 255, 0.9);
+    letter-spacing: 0.26em;
+    color: var(--muted);
+    text-transform: uppercase;
   }
   .hero-lockup {
     display: flex;
@@ -92,30 +94,30 @@
     box-shadow: 0 4px 12px rgba(170, 70, 20, 0.28);
   }
   header h1 {
-    font-size: 1.55rem;
-    font-weight: 900;
-    color: #fff;
-    letter-spacing: 0.03em;
-    text-shadow: 0 2px 14px rgba(196, 78, 22, 0.35);
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--ink);
+    letter-spacing: 0.02em;
     margin-top: 2px;
   }
   .hero-tag {
-    color: #fff;
-    font-weight: 700;
-    font-size: 0.92rem;
-    margin-top: 4px;
-    text-shadow: 0 1px 8px rgba(196, 78, 22, 0.3);
+    font-family: "Lora", Georgia, serif;
+    font-style: italic;
+    color: var(--muted);
+    font-weight: 500;
+    font-size: 0.95rem;
+    margin-top: 8px;
   }
   .hero-chips { margin-top: 12px; }
   .hero-chips .chip {
     display: inline-block;
-    background: rgba(255, 255, 255, 0.92);
-    color: var(--ink);
-    border-radius: 999px;
-    padding: 5px 16px;
-    font-weight: 700;
-    font-size: 0.84rem;
-    box-shadow: 0 3px 10px rgba(180, 80, 20, 0.2);
+    background: transparent;
+    color: var(--muted);
+    border: 1px solid var(--line);
+    border-radius: 7px;
+    padding: 5px 14px;
+    font-weight: 500;
+    font-size: 0.82rem;
   }
   .hero-waves {
     position: absolute;
@@ -142,11 +144,11 @@
     margin: 0 auto;
   }
   .controls button {
-    border: 2px solid var(--line);
-    background: #fff;
-    border-radius: 999px;
+    border: 1px solid var(--line);
+    background: var(--card);
+    border-radius: 7px;
     padding: 6px 16px;
-    font-weight: 700;
+    font-weight: 500;
     font-size: 0.8rem;
     color: var(--muted);
     cursor: pointer;
@@ -157,13 +159,12 @@
     background: var(--accent);
     border-color: var(--accent);
     color: #fff;
-    box-shadow: 0 4px 10px rgba(14, 124, 134, 0.25);
   }
   .controls button:last-child { margin-left: auto; }
   .controls select {
-    border: 2px solid var(--line);
-    background: #fff;
-    border-radius: 999px;
+    border: 1px solid var(--line);
+    background: var(--card);
+    border-radius: 7px;
     padding: 6px 10px;
     font-size: 0.74rem;
     color: var(--muted);
@@ -181,24 +182,22 @@
     margin: 0 auto;
   }
   #job-nav button {
-    border: 2px solid var(--line);
-    background: #fff;
-    border-radius: 14px;
+    border: 1px solid var(--line);
+    background: var(--card);
+    border-radius: 8px;
     padding: 8px 14px;
-    font-weight: 700;
+    font-weight: 500;
     font-size: 0.86rem;
     color: var(--ink);
     cursor: pointer;
-    box-shadow: 0 2px 0 var(--line);
-    transition: transform 0.12s, box-shadow 0.12s, background 0.12s;
+    transition: border-color 0.12s, background 0.12s, color 0.12s;
   }
-  #job-nav button:hover { transform: translateY(-2px); }
-  #job-nav button:active { transform: scale(0.96); }
+  #job-nav button:hover { border-color: var(--accent); color: var(--accent); }
+  #job-nav button:active { background: var(--accent-soft); }
   #job-nav button.active {
-    background: linear-gradient(135deg, var(--accent), #15939E);
+    background: var(--accent);
     color: #fff;
-    border-color: transparent;
-    box-shadow: 0 5px 14px rgba(14, 124, 134, 0.35);
+    border-color: var(--accent);
   }
 
   /* ===== シーンナビ ===== */
@@ -211,25 +210,24 @@
     margin: 0 auto;
   }
   nav button {
-    border: 1.5px solid var(--line);
-    background: #fff;
-    border-radius: 999px;
+    border: 1px solid var(--line);
+    background: var(--card);
+    border-radius: 7px;
     padding: 5px 13px;
     font-size: 0.78rem;
-    font-weight: 700;
+    font-weight: 500;
     color: var(--muted);
     cursor: pointer;
     transition: all 0.12s;
   }
-  nav button:hover { color: var(--sun1); border-color: var(--sun1); }
+  nav button:hover { color: var(--accent); border-color: var(--accent); }
   nav button.active {
-    background: linear-gradient(135deg, var(--sun1), var(--sun2));
-    border-color: transparent;
+    background: var(--ink);
+    border-color: var(--ink);
     color: #fff;
-    box-shadow: 0 4px 10px rgba(255, 107, 74, 0.3);
   }
   nav button.done { border-color: var(--done); }
-  nav button.done::after { content: " ✓"; color: var(--done); font-weight: 900; }
+  nav button.done::after { content: " ✓"; color: var(--done); font-weight: 700; }
   nav button.active.done::after { color: #fff; }
 
   main { max-width: 820px; margin: 0 auto; padding: 8px 18px 90px; }
@@ -257,15 +255,14 @@
     border: 2px solid var(--line);
     background: #fff;
     color: var(--ink);
-    border-radius: 999px;
+    border-radius: 7px;
     padding: 8px 16px;
-    font-weight: 700;
+    font-weight: 500;
     font-size: 0.82rem;
     cursor: pointer;
-    transition: transform 0.12s, border-color 0.12s, color 0.12s;
+    transition: border-color 0.12s, color 0.12s;
   }
   .scene-actions button:hover { border-color: var(--accent); color: var(--accent); }
-  .scene-actions button:active { transform: scale(0.95); }
 
   /* ===== 会話バブル ===== */
   .line {
@@ -286,88 +283,89 @@
   .bubble {
     max-width: 80%;
     padding: 11px 16px;
-    border-radius: 18px;
+    border-radius: 10px;
     background: var(--card);
-    box-shadow: 0 3px 12px rgba(160, 120, 60, 0.10);
+    border: 1px solid var(--line);
   }
-  .line.customer .bubble { border-bottom-left-radius: 6px; }
-  .line.staff .bubble { background: var(--accent-soft); border-bottom-right-radius: 6px; }
+  .line.customer .bubble { border-bottom-left-radius: 3px; }
+  .line.staff .bubble { background: var(--accent-soft); border-color: var(--accent-soft); border-bottom-right-radius: 3px; }
   .en {
-    font-family: "Quicksand", "Zen Maru Gothic", sans-serif;
-    font-weight: 600;
-    font-size: 1rem;
+    font-family: "Lora", Georgia, serif;
+    font-weight: 500;
+    font-size: 1.02rem;
   }
   .ja { font-size: 0.8rem; color: var(--muted); margin-top: 3px; }
+  .rhythm { font-size: 0.95rem; margin-top: 6px; padding: 6px 9px; border-radius: 8px;
+            background: rgba(255,170,60,.13); letter-spacing: .01em; line-height: 1.7; }
+  .rhythm b { font-weight: 800; color: #d46a00; }
+  .rhythm .sl { color: var(--muted); margin: 0 5px; font-weight: 400; }
   body.hide-ja .ja { display: none; }
 
   .play-btn {
     background: none;
     border: none;
-    color: var(--sun2);
+    color: var(--accent);
     cursor: pointer;
     font-size: 0.9rem;
     margin-left: 8px;
     padding: 0 2px;
     vertical-align: middle;
   }
-  .play-btn:hover { color: var(--sun1); }
+  .play-btn:hover { color: var(--accent-deep); }
 
   /* ロールプレイモード: 自分のセリフを隠す */
   body.roleplay .line.staff .bubble.hidden-answer .en,
   body.roleplay .line.staff .bubble.hidden-answer .ja,
   body.roleplay .line.staff .bubble.hidden-answer .play-btn { display: none; }
   body.roleplay .line.staff .bubble.hidden-answer::after {
-    content: "🌊 あなたの番 — 声に出して言ってから、ここを押して答え合わせ";
+    content: "▸ あなたの番 — 声に出して言ってから、ここを押して答え合わせ";
     display: block;
-    color: var(--sun1);
-    font-weight: 700;
+    color: var(--accent);
+    font-weight: 600;
     font-size: 0.82rem;
     padding: 4px 0;
     cursor: pointer;
   }
   body.roleplay .line.staff .bubble.hidden-answer {
     cursor: pointer;
-    background: #FFF9F3;
-    border: 2px dashed var(--sun1);
+    background: var(--card);
+    border: 1px dashed var(--accent);
   }
 
   /* ポイント */
   .tips {
     background: var(--sand);
-    border-radius: 16px;
+    border-radius: 10px;
+    border-left: 2px solid var(--accent);
     padding: 16px 18px;
     margin: 26px 0;
     font-size: 0.87rem;
-    box-shadow: var(--shadow);
   }
   .tips h3 {
-    font-size: 0.78rem;
-    font-weight: 900;
-    letter-spacing: 0.1em;
-    color: #D45A2A;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    color: var(--accent-deep);
     margin-bottom: 8px;
+    text-transform: uppercase;
   }
-  .tips h3::before { content: "🌞 "; }
-  .tips li { margin-left: 18px; margin-bottom: 6px; color: #5B4C39; }
+  .tips li { margin-left: 18px; margin-bottom: 6px; color: var(--ink); }
 
   .complete-row { text-align: center; margin-top: 26px; }
   .complete-row button {
-    background: linear-gradient(135deg, var(--sun1), var(--sun2));
+    background: var(--accent);
     color: #fff;
     border: none;
-    border-radius: 999px;
+    border-radius: 8px;
     padding: 12px 30px;
-    font-weight: 900;
+    font-weight: 700;
     font-size: 0.95rem;
     cursor: pointer;
-    box-shadow: 0 6px 16px rgba(255, 107, 74, 0.35);
-    transition: transform 0.12s;
+    transition: background 0.12s;
   }
-  .complete-row button:hover { transform: translateY(-2px); }
-  .complete-row button:active { transform: scale(0.95); }
+  .complete-row button:hover { background: var(--accent-deep); }
   .complete-row button.completed {
-    background: linear-gradient(135deg, var(--done), #4CC9B0);
-    box-shadow: 0 6px 16px rgba(23, 163, 152, 0.3);
+    background: var(--done);
   }
 
   /* キーフレーズ・単語帳テーブル */
@@ -377,23 +375,24 @@
     border-spacing: 0;
     margin: 10px 0 26px;
     font-size: 0.88rem;
-    background: #fff;
-    border-radius: 14px;
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 8px;
     overflow: hidden;
-    box-shadow: var(--shadow);
   }
   th {
     text-align: left;
-    font-size: 0.7rem;
-    font-weight: 900;
-    letter-spacing: 0.08em;
-    color: #fff;
-    background: var(--accent);
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    background: var(--sand);
     padding: 8px 12px;
+    text-transform: uppercase;
   }
-  td { padding: 9px 12px; border-bottom: 1px solid #F7EBD8; vertical-align: top; }
+  td { padding: 9px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
   tr:last-child td { border-bottom: none; }
-  td.en-cell { font-family: "Quicksand", sans-serif; font-weight: 600; }
+  td.en-cell { font-family: "Lora", Georgia, serif; font-weight: 500; }
   td .play-btn { margin-left: 4px; }
   h3.section-title { font-size: 1.02rem; font-weight: 900; margin: 30px 0 2px; }
   .section-note { color: var(--muted); font-size: 0.82rem; }
@@ -405,45 +404,43 @@
   .chat-input-row input {
     flex: 1;
     min-width: 0;
-    border: 2px solid var(--line);
-    border-radius: 999px;
+    border: 1px solid var(--line);
+    border-radius: 8px;
     padding: 10px 16px;
     font-size: 16px;
     font-family: inherit;
-    background: #fff;
+    background: var(--card);
     color: var(--ink);
   }
   .chat-input-row input:focus { outline: none; border-color: var(--accent); }
   .chat-input-row button {
-    border: 2px solid var(--line);
-    background: #fff;
+    border: 1px solid var(--line);
+    background: var(--card);
     color: var(--ink);
-    border-radius: 999px;
+    border-radius: 8px;
     padding: 10px 16px;
     cursor: pointer;
     font-size: 0.9rem;
-    font-weight: 700;
+    font-weight: 500;
     white-space: nowrap;
-    transition: transform 0.12s;
   }
   .chat-input-row button:hover { border-color: var(--accent); color: var(--accent); }
-  .chat-input-row button:active { transform: scale(0.95); }
   #mic-btn.listening {
-    background: linear-gradient(135deg, var(--sun1), var(--sun2));
+    background: var(--accent);
     color: #fff;
-    border-color: transparent;
+    border-color: var(--accent);
     animation: mic-pulse 1.2s infinite;
   }
   @keyframes mic-pulse { 50% { opacity: 0.55; } }
   @media (prefers-reduced-motion: reduce) { #mic-btn.listening { animation: none; } }
   .voice-help {
     background: var(--sand);
-    border-radius: 14px;
+    border-radius: 10px;
     padding: 12px 16px;
     margin: 14px 0;
     font-size: 0.85rem;
   }
-  .voice-help summary { cursor: pointer; font-weight: 700; color: #D45A2A; }
+  .voice-help summary { cursor: pointer; font-weight: 600; color: var(--accent-deep); }
   .voice-help p { margin-top: 8px; }
   .voice-help ol { margin: 6px 0 6px 20px; }
   .voice-help li { margin-bottom: 4px; }
@@ -452,18 +449,18 @@
 
   /* ===== 瞬間英作文 ===== */
   .sed-card {
-    background: #fff;
-    border-radius: 20px;
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 10px;
     padding: 34px 24px;
     text-align: center;
     margin: 22px 0;
-    box-shadow: 0 8px 26px rgba(255, 128, 60, 0.14);
   }
   .sed-ja { font-size: 1.15rem; font-weight: 700; line-height: 1.7; }
   .sed-en {
-    font-family: "Quicksand", sans-serif;
-    font-weight: 600;
-    font-size: 1.05rem;
+    font-family: "Lora", Georgia, serif;
+    font-weight: 500;
+    font-size: 1.1rem;
     margin-top: 16px;
     color: var(--accent);
   }
@@ -477,49 +474,46 @@
   }
   .sed-timer > div {
     height: 100%;
-    background: linear-gradient(90deg, var(--sun1), var(--sun2));
+    background: var(--accent);
     animation: sed-shrink 2s linear forwards;
   }
   @keyframes sed-shrink { from { width: 100%; } to { width: 0; } }
   @media (prefers-reduced-motion: reduce) { .sed-timer > div { animation: none; } }
   .sed-btns { display: flex; gap: 10px; justify-content: center; margin-top: 22px; flex-wrap: wrap; }
   .sed-btns button {
-    border: 2px solid var(--line);
-    background: #fff;
-    border-radius: 999px;
+    border: 1px solid var(--line);
+    background: var(--card);
+    border-radius: 8px;
     padding: 12px 24px;
     font-size: 0.95rem;
-    font-weight: 700;
+    font-weight: 500;
     cursor: pointer;
     color: var(--ink);
-    transition: transform 0.12s;
   }
   .sed-btns button:hover { border-color: var(--accent); }
-  .sed-btns button:active { transform: scale(0.94); }
   .sed-btns .sed-ok {
     background: var(--done);
-    border-color: transparent;
+    border-color: var(--done);
     color: #fff;
-    box-shadow: 0 4px 12px rgba(23, 163, 152, 0.3);
   }
-  .sed-btns .sed-ng { border-color: #E76F51; color: #E76F51; }
+  .sed-btns .sed-ng { border-color: #B5542F; color: #B5542F; }
   .sed-select {
-    border: 2px solid var(--line);
-    background: #fff;
+    border: 1px solid var(--line);
+    background: var(--card);
     color: var(--ink);
     padding: 6px 10px;
-    border-radius: 999px;
+    border-radius: 8px;
     font-family: inherit;
     font-size: 0.82rem;
   }
 
   /* ===== モバイル ===== */
   @media (max-width: 600px) {
-    header { padding: 30px 16px 58px; }
-    header h1 { font-size: 1.18rem; }
-    .hero-mark { width: 38px; height: 38px; border-radius: 10px; }
+    header { padding: 32px 16px 24px; }
+    header h1 { font-size: 1.22rem; }
+    .hero-mark { width: 34px; height: 34px; border-radius: 8px; }
     .hero-lockup { gap: 9px; }
-    .hero-tag { font-size: 0.85rem; }
+    .hero-tag { font-size: 0.9rem; }
     .bubble { max-width: 88%; }
     .play-btn { font-size: 1.05rem; padding: 2px 8px; }
     .scene-actions button { padding: 9px 15px; }
@@ -593,9 +587,8 @@
 <body class="hide-ja-no">
 
 <header>
-  <div class="hero-sun"></div>
   <div class="hero-inner">
-    <div class="hero-eyebrow">GOLD COAST MORNING</div>
+    <div class="hero-eyebrow">WORKING HOLIDAY ENGLISH</div>
     <div class="hero-lockup">
       <svg class="hero-mark" viewBox="0 0 512 512" aria-hidden="true">
         <defs>
@@ -615,12 +608,8 @@
       <h1>ワーホリ英会話トレーナー</h1>
     </div>
     <p class="hero-tag">Have a crack, mate.</p>
-    <div class="hero-chips"><span class="chip" id="streak-chip">☀️ 今日から始めよう</span></div>
+    <div class="hero-chips"><span class="chip" id="streak-chip">今日から始めよう</span></div>
   </div>
-  <svg class="hero-waves" viewBox="0 0 1440 90" preserveAspectRatio="none" aria-hidden="true">
-    <path d="M0,42 C240,88 480,8 720,32 C960,56 1200,18 1440,48 L1440,90 L0,90 Z" fill="rgba(255,255,255,0.4)"/>
-    <path d="M0,62 C260,26 520,88 780,60 C1040,32 1240,80 1440,56 L1440,90 L0,90 Z" fill="#FFF6EA"/>
-  </svg>
 </header>
 
 <div class="controls">
@@ -4191,6 +4180,49 @@ function goAussie() {
   window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
+/* ===== リズム表示 =====
+   *語* = 強く読む語、/ = 音のかたまりの切れ目。
+   かたまりは一息で、潰れたまま雑に言うのが正解。 */
+const RHYTHM = {
+  "What can I get you?": "*What* can I / *get* you?",
+  "Thanks, that's all good. What can I get you?": "*Thanks* / that's all *good*. // *What* can I / *get* you?",
+  "Single or double?": "*Sin*gle / or *dou*ble?",
+  "Righto. Is that all on the one tab?": "*Righ*to. // Is that *all* / on the *one* tab?",
+  "Can I get you anything else?": "Can I *get* you / *an*ything else?",
+  "Thanks. Can I get you anything else?": "*Thanks*. // Can I *get* you / *an*ything else?",
+  "Can I get you any sauces or condiments?": "Can I *get* you / any *sauc*es / or *con*diments?",
+  "Can I get you anything from the bar?": "Can I *get* you / *an*ything / from the *bar*?",
+  "Are you finished with these, or still working on them?": "Are you *fin*ished with these / or *still* *work*ing on them?",
+  "Finished with these?": "*Fin*ished / with *these*?",
+  "Sorry, can I just see some ID?": "*Sor*ry / can I just *see* / some *I*-*D*?",
+  "How would you like the steak cooked?": "*How* would you like / the *steak* *cooked*?",
+  "Of course. What's your table number?": "Of *course*. // What's your *ta*ble *num*ber?",
+  "Tap when you're ready. — I'll bring these over to you.": "*Tap* / when you're *rea*dy. // I'll *bring* these *o*ver / to you.",
+  "Course. I'll bring that straight over.": "*Course*. // I'll *bring* that / *straight* *o*ver.",
+  "No worries. I'll leave a water here anyway.": "No *wor*ries. // I'll *leave* a *wa*ter here / *an*yway.",
+  "Last drinks, everyone! Bar's closing in ten minutes.": "*Last* *drinks* / *ev*eryone! // *Bar's* *clos*ing / in *ten* *min*utes.",
+  "Two Great Northerns and two vodka sodas. Card or cash?": "*Two* *Great* *North*erns / and *two* *vod*ka *so*das. // *Card* / or *cash*?",
+  "No worries, I'll keep your card behind the bar.": "No *wor*ries / I'll *keep* your *card* / be*hind* the *bar*.",
+  "Which beer, sorry? We've got six on tap.": "*Which* *beer* / *sor*ry? // We've got *six* / on *tap*.",
+  "Sorry mate, I can't serve you any more tonight.": "*Sor*ry *mate* / I *can't* *serve* you / any *more* to*night*.",
+  "Schooner of Great Northern? Coming up.": "*Schoo*ner of *Great* *North*ern? // *Com*ing *up*.",
+  "Thanks for coming in. Mind the neighbours on the way out!": "*Thanks* for *com*ing in. // *Mind* the *neigh*bours / on the *way* *out*!",
+  "Yep, I'll hold onto it. What's the name?": "*Yep* / I'll *hold* *on*to it. // What's the *name*?"
+};
+let rhythmOn = localStorage.getItem("rhythmOn") === "1";
+function renderRhythm(str) {
+  return esc(str)
+    .replace(/\*([^*]+)\*/g, "<b>$1</b>")
+    .replace(/\/\//g, '<span class="sl">‖</span>')
+    .replace(/(^|[^‖])\/(?!\/)/g, '$1<span class="sl">/</span>');
+}
+function toggleRhythm() {
+  rhythmOn = !rhythmOn;
+  localStorage.setItem("rhythmOn", rhythmOn ? "1" : "0");
+  renderScene();
+  toast(rhythmOn ? "🎵 リズム表示 ON（太字を強く、/ で区切る）" : "リズム表示 OFF");
+}
+
 function renderScene() {
   aiChat = null; // AI会話中に他画面へ移動したら会話状態を破棄
   if (currentScene === -1) { renderPhrases(); return; }
@@ -4212,6 +4244,7 @@ function renderScene() {
       <button onclick="playAll(${currentScene})">端末音声で再生</button>
       <button onclick="stopAll()">停止</button>
       <button onclick="startAIChat(${currentScene})">AIと実戦練習</button>
+      <button onclick="toggleRhythm()">${rhythmOn ? "🎵 リズム表示 ON" : "🎵 リズム表示"}</button>
     </div>
   `;
   const job = JOBS[currentJob];
@@ -4226,6 +4259,7 @@ function renderScene() {
         <div class="bubble ${hiddenCls}" ${hiddenCls ? 'onclick="this.classList.remove(\'hidden-answer\')"' : ""}>
           <span class="en">${esc(line.en)}</span><button class="play-btn" onclick="event.stopPropagation(); speak(${JSON.stringify(line.en).replace(/"/g, "&quot;")}, ${line.sp === "C"})" title="音声を再生">▶</button>
           <div class="ja">${esc(line.ja)}</div>
+          ${rhythmOn && RHYTHM[line.en] ? `<div class="rhythm">${renderRhythm(RHYTHM[line.en])}</div>` : ""}
         </div>
       </div>`;
   });
